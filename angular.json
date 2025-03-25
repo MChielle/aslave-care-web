@@ -171,7 +171,7 @@
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
-      "styleext": "scss"
+      "style": "scss"
     },
     "@schematics/angular:directive": {
       "prefix": "app"
@@ -179,5 +179,9 @@
   },
   "cli": {
     "analytics": false
-  }
+  },
+  "styles": [
+    "styles.scss",
+    "node_modules/ngx-toastr/toastr.css"
+  ]
 }
