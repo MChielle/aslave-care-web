@@ -6,12 +6,14 @@ import { SigninComponent } from './signin/signin.component';
 import { AuthRoutingModule } from './auth.routing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
+import { RecoverPasswordComponent } from './recover-password/recover-password.component';
 
 @NgModule({
   declarations: [
     SignupComponent,
     ChangePasswordComponent,
     SigninComponent,
+    RecoverPasswordComponent,
   ],
   imports: [
     CommonModule,

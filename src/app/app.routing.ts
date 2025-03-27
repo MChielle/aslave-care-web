@@ -4,12 +4,18 @@ import { BrowserModule  } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthComponent } from './pages/auth/auth.component';
+import { AuthGuard } from './shared/services/auth/auth.guard';
 
 const routes: Routes =[
   {
     path: '',
     redirectTo: 'signin',
     pathMatch: 'full',
+  }, 
+  {
+    path: 'core',
+    canActivate: [AuthGuard],
+    component: AdminLayoutComponent,
   }, 
 ];
 
