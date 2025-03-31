@@ -18,6 +18,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
 import { StockComponent } from 'app/pages/stock/stock.component';
+import { SupplierComponent } from 'app/pages/supplier/supplier.component';
 
 @NgModule({
   imports: [
@@ -41,9 +42,9 @@ import { StockComponent } from 'app/pages/stock/stock.component';
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
-    StockComponent
+    StockComponent,
+    SupplierComponent
   ],
-  exports: [RouterModule]
-})
+  exports: [RouterModule]})
 
 export class AdminLayoutModule {}

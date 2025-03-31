@@ -5,24 +5,24 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthGuard } from './shared/services/auth/auth.guard';
-import { AuthComponent } from './auth/auth.component';
 
 const routes: Routes =[
   {
     path: '',
     redirectTo: 'signin',
-    component: AuthComponent,
+    pathMatch: 'full',
     children: [{
+      path: '',
       loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
     }]
-  }, 
-  {
-    path: 'stock',
+  }, {
+    path: '',
     canActivate: [AuthGuard],
     component: AdminLayoutComponent,
-    //children: [{
-    //  loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule)
-    //}]
+    children: [{
+      path: '',
+      loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule)
+    }]
   }
 ];
 
@@ -31,7 +31,7 @@ const routes: Routes =[
     CommonModule,
     BrowserModule,
     RouterModule.forRoot(routes,{
-       useHash: true
+       useHash: false
     })
   ],
   exports: [],

@@ -33,8 +33,8 @@ export class SigninComponent implements OnInit {
     private toastr: ToastrService
   ) { 
     this.signInForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', Validators.required),
+      email: new FormControl(''),
+      password: new FormControl(''),
     });
   }
 

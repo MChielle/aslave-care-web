@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StockNames } from 'app/shared/utils/names';
+import { StockNames, SupplierNames } from 'app/shared/utils/names';
 
 declare const $: any;
 declare interface RouteInfo {
@@ -10,6 +10,7 @@ declare interface RouteInfo {
 }
 export const ROUTES: RouteInfo[] = [
   { path: '/stock', title: StockNames.STOCK,  icon: 'trolley', class: '' },
+  { path: '/supplier', title: SupplierNames.SUPPLIER,  icon: 'trolley', class: '' },
   { path: '/dashboard', title: 'Dashboard',  icon: 'dashboard', class: '' },
   { path: '/user-profile', title: 'User Profile',  icon:'person', class: '' },
   { path: '/table-list', title: 'Table List',  icon:'content_paste', class: '' },
