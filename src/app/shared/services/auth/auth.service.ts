@@ -29,8 +29,7 @@ export class AuthService {
         this.localStorageService.setItem(
           Constants.TOKEN,
           authenticatedModel.access_token
-        );
-        console.log(authenticatedModel);
+        );        
         return response;
       })
     );
@@ -45,7 +44,7 @@ export class AuthService {
 
   public confirmChangePassword(newPassword) {
     return this.baseService.post(
-      `Employee/confirm-change-password`,
+      `signin/change-password`,
       newPassword
     );
   }
@@ -58,7 +57,7 @@ export class AuthService {
     if (lastEmail) {
       this.localStorageService.setItem(Constants.LAST_LOGIN_EMAIL, lastEmail);
     }
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('signin/logout');
   }
 
   public refreshToken() {
