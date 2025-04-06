@@ -1,4 +1,5 @@
 export const StockNames = {
+  NAME: 'stock',
   STOCK: 'Estoque',
   STOCK_LOWER_CASE: 'estoque',
   STOCKS: 'Estoques',
@@ -6,6 +7,7 @@ export const StockNames = {
   };
   
 export const SupplierNames = {
+  NAME: 'supplier',
   SUPPLIER: 'Fornecedor',
   SUPPLIER_LOWER_CASE: 'fornecedor',
   SUPPLIERS: 'Fornecedores',

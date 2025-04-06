@@ -8,6 +8,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { RecoverPasswordComponent } from './recover-password/recover-password.component';
 import { RouterModule } from '@angular/router';
 import { routes } from './auth.routing';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   imports: [
@@ -15,12 +16,13 @@ import { routes } from './auth.routing';
     RouterModule.forChild(routes),
     ToastrModule.forRoot(),
     ReactiveFormsModule,
+    MatFormFieldModule,
   ],
   declarations: [
     SignupComponent,
     ChangePasswordComponent,
     SigninComponent,
-    RecoverPasswordComponent,
+    RecoverPasswordComponent,    
   ],
   exports:[RouterModule]
 })

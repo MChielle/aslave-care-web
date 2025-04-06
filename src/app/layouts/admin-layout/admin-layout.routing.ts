@@ -9,11 +9,17 @@ import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { StockComponent } from 'app/pages/stock/stock.component';
-import { SupplierComponent } from 'app/pages/supplier/supplier.component';
+import { SuppliersComponent } from 'app/pages/suppliers/suppliers.component';
+import { CreateSupplierComponent } from 'app/pages/suppliers/create-supplier/create-supplier.component';
+import { UpdateSupplierComponent } from 'app/pages/suppliers/update-supplier/update-supplier.component';
 
 export const AdminLayoutRoutes: Routes = [   
     { path: 'stock', component: StockComponent },
-    { path: 'supplier', component: SupplierComponent },
+
+    { path: 'suppliers', component: SuppliersComponent },
+    { path: 'create-supplier', component: CreateSupplierComponent },
+    { path: 'update-supplier/:id', component: UpdateSupplierComponent },
+    
     { path: 'dashboard', component: DashboardComponent },
     { path: 'user-profile', component: UserProfileComponent },
     { path: 'table-list', component: TableListComponent },

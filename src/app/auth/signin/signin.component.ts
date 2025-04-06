@@ -30,7 +30,7 @@ export class SigninComponent implements OnInit {
     public localStorageService: LocalStorageService,
     private router: Router,
     private route: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastrService,
   ) { 
     this.signInForm = new FormGroup({
       email: new FormControl(''),

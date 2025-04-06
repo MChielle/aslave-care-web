@@ -7,6 +7,8 @@ import { map } from 'rxjs';
 import { Router } from '@angular/router';
 import { Constants } from '../../utils/constants';
 import jwt_decode from 'jwt-decode';
+import { ResponseBase } from 'app/shared/Responses/response-base';
+import { SignInAuthenticationModel } from 'app/shared/models/signin/signin-authentication.model';
 
 @Injectable({
   providedIn: 'root',
@@ -23,14 +25,14 @@ export class AuthService {
 
   public signIn(email, password) {
     let loginModel = { email, password };
-    return this.baseService.post('signin/email', loginModel).pipe(
+    return this.baseService.post<ResponseBase<SignInAuthenticationModel>>('signin/email', loginModel).pipe(
       map((response) => {
-        const authenticatedModel = response;
+        const authenticatedModel = response.data;
         this.localStorageService.setItem(
           Constants.TOKEN,
           authenticatedModel.access_token
         );        
-        return response;
+        return authenticatedModel;
       })
     );
   }
@@ -57,7 +59,7 @@ export class AuthService {
     if (lastEmail) {
       this.localStorageService.setItem(Constants.LAST_LOGIN_EMAIL, lastEmail);
     }
-    this.router.navigateByUrl('signin/logout');
+    this.router.navigateByUrl('signin');
   }
 
   public refreshToken() {

@@ -5,7 +5,7 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { Constants } from '../../../shared/utils/constants';
+import { Constants } from '../utils/constants';
 
 @Injectable({
   providedIn: 'root',
