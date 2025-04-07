@@ -1,0 +1,84 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header card-header-danger">
+        <h4 class="card-title">Estoque</h4>
+        <p class="card-category">Editar item</p>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="updateForm">
+          <div class="row">
+            <div class="col-md-8">
+              <input
+                formControlName="name"
+                type="text"
+                class="form-control"
+                id="name"
+                name="name"
+                placeholder="Nome do item"
+                required
+              />
+              <div
+              *ngIf="
+                updateForm.controls.name.touched &&
+                updateForm.controls.name.errors?.required
+              "
+            >
+              Nome é obrigatório.
+            </div>
+            </div>
+            <div class="col-md-2">
+              <div>
+                <input
+                  formControlName="quantity"
+                  type="number"
+                  class="form-control"
+                  id="quantity"
+                  name="quantity"
+                  placeholder="0"
+                  required
+                />
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div>
+                <label>
+                  <input
+                    formControlName="disable"
+                    type="checkbox"
+                    class="form-control"
+                    id="disable"
+                    name="disable"
+                  />
+                  Inativo
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <input
+                formControlName="description"
+                type="description"
+                class="form-control"
+                id="description"
+                name="description"
+                placeholder="Detalhes descritivos do item"
+              />
+            </div>
+          </div>
+          <button
+            mat-raised-button
+            type="button"
+            (click)="update()"
+            class="btn btn-danger pull-right"
+          >
+            Salvar
+          </button>
+          {{ updateForm.value | json }}
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

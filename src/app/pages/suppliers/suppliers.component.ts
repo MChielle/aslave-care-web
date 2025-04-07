@@ -3,7 +3,7 @@ import { SupplierModel } from "app/shared/models/supplier/supplier.model";
 import { SupplierService } from "../../shared/services/supplier/supplier.service";
 import { firstValueFrom } from "rxjs";
 import { Router } from "@angular/router";
-import { FormatHelper } from "../../shared/utils/helpers/format.helper"
+import { FormatHelper } from "../../shared/utils/helpers/format.helper";
 import { SupplierNames } from "app/shared/utils/names";
 
 @Component({
@@ -12,10 +12,11 @@ import { SupplierNames } from "app/shared/utils/names";
   styleUrls: ["./suppliers.component.scss"],
 })
 export class SuppliersComponent implements OnInit {
-  public suppliers: SupplierModel[];
+  public models: SupplierModel[];
 
   constructor(
-    private supplierService: SupplierService,
+    private names: SupplierNames,
+    private service: SupplierService<SupplierModel>,
     private router: Router,
     private formatHelper: FormatHelper
   ) {}
@@ -25,10 +26,10 @@ export class SuppliersComponent implements OnInit {
   }
 
   getAll() {
-    firstValueFrom(this.supplierService.getToList())
+    firstValueFrom(this.service.getToList())
       .then((response) => {
         if (response.isSuccess) {
-          this.suppliers = response.data;
+          this.models = response.data;
         }
       })
       .catch((error) => {
@@ -37,15 +38,15 @@ export class SuppliersComponent implements OnInit {
   }
 
   createNew() {
-    this.router.navigate([`create-${SupplierNames.NAME}`]);
+    this.router.navigate([`create-${this.names.URL_LOWER_CASE}`]);
   }
 
   softDelete(id: string) {
     console.log(id);
-    firstValueFrom(this.supplierService.softDelete(id))
+    firstValueFrom(this.service.softDelete(id))
       .then((response) => {
         console.log(response);
-        this.suppliers = this.suppliers.filter(x => x.id !== id);
+        this.models = this.models.filter((x) => x.id !== id);
       })
       .catch((error) => {
         console.log(error);
@@ -53,10 +54,10 @@ export class SuppliersComponent implements OnInit {
   }
 
   update(id: string) {
-  this.router.navigate([`update-${SupplierNames.NAME}`, id ]);
+    this.router.navigate([`update-${this.names.URL_LOWER_CASE}`, id]);
   }
 
-  phoneNumberFormatter(phoneNumber: string){
+  phoneNumberFormatter(phoneNumber: string) {
     return this.formatHelper.phoneNumberFormatter(phoneNumber);
   }
 }

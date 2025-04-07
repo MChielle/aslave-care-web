@@ -61,7 +61,7 @@ export class SigninComponent implements OnInit {
             Constants.LAST_LOGIN_EMAIL,
             this.signInForm.value['email']
           );
-          this.router.navigate(['stock']);
+          this.router.navigate(['stocks']);
           this.authService.showLoader = false;
           return;
         },

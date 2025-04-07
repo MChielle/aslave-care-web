@@ -29,9 +29,6 @@ export class AuthInterceptor implements HttpInterceptor {
       .set('Content-Type', 'application/json');      
     let authReq = request;
 
-    if (!authReq.url.includes('clicksign')) {
-      authReq = request.clone({ headers });
-    }
     return next.handle(authReq).pipe(
       catchError((error) => {
         if (error.status === 401) {

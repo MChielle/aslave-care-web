@@ -2,8 +2,8 @@
   <div class="container-fluid">
     <div class="card">
       <div class="card-header card-header-danger">
-        <h4 class="card-title">Fornecedor</h4>
-        <p class="card-category">Criar fornecedor</p>
+        <h4 class="card-title">Estoque</h4>
+        <p class="card-category">Criar item</p>
       </div>
       <div class="card-body">
         <form [formGroup]="createForm">
@@ -15,7 +15,7 @@
                 class="form-control"
                 id="name"
                 name="name"
-                placeholder="João da Silva"
+                placeholder="Nome do item"
               />
               <div
                 *ngIf="
@@ -28,42 +28,22 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
               <input
-                formControlName="email"
-                type="email"
+                formControlName="quantity"
+                type="number"
                 class="form-control"
-                id="email"
-                name="email"
-                placeholder="name@exemple.com"
+                id="quantity"
+                name="quantity"
+                placeholder="Quantidade do item"
               />
               <div
                 *ngIf="
-                  createForm.controls.email.touched &&
-                  createForm.controls.email.errors?.required
+                  createForm.controls.name.touched &&
+                  createForm.controls.name.errors?.required
                 "
               >
-                Email é obrigatório.
-              </div>
-            </div>
-            <div class="col-md-6">
-              <input
-                formControlName="phoneNumber"
-                type="text"
-                class="form-control"
-                id="phoneNumber"
-                name="phoneNumber"
-                placeholder="(00) 00000-0000"
-                maxlength="11"
-                minlength="10"
-              />
-              <div
-                *ngIf="
-                  createForm.controls.phoneNumber.touched &&
-                  createForm.controls.phoneNumber.errors?.required
-                "
-              >
-                Telefone é obrigatório.
+                Quantidade é obrigatória.
               </div>
             </div>
           </div>

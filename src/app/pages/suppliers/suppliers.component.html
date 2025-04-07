@@ -1,76 +1,72 @@
 <div class="main-content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-danger">
-                        <h4 class="card-title ">Fornecedores</h4>
-                        <p class="card-category">Registro de fornecedores</p>                                                        
-                    </div>
-                    <div>
-                        <div class="col-md-4 pull-right">
-                            <button mat-raised-button type="button" (click)="createNew()" class="btn btn-danger pull-right">Novo</button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead class=" text-primary">
-                                    <th>
-                                        Nome
-                                    </th>
-                                    <th>
-                                        Email
-                                    </th>
-                                    <th>
-                                        Telefone
-                                    </th>
-                                    <th>
-                                        Inativo
-                                    </th>
-                                    <th class="text-right">
-                                        Ações
-                                    </th>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let supplier of suppliers">
-                                        <td>
-                                            {{ supplier.name }}
-                                        </td>
-                                        <td>
-                                            {{ supplier.email }}
-                                        </td>
-                                        <td>
-                                            {{ phoneNumberFormatter(supplier.phoneNumber) }}
-                                        </td>
-                                        <td>
-                                            <input type="checkbox" [checked]="supplier.disable"/>
-                                        </td>
-                                        <td class="text-right">
-                                            <button
-                                                class="btn btn-sm btn-trash btn-round btn-icon bt-view"
-                                                tooltip="Editar"
-                                                (click)="update(supplier.id)"
-                                            >
-                                            <i class="fa fa-pencil"></i>
-                                            </button>
-                                            &nbsp;
-                                            <button
-                                                class="btn btn-sm btn-trash btn-round btn-icon bt-view"
-                                                tooltip="Excluir"
-                                                (click)="softDelete(supplier.id)"
-                                            >
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </td>                                          
-                                    </tr>                                    
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">Fornecedores</h4>
+            <p class="card-category">Registros de fornecedores</p>
+          </div>
+          <div>
+            <div class="col-md-4 pull-right">
+              <button
+                mat-raised-button
+                type="button"
+                (click)="createNew()"
+                class="btn btn-danger pull-right"
+              >
+                Novo
+              </button>
             </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="text-primary">
+                  <th>Nome</th>
+                  <th>Email</th>
+                  <th>Telefone</th>
+                  <th>Inativo</th>
+                  <th class="text-right">Ações</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let supplier of models">
+                    <td>
+                      {{ supplier.name }}
+                    </td>
+                    <td>
+                      {{ supplier.email }}
+                    </td>
+                    <td>
+                      {{ phoneNumberFormatter(supplier.phoneNumber) }}
+                    </td>
+                    <td>
+                      <input type="checkbox" [checked]="supplier.disable" />
+                    </td>
+                    <td class="text-right">
+                      <button
+                        class="btn btn-sm btn-trash btn-round btn-icon bt-view"
+                        tooltip="Editar"
+                        (click)="update(supplier.id)"
+                      >
+                        <i class="fa fa-pencil"></i>
+                      </button>
+                      &nbsp;
+                      <button
+                        class="btn btn-sm btn-trash btn-round btn-icon bt-view"
+                        tooltip="Excluir"
+                        (click)="softDelete(supplier.id)"
+                      >
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
   </div>
-  
+</div>

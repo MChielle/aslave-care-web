@@ -17,10 +17,12 @@ import {MatRippleModule} from '@angular/material/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
-import { StockComponent } from 'app/pages/stock/stock.component';
+import { StockComponent } from 'app/pages/stocks/stocks.component';
 import { SuppliersComponent } from 'app/pages/suppliers/suppliers.component';
 import { CreateSupplierComponent } from 'app/pages/suppliers/create-supplier/create-supplier.component';
 import { UpdateSupplierComponent } from 'app/pages/suppliers/update-supplier/update-supplier.component';
+import { CreateStockComponent } from 'app/pages/stocks/create-stock/create-stock.component';
+import { UpdateStockComponent } from 'app/pages/stocks/update-stock/update-stock.component';
 
 @NgModule({
   imports: [
@@ -44,10 +46,14 @@ import { UpdateSupplierComponent } from 'app/pages/suppliers/update-supplier/upd
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
-    StockComponent,
+    
     SuppliersComponent,
     CreateSupplierComponent,
     UpdateSupplierComponent,
+
+    StockComponent,
+    CreateStockComponent,
+    UpdateStockComponent,
   ],
   exports: [RouterModule]})
 

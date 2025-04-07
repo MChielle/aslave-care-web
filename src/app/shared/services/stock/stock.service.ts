@@ -1,18 +1,17 @@
 import { Injectable } from "@angular/core";
 import { BaseService } from "../base.service";
-import { SupplierModel } from "app/shared/models/supplier/supplier.model";
 import { ResponseBase } from "app/shared/Responses/response-base";
 import { HttpParams } from "@angular/common/http";
-import { SupplierNames } from "app/shared/utils/names";
+import { StockNames } from "app/shared/utils/names";
 
 @Injectable({
   providedIn: "root",
 })
-export class SupplierService<TModel> {
+export class StockService<TModel> {
 
   constructor(
     private baseService: BaseService,
-    private names: SupplierNames
+    private names: StockNames
   ) {}
 
   public getToList() {
@@ -27,7 +26,7 @@ export class SupplierService<TModel> {
     let params = new HttpParams();
     Object.keys(model).forEach(key => {
       if(model[key])
-        params = params.append(key, model[key]);
+        params = params.set(key, model[key]);
     });
 
     return this.baseService.getByParams<ResponseBase<TModel[]>>(`${this.names.URL_LOWER_CASE}/get-by-parameters`, params);

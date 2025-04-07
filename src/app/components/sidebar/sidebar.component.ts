@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { StockNames, SupplierNames } from 'app/shared/utils/names';
 
 declare const $: any;
 declare interface RouteInfo {
@@ -9,8 +8,8 @@ declare interface RouteInfo {
     class: string;
 }
 export const ROUTES: RouteInfo[] = [
-  { path: '/stock', title: StockNames.STOCK,  icon: 'trolley', class: '' },
-  { path: '/suppliers', title: SupplierNames.SUPPLIERS,  icon: 'trolley', class: '' },
+  { path: '/stocks', title: 'Estoque',  icon: 'trolley', class: '' },
+  { path: '/suppliers', title: 'Fornecedores',  icon: 'trolley', class: '' },
   { path: '/dashboard', title: 'Dashboard',  icon: 'dashboard', class: '' },
   { path: '/user-profile', title: 'User Profile',  icon:'person', class: '' },
   { path: '/table-list', title: 'Table List',  icon:'content_paste', class: '' },

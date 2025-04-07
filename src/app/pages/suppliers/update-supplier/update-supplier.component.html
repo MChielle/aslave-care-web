@@ -6,9 +6,9 @@
         <p class="card-category">Editar fornecedor</p>
       </div>
       <div class="card-body">
-        <form [formGroup]="updateSupplierForm">
+        <form [formGroup]="updateForm">
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10">
               <input
                 formControlName="name"
                 type="text"
@@ -18,7 +18,14 @@
                 placeholder="João da Silva"
                 required
               />
-              <div *ngIf="name?.touched || !name">Nome é obrigatório.</div>
+              <div
+                *ngIf="
+                  updateForm.controls.name.touched &&
+                  updateForm.controls.name.errors?.required
+                "
+              >
+                Nome é obrigatório.
+              </div>
             </div>
           </div>
           <div class="row">
@@ -32,7 +39,14 @@
                 placeholder="name@exemple.com"
                 required
               />
-              <div *ngIf="name?.touched || !email">Email é obrigatório.</div>
+              <div
+                *ngIf="
+                  updateForm.controls.email.touched &&
+                  updateForm.controls.email.errors?.required
+                "
+              >
+                Email é obrigatório.
+              </div>
             </div>
             <div class="col-md-4">
               <input
@@ -47,19 +61,30 @@
                 minlength="10"
                 required
               />
-              <div *ngIf="phoneNumber?.touched || !phoneNumber">Email é obrigatório.</div>
-              <div *ngIf="phoneNumber?.length > 11">Máximo de 11 caracteres.</div>
-              <div *ngIf="phoneNumber?.length < 10">Máximo de 10 caracteres.</div>
+              <div
+                *ngIf="
+                  updateForm.controls.phoneNumber.touched &&
+                  updateForm.controls.phoneNumber.errors?.required
+                "
+              >
+                Telefone é obrigatório.
+              </div>
+              <div *ngIf="phoneNumber?.length > 11">
+                Máximo de 11 caracteres.
+              </div>
+              <div *ngIf="phoneNumber?.length < 10">
+                Máximo de 10 caracteres.
+              </div>
             </div>
             <div class="col-md-2">
               <div>
                 <label>
                   <input
-                  formControlName="disable"
-                  type="checkbox"
-                  class="form-control"
-                  id="disable"
-                  name="disable"
+                    formControlName="disable"
+                    type="checkbox"
+                    class="form-control"
+                    id="disable"
+                    name="disable"
                   />
                   Inativo
                 </label>
