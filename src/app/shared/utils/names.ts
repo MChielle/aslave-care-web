@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 
 @Injectable({
   providedIn: "root",
@@ -45,5 +45,29 @@ export class SupplierNames {
   }
   get SUPPLIERS_LOWER_CASE() {
     return "fornecedores";
+  }
+}
+
+@Injectable({
+  providedIn: "root",
+})
+export class RegistryInNames {
+  get URL_LOWER_CASE() {
+    return "registryin";
+  }
+  get URL_LOWER_CASE_PLURAL() {
+    return "registryins";
+  }
+  get REGISTRY_IN() {
+    return "Entrada";
+  }
+  get REGISTRY_IN_LOWER_CASE() {
+    return "entrada";
+  }
+  get REGISTRY_INS() {
+    return "Entradas";
+  }
+  get REGISTRY_INS_LOWER_CASE() {
+    return "entrada";
   }
 }

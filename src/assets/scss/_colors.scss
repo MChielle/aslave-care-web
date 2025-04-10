@@ -1,0 +1,710 @@
+$primary-3: #3d5cf5;
+$primary-5: #bfcefe;
+$primary-6: #eff3ff;
+$mobo-orange-800: #d54415;
+$primary-mobo-blue: #4264f4;
+$primary-mobo-orange: #f5a626;
+$secondary-mobo-00: #451c03;
+$secondary-mobo: #b45909;
+$secondary-mobo-2: #d97e06;
+$secondary-mobo-7: #fff7d6;
+$purple-mobo: #674ea0;
+$green-mobo: #098984;
+$glowing-blue: #0129fa;
+$glowing-purple: #9107fa;
+$glowing-yellow: #ffff05;
+$ultra-orange: #fc7412;
+$secondary-orange: #fc7412;
+$bright-orange: #ffc102;
+$success: #1cc88a;
+$success-50: #edfcf5;
+$success-200: #abefce;
+$success-500: #19b37b;
+$success-600: #069e52;
+$success-700: #0a7251;
+$danger: #ed200c;
+$danger-2: #a9190b;
+$error: #ffa39a;
+$warning: #f6c23e;
+$information: #098984;
+$border: #e2e3e6;
+$body-text: #555555;
+$focus-selected: #49b4e8;
+$white: #ffffff;
+$light: #f8f9fc;
+$dark: #232e3c;
+$black: #000000;
+$gray-50: #f9fbff;
+$gray-100: #f4f6fa;
+$gray-200: #f0f2f6;
+$gray-300: #e7eaef;
+$gray-400: #dbdee3;
+$gray-500: #c6cad0;
+$gray-600: #a0a6ae;
+$gray-700: #6e7680;
+$gray-800: #444e5a;
+$gray-900: #232e3c;
+$mono-1: #021733;
+$mono-3: #9bb2d1;
+$light-gray: #eaedff;
+$light-blue: #c1e7f2;
+$light-blue-2: #74c7e3;
+$light-blue-3: #2ca8d6;
+$dark-blue: #153d68;
+$dark-blue-2: #03213d;
+$dark-blue-3: #170f49;
+$light-orange: #fcefc8;
+$light-orange-2: #ffd48b;
+$light-orange-3: #fdba4b;
+$orange: #f68b23;
+$dark-orange: #ff412f;
+$andy-blue: #1e6fd9;
+$light-golden: #f7a625;
+$light-white: #cad7e9;
+$eskeleton: linear-gradient(90deg, #dbdee3 0%, #f0f2f6 100%);
+$ultra-orange-gradient: linear-gradient(
+  180deg,
+  #ffff05 0%,
+  #ffc102 50.52%,
+  #fc7412 100%
+);
+$ultra-blue-gradient: linear-gradient(
+  180deg,
+  #c1e7f2 0%,
+  #1e6fd9 49.46%,
+  #0129fa 80.92%
+);
+$ultra-blue-gradient-smooth: linear-gradient(
+  180deg,
+  #c1e7f2 -18.51%,
+  #1e6fd9 58.75%,
+  #0129fa 117.02%
+);
+// Text colors
+.glowing-blue-text {
+  color: $glowing-blue !important;
+}
+.glowing-purple-text {
+  color: $glowing-purple !important;
+}
+.glowing-yellow-text {
+  color: $glowing-yellow !important;
+}
+.ultra-orange-text {
+  color: $ultra-orange !important;
+}
+.secondary-orange-text {
+  color: $secondary-orange !important;
+}
+.bright-orange-text {
+  color: $bright-orange !important;
+}
+.success-text {
+  color: $success !important;
+}
+.danger-text {
+  color: $danger !important;
+}
+.danger-2-text {
+  color: $danger-2 !important;
+}
+.warning-text {
+  color: $warning !important;
+}
+.information-text {
+  color: $information !important;
+}
+.border-text {
+  color: $border !important;
+}
+.body-text {
+  color: $body-text !important;
+}
+.focus-selected-text {
+  color: $focus-selected !important;
+}
+.white-text {
+  color: $white !important;
+}
+.light-text {
+  color: $light !important;
+}
+.dark-text {
+  color: $dark !important;
+}
+.black-text {
+  color: $black !important;
+}
+.gray-50-text {
+  color: $gray-50 !important;
+}
+.gray-100-text {
+  color: $gray-100 !important;
+}
+.gray-200-text {
+  color: $gray-200 !important;
+}
+.gray-300-text {
+  color: $gray-300 !important;
+}
+.gray-400-text {
+  color: $gray-400 !important;
+}
+.gray-500-text {
+  color: $gray-500 !important;
+}
+.gray-600-text {
+  color: $gray-600 !important;
+}
+.gray-700-text {
+  color: $gray-700 !important;
+}
+.gray-800-text {
+  color: $gray-800 !important;
+}
+.gray-900-text {
+  color: $gray-900 !important;
+}
+.mono-1-text {
+  color: $mono-1 !important;
+}
+.mono-3-text {
+  color: $mono-3 !important;
+}
+.light-gray-text {
+  color: $light-gray !important;
+}
+.light-blue-text {
+  color: $light-blue !important;
+}
+.light-blue-2-text {
+  color: $light-blue-2 !important;
+}
+.light-blue-3-text {
+  color: $light-blue-3 !important;
+}
+.dark-blue-text {
+  color: $dark-blue !important;
+}
+.dark-blue-2-text {
+  color: $dark-blue-2 !important;
+}
+.dark-blue-3-text {
+  color: $dark-blue-3 !important;
+}
+.light-orange-text {
+  color: $light-orange !important;
+}
+.light-orange-2-text {
+  color: $light-orange-2 !important;
+}
+.light-orange-3-text {
+  color: $light-orange-3 !important;
+}
+.orange-text {
+  color: $orange !important;
+}
+.dark-orange-text {
+  color: $dark-orange !important;
+}
+.andy-blue-text {
+  color: $andy-blue !important;
+}
+.light-golden-text {
+  color: $light-golden !important;
+}
+.light-white-text {
+  color: $light-white !important;
+}
+.error-text {
+  color: $error !important;
+}
+.primary-5-text {
+  color: $primary-5 !important;
+}
+.primary-3-text {
+  color: $primary-3 !important;
+}
+.primary-6-text {
+  color: $primary-6 !important;
+}
+.success-200-text {
+  color: $success-200 !important;
+}
+.success-700-text {
+  color: $success-700 !important;
+}
+.success-600-text {
+  color: $success-600 !important;
+}
+.success-500-text {
+  color: $success-500 !important;
+}
+.success-50-text {
+  color: $success-50 !important;
+}
+
+// Bgs
+.glowing-blue-bg {
+  background-color: $glowing-blue !important;
+}
+.glowing-purple-bg {
+  background-color: $glowing-purple !important;
+}
+.glowing-yellow-bg {
+  background-color: $glowing-yellow !important;
+}
+.ultra-orange-bg {
+  background-color: $ultra-orange !important;
+}
+.secondary-orange-bg {
+  background-color: $secondary-orange !important;
+}
+.bright-orange-bg {
+  background-color: $bright-orange !important;
+}
+.success-bg {
+  background-color: $success !important;
+}
+.danger-bg {
+  background-color: $danger !important;
+}
+.danger-2-bg {
+  background-color: $danger-2 !important;
+}
+.warning-bg {
+  background-color: $warning !important;
+}
+.information-bg {
+  background-color: $information !important;
+}
+.border-bg {
+  background-color: $border !important;
+}
+.body-text-bg {
+  background-color: $body-text !important;
+}
+.focus-selected-bg {
+  background-color: $focus-selected !important;
+}
+.white-bg {
+  background-color: $white !important;
+}
+.light-bg {
+  background-color: $light !important;
+}
+.dark-bg {
+  background-color: $dark !important;
+}
+.black-bg {
+  background-color: $black !important;
+}
+.gray-50-bg {
+  background-color: $gray-50 !important;
+}
+.gray-100-bg {
+  background-color: $gray-100 !important;
+}
+.gray-200-bg {
+  background-color: $gray-200 !important;
+}
+.gray-300-bg {
+  background-color: $gray-300 !important;
+}
+.gray-400-bg {
+  background-color: $gray-400 !important;
+}
+.gray-500-bg {
+  background-color: $gray-500 !important;
+}
+.gray-600-bg {
+  background-color: $gray-600 !important;
+}
+.gray-700-bg {
+  background-color: $gray-700 !important;
+}
+.gray-800-bg {
+  background-color: $gray-800 !important;
+}
+.gray-900-bg {
+  background-color: $gray-900 !important;
+}
+.mono-1-bg {
+  background-color: $mono-1 !important;
+}
+.mono-3-bg {
+  background-color: $mono-3 !important;
+}
+.light-gray-bg {
+  background-color: $light-gray !important;
+}
+.light-blue-bg {
+  background-color: $light-blue !important;
+}
+.light-blue-2-bg {
+  background-color: $light-blue-2 !important;
+}
+.light-blue-3-bg {
+  background-color: $light-blue-3 !important;
+}
+.dark-blue-bg {
+  background-color: $dark-blue !important;
+}
+.dark-blue-2-bg {
+  background-color: $dark-blue-2 !important;
+}
+.dark-blue-3-bg {
+  background-color: $dark-blue-3 !important;
+}
+.light-orange-bg {
+  background-color: $light-orange !important;
+}
+.light-orange-2-bg {
+  background-color: $light-orange-2 !important;
+}
+.light-orange-3-bg {
+  background-color: $light-orange-3 !important;
+}
+.orange-bg {
+  background-color: $orange !important;
+}
+.dark-orange-bg {
+  background-color: $dark-orange !important;
+}
+.andy-blue-bg {
+  background-color: $andy-blue !important;
+}
+.light-golden-bg {
+  background-color: $light-golden !important;
+}
+.light-white-bg {
+  background-color: $light-white !important;
+}
+.error-bg {
+  background-color: $error !important;
+}
+.primary-3-bg {
+  background-color: $primary-3 !important;
+}
+.primary-5-bg {
+  background-color: $primary-5 !important;
+}
+.primary-6-bg {
+  background-color: $primary-6 !important;
+}
+.success-200-bg {
+  background-color: $success-200 !important;
+}
+.success-700-bg {
+  background-color: $success-700 !important;
+}
+.success-500-bg {
+  background-color: $success-500 !important;
+}
+.success-50-bg {
+  background-color: $success-50 !important;
+}
+
+// Borders
+.glowing-blue-border {
+  border-color: $glowing-blue !important;
+}
+.glowing-purple-border {
+  border-color: $glowing-purple !important;
+}
+.glowing-yellow-border {
+  border-color: $glowing-yellow !important;
+}
+.ultra-orange-border {
+  border-color: $ultra-orange !important;
+}
+.secondary-orange-border {
+  border-color: $secondary-orange !important;
+}
+.bright-orange-border {
+  border-color: $bright-orange !important;
+}
+.success-border {
+  border-color: $success !important;
+}
+.danger-border {
+  border-color: $danger !important;
+}
+.danger-2-border {
+  border-color: $danger-2 !important;
+}
+.warning-border {
+  border-color: $warning !important;
+}
+.information-border {
+  border-color: $information !important;
+}
+.border-color-border {
+  border-color: $border !important;
+}
+.body-text-border {
+  border-color: $body-text !important;
+}
+.focus-selected-border {
+  border-color: $focus-selected !important ;
+}
+.white-border {
+  border-color: $white !important;
+}
+.light-border {
+  border-color: $light !important;
+}
+.dark-border {
+  border-color: $dark !important;
+}
+.black-border {
+  border-color: $black !important;
+}
+.gray-50-border {
+  border-color: $gray-50 !important;
+}
+.gray-100-border {
+  border-color: $gray-100 !important;
+}
+.gray-200-border {
+  border-color: $gray-200 !important;
+}
+.gray-300-border {
+  border-color: $gray-300 !important;
+}
+.gray-400-border {
+  border-color: $gray-400 !important;
+}
+.gray-500-border {
+  border-color: $gray-500 !important;
+}
+.gray-600-border {
+  border-color: $gray-600 !important;
+}
+.gray-700-border {
+  border-color: $gray-700 !important;
+}
+.gray-800-border {
+  border-color: $gray-800 !important;
+}
+.gray-900-border {
+  border-color: $gray-900 !important;
+}
+.mono-1-border {
+  border-color: $mono-1 !important;
+}
+.mono-3-border {
+  border-color: $mono-3 !important;
+}
+.light-gray-border {
+  border-color: $light-gray !important;
+}
+.light-blue-border {
+  border-color: $light-blue !important;
+}
+.light-blue-2-border {
+  border-color: $light-blue-2 !important;
+}
+.light-blue-3-border {
+  border-color: $light-blue-3 !important;
+}
+.dark-blue-border {
+  border-color: $dark-blue !important;
+}
+.dark-blue-3-border {
+  border-color: $dark-blue-3 !important;
+}
+.light-orange-border {
+  border-color: $light-orange !important;
+}
+.light-orange-2-border {
+  border-color: $light-orange-2 !important;
+}
+.light-orange-3-border {
+  border-color: $light-orange-3 !important;
+}
+.orange-border {
+  border-color: $orange !important;
+}
+.dark-orange-border {
+  border-color: $dark-orange !important;
+}
+.andy-blue-border {
+  border-color: $andy-blue !important;
+}
+.light-golden-border {
+  border-color: $light-golden !important;
+}
+.error-border {
+  border-color: $error !important;
+}
+.primary-3-border {
+  border-color: $primary-3 !important;
+}
+.primary-5-border {
+  border-color: $primary-5 !important;
+}
+.primary-6-border {
+  border-color: $primary-6 !important;
+}
+.success-200-border {
+  border-color: $success-200 !important;
+}
+.success-700-border {
+  border-color: $success-700 !important;
+}
+.success-500-border {
+  border-color: $success-500 !important;
+}
+.success-50-border {
+  border-color: $success-50 !important;
+}
+
+// Bgs
+.glowing-blue-border {
+  border-color: $glowing-blue !important;
+}
+.glowing-purple-border {
+  border-color: $glowing-purple !important;
+}
+.glowing-yellow-border {
+  border-color: $glowing-yellow !important;
+}
+.ultra-orange-border {
+  border-color: $ultra-orange !important;
+}
+.secondary-orange-border {
+  border-color: $secondary-orange !important;
+}
+.bright-orange-border {
+  border-color: $bright-orange !important;
+}
+.success-border {
+  border-color: $success !important;
+}
+.danger-border {
+  border-color: $danger !important;
+}
+.danger-2-border {
+  border-color: $danger-2 !important;
+}
+.warning-border {
+  border-color: $warning !important;
+}
+.information-border {
+  border-color: $information !important;
+}
+.border-color-border {
+  border-color: $border !important;
+}
+.body-text-border {
+  border-color: $body-text !important;
+}
+.focus-selected-border {
+  border-color: $focus-selected !important ;
+}
+.white-border {
+  border-color: $white !important;
+}
+.light-border {
+  border-color: $light !important;
+}
+.dark-border {
+  border-color: $dark !important;
+}
+.black-border {
+  border-color: $black !important;
+}
+.gray-50-border {
+  border-color: $gray-50 !important;
+}
+.gray-100-border {
+  border-color: $gray-100 !important;
+}
+.gray-200-border {
+  border-color: $gray-200 !important;
+}
+.gray-300-border {
+  border-color: $gray-300 !important;
+}
+.gray-400-border {
+  border-color: $gray-400 !important;
+}
+.gray-500-border {
+  border-color: $gray-500 !important;
+}
+.gray-600-border {
+  border-color: $gray-600 !important;
+}
+.gray-700-border {
+  border-color: $gray-700 !important;
+}
+.gray-800-border {
+  border-color: $gray-800 !important;
+}
+.gray-900-border {
+  border-color: $gray-900 !important;
+}
+.light-blue-border {
+  border-color: $light-blue !important;
+}
+.light-blue-2-border {
+  border-color: $light-blue-2 !important;
+}
+.light-blue-3-border {
+  border-color: $light-blue-3 !important;
+}
+.dark-blue-border {
+  border-color: $dark-blue !important;
+}
+.dark-blue-2-border {
+  border-color: $dark-blue-2 !important;
+}
+.light-orange-border {
+  border-color: $light-orange !important;
+}
+.light-orange-2-border {
+  border-color: $light-orange-2 !important;
+}
+.light-orange-3-border {
+  border-color: $light-orange-3 !important;
+}
+.orange-border {
+  border-color: $orange !important;
+}
+.dark-orange-border {
+  border-color: $dark-orange !important;
+}
+.andy-blue-border {
+  border-color: $andy-blue !important;
+}
+.error-border {
+  border-color: $error !important;
+}
+// Gradients
+.eskeleton-bg {
+  background: $eskeleton !important;
+}
+.ultra-orange-gradient-bg {
+  background: $ultra-orange-gradient !important;
+}
+.ultra-blue-gradient-bg {
+  background: $ultra-blue-gradient !important;
+}
+.ultra-blue-gradient-smooth-bg {
+  background: $ultra-blue-gradient-smooth !important;
+}
+
+// Box Shadow
+
+.box-shadow {
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.05) !important;
+}
+
+.box-shadow-small {
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.03) !important;
+}
+
+.box-shadow-light {
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.01) !important;
+}

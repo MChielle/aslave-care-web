@@ -9,14 +9,26 @@
             </div>
             <div>
               <div class="col-md-4 pull-right">
-                <button
+                <div>
+                  <button
                   mat-raised-button
                   type="button"
                   (click)="createNew()"
                   class="btn btn-danger pull-right"
-                >
+                  >
                   Novo
-                </button>
+                  </button>
+                </div>
+                <div>
+                  <button
+                  mat-raised-button
+                  type="button"
+                  (click)="registryIn()"
+                  class="btn btn-success pull-right"
+                  >
+                  Entrada
+                </button>                
+              </div>
               </div>
             </div>
             <div class="card-body">
@@ -41,7 +53,7 @@
                         {{ stock.description }}
                       </td>
                       <td>
-                        <input type="checkbox" [checked]="stock.disable" />
+                        <input class="form-control" disabled type="checkbox" [checked]="stock.disable" />
                       </td>
                       <td class="text-right">
                         <button

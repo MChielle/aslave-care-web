@@ -37,7 +37,7 @@ export class UpdateStockComponent implements OnInit {
     private names: StockNames,
     private router: Router,
     private route: ActivatedRoute,
-    private stockService: StockService<StockModel>,
+    private service: StockService<StockModel>,
     private notificationService: NotificationService,
     private fb: FormBuilder
   ) {
@@ -68,7 +68,7 @@ export class UpdateStockComponent implements OnInit {
 
   ngOnInit(): void {
     const stockId = this.route.snapshot.paramMap.get("id");
-    firstValueFrom(this.stockService.getById(stockId)).then((response) => {
+    firstValueFrom(this.service.getById(stockId)).then((response) => {
       if (response.isSuccess) {
         const stock = response.data as StockModel;
         this.updateForm.patchValue(stock);
@@ -87,7 +87,7 @@ export class UpdateStockComponent implements OnInit {
   }
 
   sendUpdateRequest(stock: StockModel) {
-    this.stockService.update(stock).subscribe((response) => {
+    this.service.update(stock).subscribe((response) => {
       if (response.isSuccess) {
         this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
       }
@@ -95,21 +95,16 @@ export class UpdateStockComponent implements OnInit {
   }
 
   update() {
-    const stock = this.updateForm.value as StockModel;
+    const model = this.updateForm.value as StockModel;
     const parameters = new StockModel();
-    parameters.name = stock.name;
-    this.stockService.getByParameters(parameters).subscribe((response) => {
-      console.log(response.isSuccess);
-      console.log(response.data);
-      console.log(stock);
-      console.log(this.updateForm.valid);
-
+    parameters.name = model.name;
+    this.service.getByParameters(parameters).subscribe((response) => {
       if (
         response.isSuccess &&
-        (!response?.data[0] || response?.data[0]?.id == stock.id) &&
+        (!response?.data[0] || response?.data[0]?.id == model.id) &&
         this.updateForm.valid
       ) {
-        this.sendUpdateRequest(stock);
+        this.sendUpdateRequest(model);
       } else {
         this.showNomeAvailableNotification();
       }

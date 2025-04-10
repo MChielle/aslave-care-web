@@ -1,0 +1,64 @@
+@import "src/assets/scss/theme/variables";
+@import "src/assets/scss/colors";
+
+.dropdown-icon {
+  position: absolute;
+  top: 60%;
+  right: 0%;
+  transform: translate(-50%, -50%);
+}
+
+input[type="text"]::placeholder {
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+}
+
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.dropdown-menu {
+  max-height: 12rem;
+  overflow: auto;
+  border-color: #ced4da !important;
+  &::-webkit-scrollbar {
+    height: 5px;
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: $gray-200;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $primary-color;
+    border-radius: 10px;
+  }
+  &.reverseColumn {
+    position: absolute;
+    top: -12.5rem;
+  }
+}
+
+.dark-blue {
+  border-color: blueviolet !important;
+  &.ng-touched:not(.password-input):not(.custom-validation) {
+    &.ng-valid,
+    &.custom-valid {
+      border-color: $success !important;
+      & ~ label,
+      & ~ .txt-12 {
+        color: $success !important;
+      }
+    }
+    &.ng-invalid,
+    &.custom-invalid {
+      border-color: $danger !important;
+      & ~ label,
+      & ~ .txt-12 {
+        color: $danger !important;
+      }
+    }
+  }
+}

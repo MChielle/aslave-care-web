@@ -96,16 +96,16 @@ export class UpdateSupplierComponent implements OnInit {
   }
 
   update() {
-    const supplier = this.updateForm.value as SupplierModel;
+    const model = this.updateForm.value as SupplierModel;
     const parameters = new SupplierModel();
-    parameters.email = supplier.email;
+    parameters.email = model.email;
     this.supplierService.getByParameters(parameters).subscribe((response) => {
       if (
         response.isSuccess &&
-        (!response?.data[0] || response?.data[0]?.id == supplier.id) &&
+        (!response?.data[0] || response?.data[0]?.id == model.id) &&
         this.updateForm.valid
       ) {
-        this.sendUpdateRequest(supplier);
+        this.sendUpdateRequest(model);
       } else {
         this.showEmailAvailableNotification();
       }

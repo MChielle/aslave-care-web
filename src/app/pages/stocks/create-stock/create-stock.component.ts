@@ -5,7 +5,6 @@ import { StockModel } from 'app/shared/models/stock/stock.model';
 import { NotificationService } from 'app/shared/services/notification/notification.service';
 import { StockService } from 'app/shared/services/stock/stock.service';
 import { StockNames } from 'app/shared/utils/names';
-import { quantity } from 'chartist';
 
 declare var $: any;
 
@@ -27,7 +26,7 @@ export class CreateStockComponent implements OnInit {
   constructor(
     private names: StockNames,
     private fb: FormBuilder,
-    private supplierService: StockService<StockModel>,
+    private service: StockService<StockModel>,
     private notificationService: NotificationService,
     private router: Router
   ) {
@@ -58,19 +57,19 @@ export class CreateStockComponent implements OnInit {
   }
 
   sendCreateRequest(supplier: StockModel) {
-    this.supplierService.create(supplier).subscribe((response) => {
+    this.service.create(supplier).subscribe((response) => {
       if (response.isSuccess)
         this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
     });
   }
 
   create() {
-    const supplier = this.createForm.value as StockModel;
+    const model = this.createForm.value as StockModel;
     const parameters = new StockModel();
-    parameters.name = supplier.name;
-    this.supplierService.getByParameters(parameters).subscribe((response) => {
+    parameters.name = model.name;
+    this.service.getByParameters(parameters).subscribe((response) => {
       if (response.isSuccess && !response?.data[0] && this.createForm.valid)
-        this.sendCreateRequest(supplier);
+        this.sendCreateRequest(model);
       else this.showNameAvailableNotification();
     });
   }

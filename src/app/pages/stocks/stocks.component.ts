@@ -55,4 +55,8 @@ export class StockComponent implements OnInit {
   update(id: string) {
     this.router.navigate([`update-${this.names.URL_LOWER_CASE}`, id]);
   }
+
+  registryIn() {
+    this.router.navigate(['create-registry-in-stock']);
+  }
 }

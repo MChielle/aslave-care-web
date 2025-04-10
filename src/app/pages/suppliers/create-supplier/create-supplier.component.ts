@@ -33,7 +33,7 @@ export class CreateSupplierComponent implements OnInit {
   constructor(
     private names: SupplierNames,
     private fb: FormBuilder,
-    private supplierService: SupplierService<SupplierModel>,
+    private service: SupplierService<SupplierModel>,
     private notificationService: NotificationService,
     private router: Router
   ) {
@@ -70,19 +70,19 @@ export class CreateSupplierComponent implements OnInit {
   }
 
   sendCreateRequest(supplier: SupplierModel) {
-    this.supplierService.create(supplier).subscribe((response) => {
+    this.service.create(supplier).subscribe((response) => {
       if (response.isSuccess)
         this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
     });
   }
 
   create() {
-    const supplier = this.createForm.value as SupplierModel;
+    const model = this.createForm.value as SupplierModel;
     const parameters = new SupplierModel();
-    parameters.email = supplier.email;
-    this.supplierService.getByParameters(parameters).subscribe((response) => {
+    parameters.email = model.email;
+    this.service.getByParameters(parameters).subscribe((response) => {
       if (response.isSuccess && !response?.data[0] && this.createForm.valid)
-        this.sendCreateRequest(supplier);
+        this.sendCreateRequest(model);
       else this.showEmailAvailableNotification();
     });
   }

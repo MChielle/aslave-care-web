@@ -1,0 +1,43 @@
+<div class="form-floating w-100 position-relative dropdown-indicator pe-1">
+  <input
+    #selectItemInput
+    name="selectItem"
+    id="selectItem"
+    type="text"
+    class="form-control clickable"
+    (focus)="toggleDropdown()"
+    (blur)="blurDropdown()"
+    (input)="search($event)"
+    [(ngModel)]="searchTerm"
+    [placeholder]="placeholder"
+    autocomplete="off"
+    [disabled]="disabled"
+    [ngClass]="extraClass"
+    [readonly]="isReadonly"
+  />
+  <!-- <label for="selectItem">{{ placeholder }}</label> -->
+
+  <div
+    class="dropdown-icon clickable"
+    (click)="selectItemInput.focus()"
+    *ngIf="!selectItemInput.value.length"
+  >
+    <app-feather-icons class="small font-dark-color" icon="chevron-down">
+    </app-feather-icons>
+  </div>
+  <div
+    class="dropdown-menu w-100"
+    [ngClass]="{ show: isVisible, reverseColumn: reversed }"
+  >
+    <div
+      class="dropdown-item clickable"
+      *ngFor="let item of filteredItems"
+      (click)="onItemSelect(item)"
+    >
+      {{ item[shownValue] }}
+    </div>
+    <div class="dropdown-item" *ngIf="filteredItems && !filteredItems[0]">
+      Nenhuma categoria corresponde com a pesquisa
+    </div>
+  </div>
+</div>

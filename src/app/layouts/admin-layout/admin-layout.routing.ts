@@ -13,6 +13,7 @@ import { CreateSupplierComponent } from 'app/pages/suppliers/create-supplier/cre
 import { UpdateSupplierComponent } from 'app/pages/suppliers/update-supplier/update-supplier.component';
 import { CreateStockComponent } from 'app/pages/stocks/create-stock/create-stock.component';
 import { UpdateStockComponent } from 'app/pages/stocks/update-stock/update-stock.component';
+import { CreateRegistryInStockComponent } from 'app/pages/stocks/create-registry-in-stock/create-registry-in-stock.component';
 
 export const AdminLayoutRoutes: Routes = [   
     
@@ -23,6 +24,8 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'stocks', component: StockComponent},
     { path: 'create-stock', component: CreateStockComponent },
     { path: 'update-stock/:id', component: UpdateStockComponent},
+
+    { path: 'create-registry-in-stock', component: CreateRegistryInStockComponent },
 
     { path: 'dashboard', component: DashboardComponent },
     { path: 'user-profile', component: UserProfileComponent },
