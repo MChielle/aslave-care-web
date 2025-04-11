@@ -23,9 +23,10 @@ import { CreateSupplierComponent } from 'app/pages/suppliers/create-supplier/cre
 import { UpdateSupplierComponent } from 'app/pages/suppliers/update-supplier/update-supplier.component';
 import { CreateStockComponent } from 'app/pages/stocks/create-stock/create-stock.component';
 import { UpdateStockComponent } from 'app/pages/stocks/update-stock/update-stock.component';
-import { CreateRegistryInStockComponent } from 'app/pages/stocks/create-registry-in-stock/create-registry-in-stock.component';
+import { CreateRegistryInStockComponent } from 'app/pages/registers/create-registry-in-stock/create-registry-in-stock.component';
 import { SearchableSelectComponent } from 'app/shared/components/searchable-select/searchable-select.component';
 import { AutocompleteComponent } from 'app/shared/components/autocomplete/autocomplete.component';
+import { RegistersComponent as RegistersComponent } from 'app/pages/registers/registers.component';
 
 @NgModule({
   imports: [
@@ -60,6 +61,7 @@ import { AutocompleteComponent } from 'app/shared/components/autocomplete/autoco
     CreateStockComponent,
     UpdateStockComponent,
 
+    RegistersComponent,
     CreateRegistryInStockComponent,    
   ],
   exports: [RouterModule]})

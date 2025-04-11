@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { StockModel } from 'app/shared/models/stock/stock.model';
 import { StockService } from 'app/shared/services/stock/stock.service';
 import { FormatHelper } from 'app/shared/utils/helpers/format.helper';
-import { StockNames } from 'app/shared/utils/names';
+import { RegistersNames, RegistryInNames, StockNames } from 'app/shared/utils/names';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
@@ -16,6 +16,7 @@ export class StockComponent implements OnInit {
 
   constructor(
     private names: StockNames,
+    private registersNames: RegistersNames,
     private service: StockService<StockModel>,
     private router: Router,
   ) {}
@@ -56,7 +57,7 @@ export class StockComponent implements OnInit {
     this.router.navigate([`update-${this.names.URL_LOWER_CASE}`, id]);
   }
 
-  registryIn() {
-    this.router.navigate(['create-registry-in-stock']);
+  registers() {
+    this.router.navigate([this.registersNames.URL_LOWER_CASE]);
   }
 }

@@ -113,4 +113,8 @@ export class UpdateStockComponent implements OnInit {
   catch(error) {
     console.log("update", error);
   }
+
+  cancel() {
+    this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
+  }
 }

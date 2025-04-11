@@ -8,7 +8,7 @@ import { StockNames } from 'app/shared/utils/names';
 
 declare var $: any;
 
-type UserFields = "name" | "quantity" ;
+type UserFields = "name" | "quantity" | "description";
 type FormErrors = { [u in UserFields]: string };
 
 @Component({
@@ -20,7 +20,8 @@ export class CreateStockComponent implements OnInit {
   public createForm: FormGroup;
   public formErrors: FormErrors = {
     name: "",
-    quantity: ""
+    quantity: "",
+    description: "",
   };
 
   constructor(
@@ -31,8 +32,9 @@ export class CreateStockComponent implements OnInit {
     private router: Router
   ) {
     this.createForm = this.fb.group({
-      name: new FormControl("", [Validators.required]),
-      quantity: new FormControl("",[Validators.required]),
+      name: new FormControl('', [Validators.required]),
+      quantity: new FormControl('',[Validators.required]),
+      description: new FormControl(''),
     });
   }
 
@@ -75,5 +77,9 @@ export class CreateStockComponent implements OnInit {
   }
   catch(error) {
     console.log("create", error);
+  }
+
+  cancel() {
+    this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
   }
 }

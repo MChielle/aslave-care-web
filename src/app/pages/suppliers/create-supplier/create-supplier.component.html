@@ -1,7 +1,7 @@
 <div class="main-content">
   <div class="container-fluid">
     <div class="card">
-      <div class="card-header card-header-danger">
+      <div class="card-header card-header-success">
         <h4 class="card-title">Fornecedor</h4>
         <p class="card-category">Criar fornecedor</p>
       </div>
@@ -70,8 +70,16 @@
           <button
             mat-raised-button
             type="button"
-            (click)="create()"
+            (click)="cancel()"
             class="btn btn-danger pull-right"
+          >
+            Cancelar
+          </button>
+          <button
+            mat-raised-button
+            type="button"
+            (click)="create()"
+            class="btn btn-success pull-right"
           >
             Salvar
           </button>

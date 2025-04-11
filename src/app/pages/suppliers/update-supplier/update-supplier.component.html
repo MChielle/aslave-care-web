@@ -1,14 +1,14 @@
 <div class="main-content">
   <div class="container-fluid">
     <div class="card">
-      <div class="card-header card-header-danger">
+      <div class="card-header card-header-info">
         <h4 class="card-title">Fornecedor</h4>
         <p class="card-category">Editar fornecedor</p>
       </div>
       <div class="card-body">
         <form [formGroup]="updateForm">
           <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-11">
               <input
                 formControlName="name"
                 type="text"
@@ -29,7 +29,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-7">
               <input
                 formControlName="email"
                 type="email"
@@ -76,7 +76,7 @@
                 Máximo de 10 caracteres.
               </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
               <div>
                 <label>
                   <input
@@ -94,8 +94,16 @@
           <button
             mat-raised-button
             type="button"
-            (click)="update()"
+            (click)="cancel()"
             class="btn btn-danger pull-right"
+          >
+            Cancelar
+          </button>
+          <button
+            mat-raised-button
+            type="button"
+            (click)="update()"
+            class="btn btn-success pull-right"
           >
             Salvar
           </button>

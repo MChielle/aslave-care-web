@@ -13,7 +13,7 @@
                 mat-raised-button
                 type="button"
                 (click)="createNew()"
-                class="btn btn-danger pull-right"
+                class="btn btn-success pull-right"
               >
                 Novo
               </button>
@@ -45,7 +45,8 @@
                     </td>
                     <td class="text-right">
                       <button
-                        class="btn btn-sm btn-trash btn-round btn-icon bt-view"
+                        mat-raised-button
+                        class="btn btn-sm btn-trash btn-info"
                         tooltip="Editar"
                         (click)="update(supplier.id)"
                       >
@@ -53,7 +54,8 @@
                       </button>
                       &nbsp;
                       <button
-                        class="btn btn-sm btn-trash btn-round btn-icon bt-view"
+                        mat-raised-button
+                        class="btn btn-sm btn-trash btn-danger"
                         tooltip="Excluir"
                         (click)="softDelete(supplier.id)"
                       >

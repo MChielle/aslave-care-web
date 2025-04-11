@@ -1,7 +1,7 @@
 <div class="main-content">
   <div class="container-fluid">
     <div class="card">
-      <div class="card-header card-header-danger">
+      <div class="card-header card-header-info">
         <h4 class="card-title">Estoque</h4>
         <p class="card-category">Editar item</p>
       </div>
@@ -57,21 +57,34 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <input
-                formControlName="description"
-                type="description"
-                class="form-control"
-                id="description"
-                name="description"
-                placeholder="Detalhes descritivos do item"
-              />
+              <div class="form-group">
+                <mat-form-field class="example-full-width">
+                  <textarea
+                  matInput
+                  formControlName="description"
+                  type="text"
+                  class="form-control"
+                  id="description"
+                  name="description"
+                  placeholder="Descrição"
+                  ></textarea>
+                </mat-form-field>
+              </div>
             </div>
           </div>
+          <button
+          mat-raised-button
+          type="button"
+          (click)="cancel()"
+          class="btn btn-danger pull-right"
+        >
+          Cancelar
+        </button>
           <button
             mat-raised-button
             type="button"
             (click)="update()"
-            class="btn btn-danger pull-right"
+            class="btn btn-success pull-right"
           >
             Salvar
           </button>

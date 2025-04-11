@@ -3,9 +3,9 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header card-header-danger">
-            <h4 class="card-title">Estoque</h4>
-            <p class="card-category">Registros de estoque</p>
+          <div class="card-header card-header-info">
+            <h4 class="card-title">Registros</h4>
+            <p class="card-category">Registros de movimentação</p>
           </div>
           <div>
             <div class="col-md-4 pull-right">
@@ -13,43 +13,48 @@
                 <button
                   mat-raised-button
                   type="button"
-                  (click)="createNew()"
+                  class="btn btn-danger pull-right"
+                >
+                  Nova Saida
+                </button>
+              </div>
+              <div>
+                <button
+                  mat-raised-button
+                  (click)="registryIn()"
+                  type="button"
                   class="btn btn-success pull-right"
                 >
-                  Novo Item
+                  Nova Entrada
                 </button>
-              </div>              
+              </div>
             </div>
           </div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table">
                 <thead class="text-primary">
-                  <th>Nome</th>
-                  <th>Quantidade</th>
+                  <th>Numero</th>
+                  <th>Fornecedor</th>
+                  <th>Aplicado</th>
+                  <th>Doação</th>
                   <th>Descrição</th>
-                  <th>Inativo</th>
                   <th class="text-right">Ações</th>
                 </thead>
+                {{
+                  this.inModels | json
+                }}
                 <tbody>
-                  <tr *ngFor="let stock of models">
+                  <tr *ngFor="let registry of models">
+                    <td>{{ registry.number }}</td>
+                    <td>{{ registry.name }}</td>
                     <td>
-                      {{ stock.name }}
+                      <input class="form-control" disabled type="checkbox" [checked]="registry.apply" />
                     </td>
                     <td>
-                      {{ stock.quantity }}
+                      <input class="form-control" disabled type="checkbox" [checked]="registry.donation" />
                     </td>
-                    <td>
-                      {{ stock.description }}
-                    </td>
-                    <td>
-                      <input
-                        class="form-control"
-                        disabled
-                        type="checkbox"
-                        [checked]="stock.disable"
-                      />
-                    </td>
+                    <td>{{ registry.description }}</td>
                     <td class="text-right">
                       <button
                         mat-raised-button
@@ -62,7 +67,7 @@
                       &nbsp;
                       <button
                         mat-raised-button
-                        class="btn btn-sm btn-trash  btn-danger"
+                        class="btn btn-sm btn-trash btn-danger"
                         tooltip="Excluir"
                         (click)="softDelete(stock.id)"
                       >

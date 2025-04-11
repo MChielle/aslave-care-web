@@ -52,11 +52,14 @@ export class SupplierNames {
   providedIn: "root",
 })
 export class RegistryInNames {
-  get URL_LOWER_CASE() {
+  get API_URL_LOWER_CASE() {
     return "registryin";
+  }  
+  get URL_LOWER_CASE() {
+    return "registry-in";
   }
   get URL_LOWER_CASE_PLURAL() {
-    return "registryins";
+    return "registry-ins";
   }
   get REGISTRY_IN() {
     return "Entrada";
@@ -69,5 +72,14 @@ export class RegistryInNames {
   }
   get REGISTRY_INS_LOWER_CASE() {
     return "entrada";
+  }
+}
+
+@Injectable({
+  providedIn: "root",
+})
+export class RegistersNames {
+  get URL_LOWER_CASE() {
+    return "registers";
   }
 }

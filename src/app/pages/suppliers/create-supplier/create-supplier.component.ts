@@ -89,4 +89,8 @@ export class CreateSupplierComponent implements OnInit {
   catch(error) {
     console.log("create", error);
   }
+
+  cancel(){
+    this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
+  }
 }

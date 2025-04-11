@@ -4,10 +4,11 @@ import { SupplierModel } from "../supplier/supplier.model";
 export class RegistryInModel {
     id: string;
     supplierId: string;
+    number: number;
     supplier: SupplierModel;
     donation: boolean;
     applyDate: Date;
     description: string;
-    applied: boolean;
+    apply: boolean;
     RegistryInStocks: RegistryInStockModel[];
 }
