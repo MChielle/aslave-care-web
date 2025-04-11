@@ -94,7 +94,7 @@ export class CreateRegistryInStockComponent implements OnInit {
     try {
       this.service.create(supplier).subscribe((response) => {
         if (response.isSuccess)
-          this.router.navigate([this.registersNames.URL_LOWER_CASE]);
+          this.router.navigate([this.registersNames.URL_LOWER_CASE_PLURAL]);
       });
     } catch (error) {
       console.log("sendCreateRequest", error);
@@ -156,7 +156,7 @@ export class CreateRegistryInStockComponent implements OnInit {
 
   cancel() {
     try {
-      this.router.navigate([this.stockNames.URL_LOWER_CASE_PLURAL]);
+      this.router.navigate([this.registersNames.URL_LOWER_CASE_PLURAL]);
     } catch (error) {
       console.log("cancel", error);
     }

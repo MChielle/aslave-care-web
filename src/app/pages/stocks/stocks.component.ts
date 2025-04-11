@@ -58,6 +58,6 @@ export class StockComponent implements OnInit {
   }
 
   registers() {
-    this.router.navigate([this.registersNames.URL_LOWER_CASE]);
+    this.router.navigate([this.registersNames.URL_LOWER_CASE_PLURAL]);
   }
 }

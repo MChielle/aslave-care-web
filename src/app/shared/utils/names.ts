@@ -79,7 +79,7 @@ export class RegistryInNames {
   providedIn: "root",
 })
 export class RegistersNames {
-  get URL_LOWER_CASE() {
+  get URL_LOWER_CASE_PLURAL() {
     return "registers";
   }
 }

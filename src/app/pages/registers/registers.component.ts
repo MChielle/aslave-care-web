@@ -54,7 +54,7 @@ public inModels: RegistryInModel[];
   }
 
   createNewRegistryIn() {
-    this.router.navigate([this.names.URL_LOWER_CASE]);
+    this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
   }
 
   softDeleteRegistryIn(id: string) {
