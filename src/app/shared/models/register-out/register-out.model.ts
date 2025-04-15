@@ -1,7 +1,7 @@
-import { RegistryInStockModel } from "../registry-in-stock/registry-in-stock.model";
+import { RegisterOutStockModel } from "../register-out-stock/register-out-stock.model";
 import { SupplierModel } from "../supplier/supplier.model";
 
-export class RegistryInModel {
+export class RegisterOutModel {
     id: string;
     supplierId: string;
     number: number;
@@ -10,5 +10,5 @@ export class RegistryInModel {
     applyDate: Date;
     description: string;
     apply: boolean;
-    RegistryInStocks: RegistryInStockModel[];
+    RegisterInStocks: RegisterOutStockModel[];
 }

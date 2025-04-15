@@ -12,8 +12,9 @@
               <div>
                 <button
                   mat-raised-button
+                  (click)="registerOut()"
                   type="button"
-                  class="btn btn-danger pull-right"
+                  class="btn btn-warning pull-right"
                 >
                   Nova Saida
                 </button>
@@ -21,7 +22,7 @@
               <div>
                 <button
                   mat-raised-button
-                  (click)="registryIn()"
+                  (click)="registerIn()"
                   type="button"
                   class="btn btn-success pull-right"
                 >
@@ -35,26 +36,27 @@
               <table class="table">
                 <thead class="text-primary">
                   <th>Numero</th>
+                  <th>Tipo</th>
                   <th>Fornecedor</th>
                   <th>Aplicado</th>
                   <th>Doação</th>
+                  <th>Data</th>
                   <th>Descrição</th>
                   <th class="text-right">Ações</th>
                 </thead>
-                {{
-                  this.inModels | json
-                }}
                 <tbody>
-                  <tr *ngFor="let registry of models">
-                    <td>{{ registry.number }}</td>
-                    <td>{{ registry.name }}</td>
+                  <tr *ngFor="let register of models">
+                    <td>{{ register.number }}</td>
+                    <td>{{ register.type }}</td>
+                    <td>{{ register.name }}</td>
                     <td>
-                      <input class="form-control" disabled type="checkbox" [checked]="registry.apply" />
+                      <input class="form-control" disabled type="checkbox" [checked]="register.apply" />
                     </td>
                     <td>
-                      <input class="form-control" disabled type="checkbox" [checked]="registry.donation" />
+                      <input class="form-control" disabled type="checkbox" [checked]="register.donation" />
                     </td>
-                    <td>{{ registry.description }}</td>
+                    <td>{{ register.applyDate }}</td>
+                    <td>{{ register.description }}</td>
                     <td class="text-right">
                       <button
                         mat-raised-button

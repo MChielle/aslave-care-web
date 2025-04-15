@@ -51,27 +51,54 @@ export class SupplierNames {
 @Injectable({
   providedIn: "root",
 })
-export class RegistryInNames {
+export class RegisterInNames {
   get API_URL_LOWER_CASE() {
-    return "registryin";
+    return "registerin";
   }  
   get URL_LOWER_CASE() {
-    return "registry-in";
+    return "register-in";
   }
   get URL_LOWER_CASE_PLURAL() {
-    return "registry-ins";
+    return "register-ins";
   }
-  get REGISTRY_IN() {
+  get REGISTER_IN() {
     return "Entrada";
   }
-  get REGISTRY_IN_LOWER_CASE() {
+  get REGISTER_IN_LOWER_CASE() {
     return "entrada";
   }
-  get REGISTRY_INS() {
+  get REGISTER_INS() {
     return "Entradas";
   }
-  get REGISTRY_INS_LOWER_CASE() {
+  get REGISTER_INS_LOWER_CASE() {
     return "entrada";
+  }
+}
+
+@Injectable({
+  providedIn: "root",
+})
+export class RegisterOutNames {
+  get API_URL_LOWER_CASE() {
+    return "registerout";
+  }  
+  get URL_LOWER_CASE() {
+    return "register-out";
+  }
+  get URL_LOWER_CASE_PLURAL() {
+    return "registers-out";
+  }
+  get REGISTER_IN() {
+    return "Entrada";
+  }
+  get REGISTER_IN_LOWER_CASE() {
+    return "entrada";
+  }
+  get REGISTERS_IN() {
+    return "Entradas";
+  }
+  get REGISTERS_IN_LOWER_CASE() {
+    return "entradas";
   }
 }
 

@@ -13,8 +13,9 @@ import { CreateSupplierComponent } from 'app/pages/suppliers/create-supplier/cre
 import { UpdateSupplierComponent } from 'app/pages/suppliers/update-supplier/update-supplier.component';
 import { CreateStockComponent } from 'app/pages/stocks/create-stock/create-stock.component';
 import { UpdateStockComponent } from 'app/pages/stocks/update-stock/update-stock.component';
-import { CreateRegistryInStockComponent } from 'app/pages/registers/create-registry-in-stock/create-registry-in-stock.component';
+import { CreateRegisterInStockComponent } from 'app/pages/registers/create-register-in-stock/create-register-in-stock.component';
 import { RegistersComponent } from 'app/pages/registers/registers.component';
+import { CreateRegisterOutStockComponent } from 'app/pages/registers/create-register-out-stock/create-register-out-stock.component';
 
 export const AdminLayoutRoutes: Routes = [   
     
@@ -27,7 +28,9 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'update-stock/:id', component: UpdateStockComponent },
 
     { path: 'registers', component: RegistersComponent},    
-    { path: 'create-registry-in', component: CreateRegistryInStockComponent },
+    { path: 'create-register-in', component: CreateRegisterInStockComponent },
+    { path: 'create-register-out', component: CreateRegisterOutStockComponent },
+    
 
     { path: 'dashboard', component: DashboardComponent },
     { path: 'user-profile', component: UserProfileComponent },

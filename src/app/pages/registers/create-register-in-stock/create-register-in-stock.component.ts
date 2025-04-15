@@ -6,18 +6,18 @@ import {
   Validators,
 } from "@angular/forms";
 import { Router } from "@angular/router";
-import { CreateRegistryInStockModel } from "app/shared/models/registry-in-stock/create-registry-in-stock.model";
-import { RegistryInSelectedSupply } from "app/shared/models/registry-in-stock/registry-in-selected-supplies.model";
-import { RegistryInStockModel } from "app/shared/models/registry-in-stock/registry-in-stock.model";
-import { CreateRegistryInModel } from "app/shared/models/registry-in/create-registry-in.model";
-import { RegistryInModel } from "app/shared/models/registry-in/registry-in.model";
+import { CreateRegisterInStockModel } from "app/shared/models/register-in-stock/create-register-in-stock.model";
+import { RegisterInSelectedSupply } from "app/shared/models/register-in-stock/register-in-selected-supplies.model";
+import { RegisterInStockModel } from "app/shared/models/register-in-stock/register-in-stock.model";
+import { CreateRegisterInModel } from "app/shared/models/register-in/create-register-in.model";
+import { RegisterInModel } from "app/shared/models/register-in/register-in.model";
 import { StockModel } from "app/shared/models/stock/stock.model";
 import { SupplierModel } from "app/shared/models/supplier/supplier.model";
 import { NotificationService } from "app/shared/services/notification/notification.service";
-import { RegistryInService } from "app/shared/services/registryin/registry-in.service";
+import { RegisterInService } from "app/shared/services/register-in/register-in.service";
 import { StockService } from "app/shared/services/stock/stock.service";
 import { SupplierService } from "app/shared/services/supplier/supplier.service";
-import { RegistersNames, RegistryInNames, StockNames } from "app/shared/utils/names";
+import { RegistersNames, RegisterInNames, StockNames } from "app/shared/utils/names";
 
 declare var $: any;
 type UserFields =
@@ -26,20 +26,20 @@ type UserFields =
   | "donation"
   | "description"
   | "apply"
-  | "registryInStocks";
+  | "registerInStocks";
 type FormErrors = { [u in UserFields]: string };
 
 @Component({
-  selector: "app-create-registry-in-stock",
-  templateUrl: "./create-registry-in-stock.component.html",
-  styleUrls: ["./create-registry-in-stock.component.scss"],
+  selector: "app-create-register-in-stock",
+  templateUrl: "./create-register-in-stock.component.html",
+  styleUrls: ["./create-register-in-stock.component.scss"],
 })
-export class CreateRegistryInStockComponent implements OnInit {
+export class CreateRegisterInStockComponent implements OnInit {
   public suppliers: SupplierModel[];
   public supplies: StockModel[];
   public supply: string;
-  public selectedSupplies: RegistryInSelectedSupply[] = new Array();
-  public registryIn: CreateRegistryInModel = new CreateRegistryInModel();
+  public selectedSupplies: RegisterInSelectedSupply[] = new Array();
+  public registerIn: CreateRegisterInModel = new CreateRegisterInModel();
   public createForm: FormGroup;
   public formErrors: FormErrors = {
     supplier: "",
@@ -47,14 +47,14 @@ export class CreateRegistryInStockComponent implements OnInit {
     donation: "",
     description: "",
     apply: "",
-    registryInStocks: "",
+    registerInStocks: "",
   };
 
   constructor(
     private registersNames: RegistersNames,
     private stockNames: StockNames,
     private fb: FormBuilder,
-    private service: RegistryInService<RegistryInModel>,
+    private service: RegisterInService<RegisterInModel>,
     private stockService: StockService<StockModel>,
     private supplierService: SupplierService<SupplierModel>,
     private notificationService: NotificationService,
@@ -67,7 +67,7 @@ export class CreateRegistryInStockComponent implements OnInit {
       donation: new FormControl(false),
       description: new FormControl(""),
       apply: new FormControl(false),
-      registryInStocks: new FormControl(""),
+      registerInStocks: new FormControl(""),
     });
   }
 
@@ -90,7 +90,7 @@ export class CreateRegistryInStockComponent implements OnInit {
     $.notify(notification.content, notification.format);
   }
 
-  sendCreateRequest(supplier: CreateRegistryInModel) {
+  sendCreateRequest(supplier: CreateRegisterInModel) {
     try {
       this.service.create(supplier).subscribe((response) => {
         if (response.isSuccess)
@@ -103,10 +103,10 @@ export class CreateRegistryInStockComponent implements OnInit {
 
   create() {
     try {
-      this.createForm.controls["registryInStocks"].setValue(
+      this.createForm.controls["registerInStocks"].setValue(
         this.selectedSupplies
       );
-      const model = this.createForm.value as CreateRegistryInModel;
+      const model = this.createForm.value as CreateRegisterInModel;
       console.log(model);
       this.sendCreateRequest(model);
     } catch (error) {
@@ -131,7 +131,7 @@ export class CreateRegistryInStockComponent implements OnInit {
       );
       if (alreadySelected) return;
 
-      const selectedSupplie = new RegistryInSelectedSupply();
+      const selectedSupplie = new RegisterInSelectedSupply();
       selectedSupplie.stockId = stock.id;
       selectedSupplie.name = stock.name;
       selectedSupplie.price = 0;

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
-import { RegistersInModel } from 'app/shared/models/registries/registries.model';
-import { RegistryInModel } from 'app/shared/models/registry-in/registry-in.model';
-import { RegistryInService } from 'app/shared/services/registryin/registry-in.service';
-import { RegistersNames, RegistryInNames } from 'app/shared/utils/names';
+import { RegistersModel } from 'app/shared/models/registers/registers.model';
+import { RegisterInModel } from 'app/shared/models/register-in/register-in.model';
+import { RegisterInService } from 'app/shared/services/register-in/register-in.service';
+import { RegistersNames, RegisterInNames, RegisterOutNames } from 'app/shared/utils/names';
 import { firstValueFrom } from 'rxjs';
+import { RegisterOutModel } from 'app/shared/models/register-out/register-out.model';
+import { RegisterOutService } from 'app/shared/services/register-out/register-out.service';
 
 @Component({
   selector: 'app-registers',
@@ -13,13 +14,15 @@ import { firstValueFrom } from 'rxjs';
   styleUrls: ['./registers.component.scss']
 })
 export class RegistersComponent implements OnInit {
-public models: RegistersInModel[];
-public inModels: RegistryInModel[];
+public models: RegistersModel[];
+public inModels: RegisterInModel[];
 
   constructor(
     private names: RegistersNames,
-    private inNames: RegistryInNames,
-    private inService: RegistryInService<RegistryInModel>,
+    private inNames: RegisterInNames,
+    private outNames: RegisterOutNames,
+    private inService: RegisterInService<RegisterInModel>,
+    private outService: RegisterOutService<RegisterOutModel>,
     private router: Router,
   ) {}
 
@@ -31,16 +34,43 @@ public inModels: RegistryInModel[];
     firstValueFrom(this.inService.getToList())
       .then((response) => {
         if (response.isSuccess) {
-          this.models = response.data.map((x)=> { 
-            return {
+          response.data.map((x)=> { 
+            const registerIn = {
               id: x.id,
               number: x.number,
               name: x.supplier.name,
               apply: x.apply,
               donation: x.donation,
               description: x.description,
-          }});
-          this.models = this.sortByNumber(false);
+              applyDate: x.applyDate,
+              type: 'in',    
+            }
+
+            this.models.push(registerIn);
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+      firstValueFrom(this.outService.getToList())
+      .then((response) => {
+        if (response.isSuccess) {
+          response.data.map((x)=> { 
+            const registerIn = {
+              id: x.id,
+              number: x.number,
+              name: x.supplier.name,
+              apply: x.apply,
+              donation: x.donation,
+              description: x.description,
+              applyDate: x.applyDate,
+              type: 'out',
+            }
+
+            this.models.push(registerIn);
+          });
         }
       })
       .catch((error) => {
@@ -48,32 +78,36 @@ public inModels: RegistryInModel[];
       });
   }
 
-  sortByNumber(cres: boolean): RegistersInModel[]{
+  sortByNumber(cres: boolean): RegistersModel[]{
     return cres ? this.models.sort((a , b) => a.number - b.number) : this.models.sort((a , b) => b.number - a.number);
 
   }
 
-  createNewRegistryIn() {
+  createNewRegisterIn() {
     this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
   }
 
-  softDeleteRegistryIn(id: string) {
-    console.log(id);
-    firstValueFrom(this.inService.softDelete(id))
+  softDeleteRegisterIn(id: string) {
+      firstValueFrom(this.inService.softDelete(id))
       .then((response) => {
-        console.log(response);
-        this.inModels = this.inModels.filter((x) => x.id !== id);
+          console.log(response);
+          this.inModels = this.inModels.filter((x) => x.id !== id);
       })
       .catch((error) => {
         console.log(error);
       });
+    
   }
 
-  editRegistryIn(id: string) {
+  editRegisterIn(id: string) {
     this.router.navigate([`update-${this.inNames.URL_LOWER_CASE}`, id]);
   }
 
-  registryIn() {
+  registerIn() {
     this.router.navigate([`create-${this.inNames.URL_LOWER_CASE}`]);
+  }
+
+  registerOut() {
+    this.router.navigate([`create-${this.outNames.URL_LOWER_CASE}`]);
   }
 }

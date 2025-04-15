@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StockModel } from 'app/shared/models/stock/stock.model';
 import { StockService } from 'app/shared/services/stock/stock.service';
-import { FormatHelper } from 'app/shared/utils/helpers/format.helper';
-import { RegistersNames, RegistryInNames, StockNames } from 'app/shared/utils/names';
+import { RegistersNames, RegisterInNames, StockNames } from 'app/shared/utils/names';
 import { firstValueFrom } from 'rxjs';
 
 @Component({

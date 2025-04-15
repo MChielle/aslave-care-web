@@ -2,16 +2,16 @@ import { Injectable } from "@angular/core";
 import { BaseService } from "../base.service";
 import { ResponseBase } from "app/shared/Responses/response-base";
 import { HttpParams } from "@angular/common/http";
-import { RegistryInNames } from "app/shared/utils/names";
+import { RegisterInNames } from "app/shared/utils/names";
 
 @Injectable({
   providedIn: "root",
 })
-export class RegistryInService<TModel> {
+export class RegisterInService<TModel> {
 
   constructor(
     private baseService: BaseService,
-    private names: RegistryInNames
+    private names: RegisterInNames
   ) {}
 
   public getToList() {
