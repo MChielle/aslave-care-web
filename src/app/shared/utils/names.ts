@@ -59,7 +59,7 @@ export class RegisterInNames {
     return "register-in";
   }
   get URL_LOWER_CASE_PLURAL() {
-    return "register-ins";
+    return "registers-in";
   }
   get REGISTER_IN() {
     return "Entrada";
@@ -71,7 +71,7 @@ export class RegisterInNames {
     return "Entradas";
   }
   get REGISTER_INS_LOWER_CASE() {
-    return "entrada";
+    return "entradas";
   }
 }
 
@@ -89,16 +89,16 @@ export class RegisterOutNames {
     return "registers-out";
   }
   get REGISTER_IN() {
-    return "Entrada";
+    return "Saida";
   }
   get REGISTER_IN_LOWER_CASE() {
-    return "entrada";
+    return "saida";
   }
   get REGISTERS_IN() {
-    return "Entradas";
+    return "Saidas";
   }
   get REGISTERS_IN_LOWER_CASE() {
-    return "entradas";
+    return "saidas";
   }
 }
 

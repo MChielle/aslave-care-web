@@ -1,0 +1,73 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">Consumo</h4>
+            <p class="card-category">Registros de Consumo</p>
+          </div>
+          <div>
+            <div class="col-md-4 pull-right">
+              <div>
+                <button
+                  mat-raised-button
+                  (click)="navigateToCreateRegister()"
+                  type="button"
+                  class="btn btn-success pull-right"
+                >
+                  Novo Consumo
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="text-primary">
+                  <th>Numero</th>
+                  <th>Aplicado</th>
+                  <th>Data</th>
+                  <th class="text-right">Ações</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let register of models">
+                    <td>{{ register.number }}</td>
+                    <td>
+                      <input
+                        class="form-control"
+                        disabled
+                        type="checkbox"
+                        [checked]="register.apply"
+                      />
+                    </td>
+                    <td>{{ register.apply ? register.applyDate : ''}}</td>
+                    <td class="text-right">
+                      <button
+                        mat-raised-button
+                        class="btn btn-sm btn-trash btn-info"
+                        tooltip="Editar"
+                        (click)="navigateToEditRegister(register.id)"
+                      >
+                        <i class="fa fa-pencil"></i>
+                      </button>
+                      &nbsp;
+                      <button
+                        mat-raised-button
+                        class="btn btn-sm btn-trash btn-danger"
+                        tooltip="Excluir"
+                        (click)="softDeleteRegister(register.id)"
+                      >
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

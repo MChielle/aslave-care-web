@@ -10,5 +10,5 @@ export class RegisterInModel {
     applyDate: Date;
     description: string;
     apply: boolean;
-    RegisterInStocks: RegisterInStockModel[];
+    registerInStocks: RegisterInStockModel[];
 }

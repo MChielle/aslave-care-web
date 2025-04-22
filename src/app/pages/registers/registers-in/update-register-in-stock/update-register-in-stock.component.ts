@@ -1,14 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from "@angular/forms";
-import { Router } from "@angular/router";
-import { CreateRegisterInStockModel } from "app/shared/models/register-in-stock/create-register-in-stock.model";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
 import { RegisterInSelectedSupply } from "app/shared/models/register-in-stock/register-in-selected-supplies.model";
-import { RegisterInStockModel } from "app/shared/models/register-in-stock/register-in-stock.model";
 import { CreateRegisterInModel } from "app/shared/models/register-in/create-register-in.model";
 import { RegisterInModel } from "app/shared/models/register-in/register-in.model";
 import { StockModel } from "app/shared/models/stock/stock.model";
@@ -17,7 +10,8 @@ import { NotificationService } from "app/shared/services/notification/notificati
 import { RegisterInService } from "app/shared/services/register-in/register-in.service";
 import { StockService } from "app/shared/services/stock/stock.service";
 import { SupplierService } from "app/shared/services/supplier/supplier.service";
-import { RegistersNames, RegisterInNames, StockNames } from "app/shared/utils/names";
+import { RegisterInNames } from "app/shared/utils/names";
+import { firstValueFrom } from "rxjs";
 
 declare var $: any;
 type UserFields =
@@ -30,17 +24,17 @@ type UserFields =
 type FormErrors = { [u in UserFields]: string };
 
 @Component({
-  selector: "app-create-register-in-stock",
-  templateUrl: "./create-register-in-stock.component.html",
-  styleUrls: ["./create-register-in-stock.component.scss"],
+  selector: "app-update-register-in-stock",
+  templateUrl: "./update-register-in-stock.component.html",
+  styleUrls: ["./update-register-in-stock.component.scss"],
 })
-export class CreateRegisterInStockComponent implements OnInit {
+export class UpdateRegisterInStockComponent implements OnInit {
   public suppliers: SupplierModel[];
   public supplies: StockModel[];
   public supply: string;
   public selectedSupplies: RegisterInSelectedSupply[] = new Array();
-  public registerIn: CreateRegisterInModel = new CreateRegisterInModel();
-  public createForm: FormGroup;
+  public registerIn: RegisterInModel = new RegisterInModel();
+  public updateForm: FormGroup;
   public formErrors: FormErrors = {
     supplier: "",
     supplierId: "",
@@ -51,17 +45,17 @@ export class CreateRegisterInStockComponent implements OnInit {
   };
 
   constructor(
-    private registersNames: RegistersNames,
-    private stockNames: StockNames,
+    private names: RegisterInNames,
     private fb: FormBuilder,
     private service: RegisterInService<RegisterInModel>,
     private stockService: StockService<StockModel>,
     private supplierService: SupplierService<SupplierModel>,
     private notificationService: NotificationService,
     private router: Router,
+    private route: ActivatedRoute,
     private cdr: ChangeDetectorRef
   ) {
-    this.createForm = this.fb.group({
+    this.updateForm = this.fb.group({
       supplier: new FormControl(""),
       supplierId: new FormControl(""),
       donation: new FormControl(false),
@@ -72,6 +66,25 @@ export class CreateRegisterInStockComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const registerInId = this.route.snapshot.paramMap.get("id");
+    firstValueFrom(this.service.getByIdToUpdate(registerInId)).then(
+      (response) => {
+        if (response.isSuccess) {
+          this.registerIn = response.data as RegisterInModel;
+          this.selectedSupplies = this.registerIn.registerInStocks.map<RegisterInSelectedSupply>((x) => {
+            return new RegisterInSelectedSupply(
+              x.stockId,
+              x.stock.name,
+              x.price,
+              x.quantity
+            );
+          });
+          this.updateForm.patchValue(this.registerIn);      
+          this.selectSupplier(this.registerIn.supplier);
+        }
+      }
+    );
+
     this.supplierService.getToList().subscribe((response) => {
       if (response.isSuccess) this.suppliers = response.data;
     });
@@ -90,34 +103,32 @@ export class CreateRegisterInStockComponent implements OnInit {
     $.notify(notification.content, notification.format);
   }
 
-  sendCreateRequest(supplier: CreateRegisterInModel) {
+  sendUpdateRequest(supplier: RegisterInModel) {
     try {
-      this.service.create(supplier).subscribe((response) => {
-        if (response.isSuccess)
-          this.router.navigate([this.registersNames.URL_LOWER_CASE_PLURAL]);
+      this.service.update(supplier).subscribe((response) => {
+        if (response.isSuccess) this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
       });
     } catch (error) {
-      console.log("sendCreateRequest", error);
+      console.log("sendUpdateRequest", error);
     }
   }
 
-  create() {
+  update() {
     try {
-      this.createForm.controls["registerInStocks"].setValue(
+      this.updateForm.controls["registerInStocks"].setValue(
         this.selectedSupplies
       );
-      const model = this.createForm.value as CreateRegisterInModel;
-      console.log(model);
-      this.sendCreateRequest(model);
+      const model = this.updateForm.value as RegisterInModel;
+      this.sendUpdateRequest(model);
     } catch (error) {
       console.log("create", error);
     }
   }
 
-  selectSupplier(supplier) {
+  selectSupplier(supplier: SupplierModel) {
     try {
-      this.createForm.controls["supplierId"].setValue(supplier?.id);
-      this.createForm.controls["supplier"].setValue(supplier);
+      this.updateForm.controls["supplierId"].setValue(supplier?.id);
+      this.updateForm.controls["supplier"].setValue(supplier);
       this.cdr.detectChanges();
     } catch (error) {
       console.log("selectSupplier", error);
@@ -131,14 +142,14 @@ export class CreateRegisterInStockComponent implements OnInit {
       );
       if (alreadySelected) return;
 
-      const selectedSupplie = new RegisterInSelectedSupply();
-      selectedSupplie.stockId = stock.id;
-      selectedSupplie.name = stock.name;
-      selectedSupplie.price = 0;
-      selectedSupplie.quantity = 0;
+      const selectedSupply = new RegisterInSelectedSupply(
+        stock.id,
+        stock.name,
+        0,
+        0
+      );
 
-      this.selectedSupplies.push(selectedSupplie);
-      console.log(this.selectedSupplies);
+      this.selectedSupplies.push(selectedSupply);
     } catch (error) {
       console.log("selectSupply", error);
     }
@@ -156,7 +167,7 @@ export class CreateRegisterInStockComponent implements OnInit {
 
   cancel() {
     try {
-      this.router.navigate([this.registersNames.URL_LOWER_CASE_PLURAL]);
+      this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
     } catch (error) {
       console.log("cancel", error);
     }

@@ -13,9 +13,12 @@ import { CreateSupplierComponent } from 'app/pages/suppliers/create-supplier/cre
 import { UpdateSupplierComponent } from 'app/pages/suppliers/update-supplier/update-supplier.component';
 import { CreateStockComponent } from 'app/pages/stocks/create-stock/create-stock.component';
 import { UpdateStockComponent } from 'app/pages/stocks/update-stock/update-stock.component';
-import { CreateRegisterInStockComponent } from 'app/pages/registers/create-register-in-stock/create-register-in-stock.component';
-import { RegistersComponent } from 'app/pages/registers/registers.component';
-import { CreateRegisterOutStockComponent } from 'app/pages/registers/create-register-out-stock/create-register-out-stock.component';
+import { CreateRegisterInStockComponent } from 'app/pages/registers/registers-in/create-register-in-stock/create-register-in-stock.component';
+import { CreateRegisterOutStockComponent } from 'app/pages/registers/registers-out/create-register-out-stock/create-register-out-stock.component';
+import { RegistersInComponent } from 'app/pages/registers/registers-in/registers-in.component';
+import { RegistersOutComponent } from 'app/pages/registers/registers-out/registers-out.component';
+import { UpdateRegisterOutStockComponent } from 'app/pages/registers/registers-out/update-register-out-stock/update-register-out-stock.component';
+import { UpdateRegisterInStockComponent } from 'app/pages/registers/registers-in/update-register-in-stock/update-register-in-stock.component';
 
 export const AdminLayoutRoutes: Routes = [   
     
@@ -27,10 +30,13 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'create-stock', component: CreateStockComponent },
     { path: 'update-stock/:id', component: UpdateStockComponent },
 
-    { path: 'registers', component: RegistersComponent},    
+    { path: 'registers-in', component: RegistersInComponent},    
     { path: 'create-register-in', component: CreateRegisterInStockComponent },
-    { path: 'create-register-out', component: CreateRegisterOutStockComponent },
-    
+    { path: 'update-register-in/:id', component: UpdateRegisterInStockComponent},
+
+    { path: 'registers-out', component: RegistersOutComponent},    
+    { path: 'create-register-out', component: CreateRegisterOutStockComponent },    
+    { path: 'update-register-out', component: UpdateRegisterOutStockComponent },    
 
     { path: 'dashboard', component: DashboardComponent },
     { path: 'user-profile', component: UserProfileComponent },

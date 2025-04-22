@@ -1,16 +1,21 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-import { RegisterOutSelectedSupply } from 'app/shared/models/register-out-stock/register-out-selected-supplies.model';
-import { CreateRegisterOutModel } from 'app/shared/models/register-out/create-register-in.model';
-import { RegisterOutModel } from 'app/shared/models/register-out/register-out.model';
-import { StockModel } from 'app/shared/models/stock/stock.model';
-import { SupplierModel } from 'app/shared/models/supplier/supplier.model';
-import { NotificationService } from 'app/shared/services/notification/notification.service';
-import { RegisterOutService } from 'app/shared/services/register-out/register-out.service';
-import { StockService } from 'app/shared/services/stock/stock.service';
-import { SupplierService } from 'app/shared/services/supplier/supplier.service';
-import { RegistersNames, StockNames } from 'app/shared/utils/names';
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
+import { Router } from "@angular/router";
+import { RegisterInSelectedSupply } from "app/shared/models/register-in-stock/register-in-selected-supplies.model";
+import { CreateRegisterInModel } from "app/shared/models/register-in/create-register-in.model";
+import { RegisterInModel } from "app/shared/models/register-in/register-in.model";
+import { StockModel } from "app/shared/models/stock/stock.model";
+import { SupplierModel } from "app/shared/models/supplier/supplier.model";
+import { NotificationService } from "app/shared/services/notification/notification.service";
+import { RegisterInService } from "app/shared/services/register-in/register-in.service";
+import { StockService } from "app/shared/services/stock/stock.service";
+import { SupplierService } from "app/shared/services/supplier/supplier.service";
+import { RegisterInNames, StockNames } from "app/shared/utils/names";
 
 declare var $: any;
 type UserFields =
@@ -23,16 +28,16 @@ type UserFields =
 type FormErrors = { [u in UserFields]: string };
 
 @Component({
-  selector: 'app-create-register-out-stock',
-  templateUrl: './create-register-out-stock.component.html',
-  styleUrls: ['./create-register-out-stock.component.scss']
+  selector: "app-create-register-in-stock",
+  templateUrl: "./create-register-in-stock.component.html",
+  styleUrls: ["./create-register-in-stock.component.scss"],
 })
-export class CreateRegisterOutStockComponent implements OnInit {
-public suppliers: SupplierModel[];
+export class CreateRegisterInStockComponent implements OnInit {
+  public suppliers: SupplierModel[];
   public supplies: StockModel[];
   public supply: string;
-  public selectedSupplies: RegisterOutSelectedSupply[] = new Array();
-  public registerIn: CreateRegisterOutModel = new CreateRegisterOutModel();
+  public selectedSupplies: RegisterInSelectedSupply[] = new Array();
+  public registerIn: CreateRegisterInModel = new CreateRegisterInModel();
   public createForm: FormGroup;
   public formErrors: FormErrors = {
     supplier: "",
@@ -44,10 +49,9 @@ public suppliers: SupplierModel[];
   };
 
   constructor(
-    private registersNames: RegistersNames,
-    private stockNames: StockNames,
+    private names: RegisterInNames,
     private fb: FormBuilder,
-    private service: RegisterOutService<RegisterOutModel>,
+    private service: RegisterInService<RegisterInModel>,
     private stockService: StockService<StockModel>,
     private supplierService: SupplierService<SupplierModel>,
     private notificationService: NotificationService,
@@ -83,11 +87,11 @@ public suppliers: SupplierModel[];
     $.notify(notification.content, notification.format);
   }
 
-  sendCreateRequest(supplier: CreateRegisterOutModel) {
+  sendCreateRequest(supplier: CreateRegisterInModel) {
     try {
       this.service.create(supplier).subscribe((response) => {
         if (response.isSuccess)
-          this.router.navigate([this.registersNames.URL_LOWER_CASE_PLURAL]);
+          this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
       });
     } catch (error) {
       console.log("sendCreateRequest", error);
@@ -99,7 +103,7 @@ public suppliers: SupplierModel[];
       this.createForm.controls["registerInStocks"].setValue(
         this.selectedSupplies
       );
-      const model = this.createForm.value as CreateRegisterOutModel;
+      const model = this.createForm.value as CreateRegisterInModel;
       console.log(model);
       this.sendCreateRequest(model);
     } catch (error) {
@@ -124,11 +128,12 @@ public suppliers: SupplierModel[];
       );
       if (alreadySelected) return;
 
-      const selectedSupplie = new RegisterOutSelectedSupply();
-      selectedSupplie.stockId = stock.id;
-      selectedSupplie.name = stock.name;
-      selectedSupplie.price = 0;
-      selectedSupplie.quantity = 0;
+      const selectedSupplie = new RegisterInSelectedSupply(
+        stock.id,
+        stock.name,
+        0,
+        0
+      );
 
       this.selectedSupplies.push(selectedSupplie);
       console.log(this.selectedSupplies);
@@ -149,7 +154,7 @@ public suppliers: SupplierModel[];
 
   cancel() {
     try {
-      this.router.navigate([this.registersNames.URL_LOWER_CASE_PLURAL]);
+      this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
     } catch (error) {
       console.log("cancel", error);
     }

@@ -1,0 +1,108 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header card-header-info">
+        <h4 class="card-title">Consumo</h4>
+        <p class="card-category">Dados do Consumo</p>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="updateForm">
+          <div class="row">
+            <div class="col-md-11">
+              <div class="form-group">
+                <mat-form-field class="example-full-width">
+                  <textarea
+                    matInput
+                    formControlName="description"
+                    type="text"
+                    class="form-control"
+                    id="description"
+                    name="description"
+                    placeholder="Descrição"
+                  ></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-1">
+              <label>
+                <input
+                  formControlName="apply"
+                  type="checkbox"
+                  class="form-control"
+                  id="apply"
+                  name="apply"
+                />
+                Aplicar
+              </label>
+            </div>
+          </div>
+        </form>
+        <div class="row">
+          <div class="col-md-12">
+            <app-autocomplete
+              placeholder="Suprimentos"
+              shownValue="name"
+              [itemList]="supplies"
+              [selectedValue]="supply"
+              (itemChanged)="selectSupply($event)"
+            ></app-autocomplete>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead class="text-primary">
+              <th>Nome</th>
+              <th>Quantidade</th>
+              <th class="text-right">Ações</th>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let selectedSupply of this.selectedSupplies;
+                  let i = index
+                "
+              >
+                <td>
+                  {{ selectedSupply.name }}
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    name="quantity{{ i }}"
+                    [(ngModel)]="selectedSupply.quantity"
+                  />
+                </td>
+                <td class="text-right">
+                  <button
+                    class="btn btn-sm btn-trash btn-round btn-icon bt-view"
+                    tooltip="Excluir"
+                    (click)="deleteSupply(selectedSupply.stockId)"
+                  >
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button
+          mat-raised-button
+          type="button"
+          (click)="cancel()"
+          class="btn btn-danger pull-right"
+        >
+          Cancelar
+        </button>
+        <button
+          mat-raised-button
+          type="button"
+          (click)="update()"
+          class="btn btn-success pull-right"
+        >
+          Salvar
+        </button>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -23,11 +23,13 @@ import { CreateSupplierComponent } from "app/pages/suppliers/create-supplier/cre
 import { UpdateSupplierComponent } from "app/pages/suppliers/update-supplier/update-supplier.component";
 import { CreateStockComponent } from "app/pages/stocks/create-stock/create-stock.component";
 import { UpdateStockComponent } from "app/pages/stocks/update-stock/update-stock.component";
-import { CreateRegisterInStockComponent } from "app/pages/registers/create-register-in-stock/create-register-in-stock.component";
-import { SearchableSelectComponent } from "app/shared/components/searchable-select/searchable-select.component";
+import { CreateRegisterInStockComponent } from "app/pages/registers/registers-in/create-register-in-stock/create-register-in-stock.component";
 import { AutocompleteComponent } from "app/shared/components/autocomplete/autocomplete.component";
-import { RegistersComponent } from "app/pages/registers/registers.component";
-import { CreateRegisterOutStockComponent } from "app/pages/registers/create-register-out-stock/create-register-out-stock.component";
+import { CreateRegisterOutStockComponent } from "app/pages/registers/registers-out/create-register-out-stock/create-register-out-stock.component";
+import { RegistersInComponent } from "app/pages/registers/registers-in/registers-in.component";
+import { RegistersOutComponent } from "app/pages/registers/registers-out/registers-out.component";
+import { UpdateRegisterOutStockComponent } from "app/pages/registers/registers-out/update-register-out-stock/update-register-out-stock.component";
+import { UpdateRegisterInStockComponent } from "app/pages/registers/registers-in/update-register-in-stock/update-register-in-stock.component";
 
 @NgModule({
   imports: [
@@ -51,7 +53,6 @@ import { CreateRegisterOutStockComponent } from "app/pages/registers/create-regi
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
-    SearchableSelectComponent,
     AutocompleteComponent,
 
     SuppliersComponent,
@@ -62,9 +63,13 @@ import { CreateRegisterOutStockComponent } from "app/pages/registers/create-regi
     CreateStockComponent,
     UpdateStockComponent,
 
-    RegistersComponent,
+    RegistersInComponent,
     CreateRegisterInStockComponent,
+    UpdateRegisterInStockComponent,
+    
+    RegistersOutComponent,
     CreateRegisterOutStockComponent,
+    UpdateRegisterOutStockComponent,
   ],
   exports: [RouterModule],
 })

@@ -43,4 +43,8 @@ export class RegisterInService<TModel> {
   public update(model) {
     return this.baseService.put<ResponseBase<TModel>>(`${this.names.API_URL_LOWER_CASE}/${model.id}`, model);
   }
+
+  public getByIdToUpdate(id: string){
+    return this.baseService.get<ResponseBase<TModel>>(`${this.names.API_URL_LOWER_CASE}/${id}/to-update`);
+  }
 }

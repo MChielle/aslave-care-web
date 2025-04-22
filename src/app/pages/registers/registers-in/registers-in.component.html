@@ -4,29 +4,19 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-danger">
-            <h4 class="card-title">Registros</h4>
-            <p class="card-category">Registros de movimentação</p>
+            <h4 class="card-title">Aquisição</h4>
+            <p class="card-category">Registros de Aquisição</p>
           </div>
           <div>
             <div class="col-md-4 pull-right">
               <div>
                 <button
                   mat-raised-button
-                  (click)="registerOut()"
-                  type="button"
-                  class="btn btn-warning pull-right"
-                >
-                  Nova Saida
-                </button>
-              </div>
-              <div>
-                <button
-                  mat-raised-button
-                  (click)="registerIn()"
+                  (click)="navigateToCreateRegister()"
                   type="button"
                   class="btn btn-success pull-right"
                 >
-                  Nova Entrada
+                  Nova Aquisição
                 </button>
               </div>
             </div>
@@ -36,33 +26,39 @@
               <table class="table">
                 <thead class="text-primary">
                   <th>Numero</th>
-                  <th>Tipo</th>
                   <th>Fornecedor</th>
                   <th>Aplicado</th>
                   <th>Doação</th>
                   <th>Data</th>
-                  <th>Descrição</th>
                   <th class="text-right">Ações</th>
                 </thead>
                 <tbody>
                   <tr *ngFor="let register of models">
                     <td>{{ register.number }}</td>
-                    <td>{{ register.type }}</td>
-                    <td>{{ register.name }}</td>
+                    <td>{{ register.supplier.name }}</td>
                     <td>
-                      <input class="form-control" disabled type="checkbox" [checked]="register.apply" />
+                      <input
+                        class="form-control"
+                        disabled
+                        type="checkbox"
+                        [checked]="register.apply"
+                      />
                     </td>
                     <td>
-                      <input class="form-control" disabled type="checkbox" [checked]="register.donation" />
+                      <input
+                        class="form-control"
+                        disabled
+                        type="checkbox"
+                        [checked]="register.donation"
+                      />
                     </td>
                     <td>{{ register.applyDate }}</td>
-                    <td>{{ register.description }}</td>
                     <td class="text-right">
                       <button
                         mat-raised-button
                         class="btn btn-sm btn-trash btn-info"
                         tooltip="Editar"
-                        (click)="update(stock.id)"
+                        (click)="navigateToUpdateRegister(register.id)"
                       >
                         <i class="fa fa-pencil"></i>
                       </button>
@@ -71,7 +67,7 @@
                         mat-raised-button
                         class="btn btn-sm btn-trash btn-danger"
                         tooltip="Excluir"
-                        (click)="softDelete(stock.id)"
+                        (click)="softDeleteRegister(register.id)"
                       >
                         <i class="fa fa-trash"></i>
                       </button>
