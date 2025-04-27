@@ -66,31 +66,35 @@ export class UpdateRegisterInStockComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const registerInId = this.route.snapshot.paramMap.get("id");
-    firstValueFrom(this.service.getByIdToUpdate(registerInId)).then(
-      (response) => {
-        if (response.isSuccess) {
-          this.registerIn = response.data as RegisterInModel;
-          this.selectedSupplies = this.registerIn.registerInStocks.map<RegisterInSelectedSupply>((x) => {
-            return new RegisterInSelectedSupply(
-              x.stockId,
-              x.stock.name,
-              x.price,
-              x.quantity
-            );
-          });
-          this.updateForm.patchValue(this.registerIn);      
-          this.selectSupplier(this.registerIn.supplier);
-        }
-      }
-    );
-
     this.supplierService.getToList().subscribe((response) => {
       if (response.isSuccess) this.suppliers = response.data;
     });
     this.stockService.getToList().subscribe((response) => {
       if (response.isSuccess) this.supplies = response.data;
     });
+
+    const registerInId = this.route.snapshot.paramMap.get("id");
+    firstValueFrom(this.service.getByIdToUpdate(registerInId)).then(
+      (response) => {
+        if (response.isSuccess) {
+          this.registerIn = response.data as RegisterInModel;
+          this.selectedSupplies =
+            this.registerIn.registerInStocks.map<RegisterInSelectedSupply>(
+              (x) => {
+                return new RegisterInSelectedSupply(
+                  x.stockId,
+                  x.stock.name,
+                  x.price,
+                  x.quantity
+                );
+              }
+            );
+          this.updateForm.patchValue(this.registerIn);
+          this.selectSupplier(this.registerIn.supplier);
+          this.cdr.detectChanges();
+        }
+      }
+    );
   }
 
   showNameAvailableNotification() {
@@ -106,7 +110,8 @@ export class UpdateRegisterInStockComponent implements OnInit {
   sendUpdateRequest(supplier: RegisterInModel) {
     try {
       this.service.update(supplier).subscribe((response) => {
-        if (response.isSuccess) this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
+        if (response.isSuccess)
+          this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
       });
     } catch (error) {
       console.log("sendUpdateRequest", error);
@@ -135,7 +140,7 @@ export class UpdateRegisterInStockComponent implements OnInit {
     }
   }
 
-  selectSupply(stock) {
+  selectSupply(stock: StockModel) {
     try {
       const alreadySelected = this.selectedSupplies.find(
         (x) => x.stockId == stock.id

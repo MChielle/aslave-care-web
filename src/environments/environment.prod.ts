@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  PRODUCTION: true,
+  BASE_URL: 'https://slave-care-api.onrender.com/api',
 };
