@@ -7,15 +7,15 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class BaseService {
-  private BASE_URL = environment.baseUrl;
+  private baseUrl = environment.BASE_URL;
   constructor(private http: HttpClient) {}
 
   get<T>(url: string, version: string = 'v1'): Observable<T> {
-    return this.http.get<T>(`${this.BASE_URL}/${version}/${url}`);
+    return this.http.get<T>(`${this.baseUrl}/${version}/${url}`);
   }
 
   getByParams<T>(url: string, params: HttpParams, version: string = 'v1'): Observable<T> {
-    return this.http.get<T>(`${this.BASE_URL}/${version}/${url}`, { params });
+    return this.http.get<T>(`${this.baseUrl}/${version}/${url}`, { params });
   }
 
   getMock(fileName: string): Observable<any> {
@@ -23,25 +23,25 @@ export class BaseService {
   }
 
   post<T>(url: string, body: any, version: string = 'v1'): Observable<T> {
-    return this.http.post<T>(`${this.BASE_URL}/${version}/${url}`, body);
+    return this.http.post<T>(`${this.baseUrl}/${version}/${url}`, body);
   }
 
   put<T>(url: string, body: any, version: string = 'v1'): Observable<T> {
-    return this.http.put<T>(`${this.BASE_URL}/${version}/${url}`, body);
+    return this.http.put<T>(`${this.baseUrl}/${version}/${url}`, body);
   }
 
   patch<T>(url: string, body: any, version: string = 'v1'): Observable<T> {
-    return this.http.patch<T>(`${this.BASE_URL}/${version}/${url}`, body);
+    return this.http.patch<T>(`${this.baseUrl}/${version}/${url}`, body);
   }
 
   delete<T>(url: string, version: string = 'v1'): Observable<T> {
-    return this.http.delete<T>(`${this.BASE_URL}/${version}/${url}`);
+    return this.http.delete<T>(`${this.baseUrl}/${version}/${url}`);
   }
 
   deleteWithBody(url: string, body, version: string = 'v1'): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-    return this.http.delete(`${this.BASE_URL}/${version}/${url}`, {
+    return this.http.delete(`${this.baseUrl}/${version}/${url}`, {
       body: `"${body}"`,
       headers,
     });

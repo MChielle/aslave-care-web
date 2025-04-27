@@ -67,7 +67,7 @@ export class AuthService {
     });
 
     return this.http
-      .get(`${environment.baseUrl}/v1/refresh-token?email=${token.email}`, {
+      .get(`${environment.BASE_URL}/v1/refresh-token?email=${token.email}`, {
         headers,
       })
       .pipe(
