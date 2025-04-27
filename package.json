@@ -5,8 +5,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "start:production": "ng serve --configuration=production",
     "build": "ng build",
+    "start:production": "ng serve -o --configuration=production",
     "build:production": "ng build --configuration=production",
     "test": "ng test",
     "lint": "ng lint",
@@ -14,8 +14,8 @@
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && ng serve -o"
   },
   "engines": {
-    "node": "6.11.1",
-    "npm": "3.10.9"
+    "node": "20",
+    "npm": "8"
   },
   "private": true,
   "dependencies": {
