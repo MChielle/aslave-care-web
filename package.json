@@ -7,7 +7,7 @@
     "start": "ng serve",
     "build": "ng build",
     "start:production": "export NODE_OPTIONS=–max-old-space-size=420 && ng serve -o",
-    "build:production": "node dist/app.js  --max_old_space_size=420  node_modules/@angular/cli/bin/ng build --configuration=production",
+    "build:production": "node  --max_old_space_size=420  node_modules/@angular/cli/bin/ng build --configuration=production",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
