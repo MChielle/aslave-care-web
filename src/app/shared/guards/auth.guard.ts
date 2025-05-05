@@ -5,7 +5,7 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { Constants } from '../utils/constants';
+import { Constants } from '../constants/aslavecare.constants';
 
 @Injectable({
   providedIn: 'root',

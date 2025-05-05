@@ -3,5 +3,7 @@ export class StockModel {
   name: string;
   disable: boolean;
   description: string;
-  quantity: string;
+  quantity: number;
+  stockLowWarning: number;
+  stockTypeId: string;
 }

@@ -1,12 +1,12 @@
 {
-  "name": "slave-care",
+  "name": "aslave-care",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "start:production": "export NODE_OPTIONS=–max-old-space-size=420 && ng serve -o --port 5001 --configuration=production",
+    "start:production": "export NODE_OPTIONS=–max-old-space-size=420 -o --port 5001 --configuration=production",
     "build:production": "node --max_old_space_size=420  node_modules/@angular/cli/bin/ng build --configuration=production",
     "test": "ng test",
     "lint": "ng lint",

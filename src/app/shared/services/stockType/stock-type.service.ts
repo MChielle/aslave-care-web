@@ -2,16 +2,15 @@ import { Injectable } from "@angular/core";
 import { BaseService } from "../base.service";
 import { ResponseBase } from "app/shared/Responses/response-base";
 import { HttpParams } from "@angular/common/http";
-import { StockNames } from "app/shared/utils/names";
-import { DonationsPerMonthModel } from "app/shared/models/dashboard/donations-per-month.model";
+import { StockNames, StockTypeNames } from "app/shared/utils/names";
 
 @Injectable({
   providedIn: "root",
 })
-export class StockService<TModel> {
+export class StockTypeService<TModel> {
   constructor(
     private baseService: BaseService,
-    private names: StockNames
+    private names: StockTypeNames
   ) {}
   
   public getToList() {
@@ -42,9 +41,5 @@ export class StockService<TModel> {
   
   public update(model) {
     return this.baseService.put<ResponseBase<TModel>>(`${this.names.URL_LOWER_CASE}/${model.id}`, model);
-  }
-  
-  public getLowerStocks(number: number = 10) {
-    return this.baseService.get<ResponseBase<TModel[]>>(`${this.names.URL_LOWER_CASE}/lower-stocks/${number}`);
   }
 }
