@@ -374,6 +374,7 @@
                           <thead class="text-warning">
                               <th>Nome</th>
                               <th>Quantidade</th>
+                              <th>Limite</th>
                           </thead>
                           <tbody>
                               <tr *ngFor="let stock of stocks">
@@ -382,6 +383,9 @@
                                   </td>
                                   <td>
                                     {{ stock.quantity }}
+                                  </td>
+                                  <td>
+                                    {{ stock.quantityLowWarning }}
                                   </td>
                               </tr>                             
                           </tbody>
