@@ -7,15 +7,16 @@ import {
 } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { StockModel } from "app/shared/models/stock/stock.model";
+import { StockTypeModel } from "app/shared/models/stockType/stock-type.model";
 import { NotificationService } from "app/shared/services/notification/notification.service";
 import { StockService } from "app/shared/services/stock/stock.service";
+import { StockTypeService } from "app/shared/services/stockType/stock-type.service";
 import { StockNames } from "app/shared/utils/names";
-import { quantity } from "chartist";
 import { firstValueFrom } from "rxjs";
 
 declare var $: any;
 
-type UserFields = "id" | "name" | "description" | "disable" | "quantity";
+type UserFields = "id" | "name" | "description" | "disable" | "quantity" | "quantityLowWarning" | "stockTypeId";
 type FormErrors = { [u in UserFields]: string };
 
 @Component({
@@ -25,12 +26,16 @@ type FormErrors = { [u in UserFields]: string };
 })
 export class UpdateStockComponent implements OnInit {
   public updateForm: FormGroup;
+  public stockTypes: StockTypeModel[] = [];
+  public selectedStockTypeId: string;
   public formErrors: FormErrors = {
     id: "",
     name: "",
     description: "",
     quantity: "",
+    quantityLowWarning: "",
     disable: "",
+    stockTypeId: "",
   };
 
   constructor(
@@ -38,6 +43,7 @@ export class UpdateStockComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private service: StockService<StockModel>,
+    private stockTypeService: StockTypeService<StockTypeModel>,    
     private notificationService: NotificationService,
     private fb: FormBuilder
   ) {
@@ -46,7 +52,9 @@ export class UpdateStockComponent implements OnInit {
       name: new FormControl("", [Validators.required]),
       description: new FormControl(""),
       quantity: new FormControl(0, [Validators.required]),
+      quantityLowWarning: new FormControl(0, [Validators.required]),
       disable: new FormControl(false),
+      stockTypeId: new FormControl("", [Validators.required]),
     });
   }
 
@@ -62,11 +70,29 @@ export class UpdateStockComponent implements OnInit {
   get quantity() {
     return this.updateForm.get("quantity").value;
   }
+  get quantityLowWarning() {
+    return this.updateForm.get("quantityLowWarning").value;
+  }
   get disable() {
     return this.updateForm.get("disable").value;
   }
 
+  get stockTypeId() {
+    return this.updateForm.get("stockTypeId").value;
+  }
+
+  loadStockTypes() {
+    this.stockTypeService.getToList().subscribe((response) => {
+      if (response.isSuccess) {
+        setTimeout(() => {
+          this.stockTypes = response.data;
+        }, 200);
+      }
+    });
+  }
+
   ngOnInit(): void {
+    this.loadStockTypes();
     const stockId = this.route.snapshot.paramMap.get("id");
     firstValueFrom(this.service.getById(stockId)).then((response) => {
       if (response.isSuccess) {
@@ -116,5 +142,9 @@ export class UpdateStockComponent implements OnInit {
 
   cancel() {
     this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
+  }
+
+  onChangeStockType(type) {
+    this.selectedStockTypeId = type.target.value;
   }
 }

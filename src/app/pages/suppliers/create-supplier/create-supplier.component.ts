@@ -59,9 +59,9 @@ export class CreateSupplierComponent implements OnInit {
     return this.createForm.get("phoneNumber").value;
   }
 
-  showEmailAvailableNotification() {
+  showNotification(text: string) {
     const notification = this.notificationService.buildNotification(
-      "Conflito, este email pertence a outro cadastro.",
+      text,
       "warning",
       "bottom",
       "right"
@@ -81,9 +81,22 @@ export class CreateSupplierComponent implements OnInit {
     const parameters = new SupplierModel();
     parameters.email = model.email;
     this.service.getByParameters(parameters).subscribe((response) => {
-      if (response.isSuccess && !response?.data[0] && this.createForm.valid)
+      if(!response.isSuccess) 
+      {
+        this.showNotification("Erro, não foi possível consultar email.");
+        return;
+      }
+      
+      if(response?.data[0]){
+        this.showNotification("Conflito, este email pertence a outro cadastro.");
+        return;
+      } 
+
+      if (this.createForm.valid)
+      {
         this.sendCreateRequest(model);
-      else this.showEmailAvailableNotification();
+        return;
+      }      
     });
   }
   catch(error) {

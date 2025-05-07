@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "../../../../environments/environment";
 import { map } from "rxjs";
 import { Router } from "@angular/router";
-import { Constants } from "../../utils/constants";
+import { Constants } from "../../constants/aslavecare.constants";
 import jwt_decode from "jwt-decode";
 import { ResponseBase } from "app/shared/Responses/response-base";
 import { SignInAuthenticationModel } from "app/shared/models/signin/signin-authentication.model";

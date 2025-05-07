@@ -16,7 +16,7 @@
                   (click)="createNew()"
                   class="btn btn-success pull-right"
                 >
-                  Criar
+                  Novo Insumo
                 </button>
               </div>              
             </div>
@@ -26,8 +26,9 @@
               <table class="table">
                 <thead class="text-primary">
                   <th>Nome</th>
+                  <th>Tipo</th>
                   <th>Quantidade</th>
-                  <th>Descrição</th>
+                  <th>Limite</th>
                   <th>Inativo</th>
                   <th class="text-right">Ações</th>
                 </thead>
@@ -37,10 +38,13 @@
                       {{ stock.name }}
                     </td>
                     <td>
+                      {{ stock.stockTypeId }}
+                    </td>
+                    <td>
                       {{ stock.quantity }}
                     </td>
                     <td>
-                      {{ stock.description }}
+                      {{ stock.quantityLowWarning }}
                     </td>
                     <td>
                       <input

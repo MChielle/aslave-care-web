@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'app/shared/services/app/local-storage.service';
 import { AuthService } from 'app/shared/services/auth/auth.service';
 import { ToastrService } from 'ngx-toastr';
-import { Constants } from 'app/shared/utils/constants';
+import { Constants } from 'app/shared/constants/aslavecare.constants';
 
 type UserFields = 'email' | 'password';
 type FormErrors = { [u in UserFields]: string };

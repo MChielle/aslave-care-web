@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { RegisterInSelectedSupply } from "app/shared/models/register-in-stock/register-in-selected-supplies.model";
-import { CreateRegisterInModel } from "app/shared/models/register-in/create-register-in.model";
 import { RegisterInModel } from "app/shared/models/register-in/register-in.model";
 import { StockModel } from "app/shared/models/stock/stock.model";
 import { SupplierModel } from "app/shared/models/supplier/supplier.model";
@@ -56,6 +55,7 @@ export class UpdateRegisterInStockComponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) {
     this.updateForm = this.fb.group({
+      id: new FormControl(""),
       supplier: new FormControl(""),
       supplierId: new FormControl(""),
       donation: new FormControl(false),
@@ -78,6 +78,7 @@ export class UpdateRegisterInStockComponent implements OnInit {
       (response) => {
         if (response.isSuccess) {
           this.registerIn = response.data as RegisterInModel;
+          this.registerIn.id = registerInId;
           this.selectedSupplies =
             this.registerIn.registerInStocks.map<RegisterInSelectedSupply>(
               (x) => {
@@ -124,6 +125,7 @@ export class UpdateRegisterInStockComponent implements OnInit {
         this.selectedSupplies
       );
       const model = this.updateForm.value as RegisterInModel;
+      console.log({model});
       this.sendUpdateRequest(model);
     } catch (error) {
       console.log("create", error);

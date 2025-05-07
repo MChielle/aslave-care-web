@@ -110,3 +110,31 @@ export class RegistersNames {
     return "registers";
   }
 }
+
+
+@Injectable({
+  providedIn: "root",
+})
+export class StockTypeNames {
+  get API_URL_LOWER_CASE() {
+    return "stocktype";
+  }  
+  get URL_LOWER_CASE() {
+    return "stocktype";
+  }
+  get URL_LOWER_CASE_PLURAL() {
+    return "stock-types";
+  }
+  get REGISTER_IN() {
+    return "Tipo de Estoque";
+  }
+  get REGISTER_IN_LOWER_CASE() {
+    return "tipo de estoque";
+  }
+  get REGISTERS_IN() {
+    return "Tipos de Estoque";
+  }
+  get REGISTERS_IN_LOWER_CASE() {
+    return "tipos de estoque";
+  }
+}
