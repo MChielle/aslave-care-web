@@ -19,7 +19,7 @@ type UserFields =
   | "name"
   | "quantity"
   | "description"
-  | "stockLowWarning"
+  | "quantityLowWarning"
   | "stockTypeId";
 type FormErrors = { [u in UserFields]: string };
 
@@ -36,7 +36,7 @@ export class CreateStockComponent implements OnInit {
     name: "",
     quantity: "",
     stockTypeId: "",
-    stockLowWarning: "",
+    quantityLowWarning: "",
     description: "",
   };
 
@@ -52,7 +52,7 @@ export class CreateStockComponent implements OnInit {
       name: new FormControl("", [Validators.required]),
       quantity: new FormControl("", [Validators.required]),
       description: new FormControl(""),
-      stockLowWarning: new FormControl("", [Validators.required]),
+      quantityLowWarning: new FormControl("", [Validators.required]),
       stockTypeId: new FormControl("", [Validators.required]),
     });
   }
@@ -69,8 +69,8 @@ export class CreateStockComponent implements OnInit {
     return this.createForm.get("quantity").value;
   }
 
-  get stockLowWarning() {
-    return this.createForm.get("stockLowWarning").value;
+  get quantityLowWarning() {
+    return this.createForm.get("quantityLowWarning").value;
   }
 
   get stockTypeId() {
