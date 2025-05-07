@@ -65,8 +65,8 @@
               />
               <div
                 *ngIf="
-                  createForm.controls.name.touched &&
-                  createForm.controls.name.errors?.required
+                  createForm.controls.quantity.touched &&
+                  createForm.controls.quantity.errors?.required
                 "
               >
                 Quantidade é obrigatória.
@@ -74,17 +74,17 @@
             </div>
               <div class="col-md-4">
                 <input
-                  formControlName="stockLowWarning"
+                  formControlName="quantityLowWarning"
                   type="number"
                   class="form-control"
-                  id="stockLowWarning"
-                  name="stockLowWarning"
+                  id="quantityLowWarning"
+                  name="quantityLowWarning"
                   placeholder="Quantidade mínima do item"
                 />
                 <div
                   *ngIf="
-                    createForm.controls.stockLowWarning.touched &&
-                    createForm.controls.stockLowWarning.errors?.required
+                    createForm.controls.quantityLowWarning.touched &&
+                    createForm.controls.quantityLowWarning.errors?.required
                   "
                 >
                   Quantidade mínima é obrigatória.
