@@ -8,27 +8,61 @@
       <div class="card-body">
         <form [formGroup]="updateForm">
           <div class="row">
-            <div class="col-md-10">
-              <input
-                formControlName="name"
-                type="text"
-                class="form-control"
-                id="name"
-                name="name"
-                placeholder="Nome do item"
-                required
-              />
+            <div class="col-md-6">
+              <label class="col-form-label">
+                Nome
+              </label>
+                <input
+                  formControlName="name"
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  placeholder="Nome do item"
+                  required
+                />
               <div
-              *ngIf="
-                updateForm.controls.name.touched &&
-                updateForm.controls.name.errors?.required
-              "
-            >
-              Nome é obrigatório.
+                *ngIf="
+                  updateForm.controls.name.touched &&
+                  updateForm.controls.name.errors?.required
+                "
+              >
+                Nome é obrigatório.
+              </div>
             </div>
+            <div class="col-md-2">
+              <label for="Tipo" class="col-form-label">
+                Tipo
+              </label>
+              <select
+                formControlName="stockTypeId"
+                class="form-control"
+                id="stockTypeId"
+                autocomplete="off"
+                (change)="onChangeStockType($event)"
+              >
+                <option value="" disabled selected>Selecione o tipo</option>
+                <option
+                  *ngFor="let type of stockTypes"
+                  [selected]="type.id == selectedStockTypeId"
+                  [value]="type.id"
+                >
+                  {{ type.id }}
+                </option>
+              </select>
+              <div
+                *ngIf="
+                  updateForm.controls.stockTypeId.touched &&
+                  updateForm.controls.stockTypeId.errors?.required
+                "
+              >
+                Tipo é obrigatório.
+              </div>
             </div>
             <div class="col-md-1">
-              <div>
+              <label for="quantity" class="col-form-label">
+                Quantidade
+              </label>
                 <input
                   formControlName="quantity"
                   type="number"
@@ -38,19 +72,32 @@
                   placeholder="0"
                   required
                 />
-              </div>
+            </div>
+            <div class="col-md-2">
+              <label for="quantityLowWarning" class="col-form-label">
+                Quantidade mínima
+              </label>
+                <input
+                  formControlName="quantityLowWarning"
+                  type="number"
+                  class="form-control"
+                  id="quantityLowWarning"
+                  name="quantityLowWarning"
+                  placeholder="0"
+                  required
+                />
             </div>
             <div class="col-md-1">
               <div>
-                <label>
-                  <input
-                    formControlName="disable"
-                    type="checkbox"
-                    class="form-control"
-                    id="disable"
-                    name="disable"
-                  />
+                <label for="disable" class="col-form-label">
                   Inativo
+                  <input
+                  formControlName="disable"
+                  type="checkbox"
+                  class="form-control"
+                  id="disable"
+                  name="disable"
+                  />
                 </label>
               </div>
             </div>
@@ -60,26 +107,26 @@
               <div class="form-group">
                 <mat-form-field class="example-full-width">
                   <textarea
-                  matInput
-                  formControlName="description"
-                  type="text"
-                  class="form-control"
-                  id="description"
-                  name="description"
-                  placeholder="Descrição"
+                    matInput
+                    formControlName="description"
+                    type="text"
+                    class="form-control"
+                    id="description"
+                    name="description"
+                    placeholder="Descrição"
                   ></textarea>
                 </mat-form-field>
               </div>
             </div>
           </div>
           <button
-          mat-raised-button
-          type="button"
-          (click)="cancel()"
-          class="btn btn-danger pull-right"
-        >
-          Cancelar
-        </button>
+            mat-raised-button
+            type="button"
+            (click)="cancel()"
+            class="btn btn-danger pull-right"
+          >
+            Cancelar
+          </button>
           <button
             mat-raised-button
             type="button"

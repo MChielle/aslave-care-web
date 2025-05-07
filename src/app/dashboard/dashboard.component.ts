@@ -8,9 +8,6 @@ import { RegisterOutService } from "app/shared/services/register-out/register-ou
 import { StockService } from "app/shared/services/stock/stock.service";
 import * as Chartist from "chartist";
 
-//TODO: Adicionar stockLowWarning na dashboard
-
-
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",
@@ -22,6 +19,7 @@ export class DashboardComponent implements OnInit {
   public actualMonthDonations: number = 0;
   public actualMonthShopping: number = 0;
   public actualMonthConsumptions: number = 0;
+  public totalStocksQuantityWarning: number = 0;
 
   constructor(
     private stockService: StockService<StockModel>,
@@ -32,6 +30,12 @@ export class DashboardComponent implements OnInit {
   getLowerStocks() {
     this.stockService.getLowerStocks(this.lowerStock).subscribe((response) => {
       if (response.isSuccess) this.stocks = response.data;
+    });
+  }
+
+  getTotalStocksLowQuantity() {
+    this.stockService.getTotalStocksQuantityWarning().subscribe((response) => {
+      if (response.isSuccess) this.totalStocksQuantityWarning = response.data.total;
     });
   }
 
@@ -98,6 +102,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.getLowerStocks();
+    this.getTotalStocksLowQuantity();
     this.buildDonationsChart();
     this.buildConsumptionsChart();
     this.buildShoppingChart();

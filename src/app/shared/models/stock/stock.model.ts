@@ -4,6 +4,6 @@ export class StockModel {
   disable: boolean;
   description: string;
   quantity: number;
-  stockLowWarning: number;
+  quantityLowWarning: number;
   stockTypeId: string;
 }

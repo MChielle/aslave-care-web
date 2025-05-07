@@ -4,6 +4,7 @@ import { ResponseBase } from "app/shared/Responses/response-base";
 import { HttpParams } from "@angular/common/http";
 import { StockNames } from "app/shared/utils/names";
 import { DonationsPerMonthModel } from "app/shared/models/dashboard/donations-per-month.model";
+import { StocksQuantityWarningModel as StocksQuantityWarningModel } from "app/shared/models/dashboard/stocks-quantity-warning.model";
 
 @Injectable({
   providedIn: "root",
@@ -46,5 +47,9 @@ export class StockService<TModel> {
   
   public getLowerStocks(number: number = 10) {
     return this.baseService.get<ResponseBase<TModel[]>>(`${this.names.URL_LOWER_CASE}/lower-stocks/${number}`);
+  }
+  
+  public getTotalStocksQuantityWarning() {
+    return this.baseService.get<ResponseBase<StocksQuantityWarningModel>>(`${this.names.URL_LOWER_CASE}/total-stocks-quantity-warning`);
   }
 }
