@@ -6,12 +6,14 @@ import {
   Validators,
 } from "@angular/forms";
 import { Router } from "@angular/router";
+import { PropertyLenghtConstants } from "app/shared/constants/property-lenght.constants";
 import { StockModel } from "app/shared/models/stock/stock.model";
 import { StockTypeModel } from "app/shared/models/stockType/stock-type.model";
 import { NotificationService } from "app/shared/services/notification/notification.service";
 import { StockService } from "app/shared/services/stock/stock.service";
 import { StockTypeService } from "app/shared/services/stockType/stock-type.service";
 import { StockNames } from "app/shared/utils/names";
+import { DecimalValidator } from "app/shared/validators/quantity.validator";
 
 declare var $: any;
 
@@ -29,6 +31,7 @@ type FormErrors = { [u in UserFields]: string };
   styleUrls: ["./create-stock.component.scss"],
 })
 export class CreateStockComponent implements OnInit {
+  public propertyLenght;
   public createForm: FormGroup;
   public stockTypes: StockTypeModel[] = [];
   public selectedStockTypeId: string;
@@ -47,18 +50,22 @@ export class CreateStockComponent implements OnInit {
     private stockTypeService: StockTypeService<StockTypeModel>,
     private notificationService: NotificationService,
     private router: Router
-  ) {
-    this.createForm = this.fb.group({
-      name: new FormControl("", [Validators.required]),
-      quantity: new FormControl("", [Validators.required]),
-      description: new FormControl(""),
-      quantityLowWarning: new FormControl("", [Validators.required]),
-      stockTypeId: new FormControl("", [Validators.required]),
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
+    this.initForm();
     this.loadStockTypes();
+    this.propertyLenght = PropertyLenghtConstants;
+  }
+
+  initForm(){
+    this.createForm = this.fb.group({
+      name: new FormControl("", [Validators.required]),
+      quantity: new FormControl("", [Validators.required, DecimalValidator.decimal(2)]),
+      description: new FormControl(""),
+      quantityLowWarning: new FormControl("", [Validators.required, DecimalValidator.decimal(2)]),
+      stockTypeId: new FormControl("", [Validators.required]),
+    });
   }
 
   get name() {

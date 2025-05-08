@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StockModel } from 'app/shared/models/stock/stock.model';
 import { StockService } from 'app/shared/services/stock/stock.service';
-import { RegistersNames, RegisterInNames, StockNames } from 'app/shared/utils/names';
+import { RegistersNames, StockNames } from 'app/shared/utils/names';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
@@ -12,7 +12,6 @@ import { firstValueFrom } from 'rxjs';
 })
 export class StockComponent implements OnInit {
   public models: StockModel[];
-
   constructor(
     private names: StockNames,
     private registersNames: RegistersNames,
@@ -44,7 +43,6 @@ export class StockComponent implements OnInit {
     console.log(id);
     firstValueFrom(this.service.softDelete(id))
       .then((response) => {
-        console.log(response);
         this.models = this.models.filter((x) => x.id !== id);
       })
       .catch((error) => {

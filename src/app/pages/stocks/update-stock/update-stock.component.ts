@@ -6,17 +6,26 @@ import {
   Validators,
 } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { PropertyLenghtConstants } from "app/shared/constants/property-lenght.constants";
 import { StockModel } from "app/shared/models/stock/stock.model";
 import { StockTypeModel } from "app/shared/models/stockType/stock-type.model";
 import { NotificationService } from "app/shared/services/notification/notification.service";
 import { StockService } from "app/shared/services/stock/stock.service";
 import { StockTypeService } from "app/shared/services/stockType/stock-type.service";
 import { StockNames } from "app/shared/utils/names";
+import { DecimalValidator } from "app/shared/validators/quantity.validator";
 import { firstValueFrom } from "rxjs";
 
 declare var $: any;
 
-type UserFields = "id" | "name" | "description" | "disable" | "quantity" | "quantityLowWarning" | "stockTypeId";
+type UserFields =
+  | "id"
+  | "name"
+  | "description"
+  | "disable"
+  | "quantity"
+  | "quantityLowWarning"
+  | "stockTypeId";
 type FormErrors = { [u in UserFields]: string };
 
 @Component({
@@ -25,6 +34,7 @@ type FormErrors = { [u in UserFields]: string };
   styleUrls: ["./update-stock.component.scss"],
 })
 export class UpdateStockComponent implements OnInit {
+  public propertyLenght;
   public updateForm: FormGroup;
   public stockTypes: StockTypeModel[] = [];
   public selectedStockTypeId: string;
@@ -43,16 +53,24 @@ export class UpdateStockComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private service: StockService<StockModel>,
-    private stockTypeService: StockTypeService<StockTypeModel>,    
+    private stockTypeService: StockTypeService<StockTypeModel>,
     private notificationService: NotificationService,
     private fb: FormBuilder
-  ) {
+  ) {}
+
+  initForm() {
     this.updateForm = this.fb.group({
       id: new FormControl(""),
       name: new FormControl("", [Validators.required]),
       description: new FormControl(""),
-      quantity: new FormControl(0, [Validators.required]),
-      quantityLowWarning: new FormControl(0, [Validators.required]),
+      quantity: new FormControl(0, [
+        Validators.required,
+        DecimalValidator.decimal(2),
+      ]),
+      quantityLowWarning: new FormControl(0, [
+        Validators.required,
+        DecimalValidator.decimal(2),
+      ]),
       disable: new FormControl(false),
       stockTypeId: new FormControl("", [Validators.required]),
     });
@@ -92,14 +110,17 @@ export class UpdateStockComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.propertyLenght = PropertyLenghtConstants;
+    this.initForm();
     this.loadStockTypes();
     const stockId = this.route.snapshot.paramMap.get("id");
-    firstValueFrom(this.service.getById(stockId)).then((response) => {
-      if (response.isSuccess) {
-        const stock = response.data as StockModel;
-        this.updateForm.patchValue(stock);
-      }
-    });
+    if (stockId)
+      firstValueFrom(this.service.getById(stockId)).then((response) => {
+        if (response.isSuccess) {
+          const stock = response.data as StockModel;
+          this.updateForm.patchValue(stock);
+        }
+      });
   }
 
   showNomeAvailableNotification() {
@@ -127,13 +148,15 @@ export class UpdateStockComponent implements OnInit {
     this.service.getByParameters(parameters).subscribe((response) => {
       if (
         response.isSuccess &&
-        (!response?.data[0] || response?.data[0]?.id == model.id) &&
-        this.updateForm.valid
+        response.data[0] &&
+        response.data[0].name == model.name
       ) {
-        this.sendUpdateRequest(model);
-      } else {
         this.showNomeAvailableNotification();
+        return;
       }
+
+      if (response.isSuccess && this.updateForm.valid)
+        this.sendUpdateRequest(model);
     });
   }
   catch(error) {
