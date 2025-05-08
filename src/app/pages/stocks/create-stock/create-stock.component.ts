@@ -58,12 +58,18 @@ export class CreateStockComponent implements OnInit {
     this.propertyLenght = PropertyLenghtConstants;
   }
 
-  initForm(){
+  initForm() {
     this.createForm = this.fb.group({
       name: new FormControl("", [Validators.required]),
-      quantity: new FormControl("", [Validators.required, DecimalValidator.decimal(2)]),
+      quantity: new FormControl("", [
+        Validators.required,
+        DecimalValidator.decimal(2),
+      ]),
       description: new FormControl(""),
-      quantityLowWarning: new FormControl("", [Validators.required, DecimalValidator.decimal(2)]),
+      quantityLowWarning: new FormControl("", [
+        Validators.required,
+        DecimalValidator.decimal(2),
+      ]),
       stockTypeId: new FormControl("", [Validators.required]),
     });
   }
@@ -94,9 +100,9 @@ export class CreateStockComponent implements OnInit {
     });
   }
 
-  showNameAvailableNotification() {
+  showNameAvailableNotification(text: string) {
     const notification = this.notificationService.buildNotification(
-      "Conflito, este nome pertence a outro cadastro.",
+      text,
       "warning",
       "bottom",
       "right"
@@ -116,9 +122,24 @@ export class CreateStockComponent implements OnInit {
     const parameters = new StockModel();
     parameters.name = model.name;
     this.service.getByParameters(parameters).subscribe((response) => {
-      if (response.isSuccess && !response?.data[0] && this.createForm.valid)
+      if (
+        response.isSuccess &&
+        response.data[0] &&
+        response.data[0].name == model.name
+      ) {
+        this.showNameAvailableNotification(
+          "Conflito, este nome pertence a outro cadastro."
+        );
+        return;
+      }
+
+      if (this.createForm.errors || !this.createForm.touched) {
+        this.showNameAvailableNotification(this.createForm.errors[0]);
+        return;
+      }
+
+      if (response.isSuccess && this.createForm.valid && this.createForm.touched)
         this.sendCreateRequest(model);
-      else this.showNameAvailableNotification();
     });
   }
   catch(error) {

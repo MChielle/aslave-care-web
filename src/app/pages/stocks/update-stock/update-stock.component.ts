@@ -123,9 +123,9 @@ export class UpdateStockComponent implements OnInit {
       });
   }
 
-  showNomeAvailableNotification() {
+  showNameAvailableNotification(text: string) {
     const notification = this.notificationService.buildNotification(
-      "Conflito, este nome pertence a outro cadastro.",
+      text,
       "warning",
       "bottom",
       "right"
@@ -151,11 +151,18 @@ export class UpdateStockComponent implements OnInit {
         response.data[0] &&
         response.data[0].name == model.name
       ) {
-        this.showNomeAvailableNotification();
+        this.showNameAvailableNotification(
+          "Conflito, este nome pertence a outro cadastro."
+        );
         return;
       }
 
-      if (response.isSuccess && this.updateForm.valid)
+      if (this.updateForm.errors || !this.updateForm.touched) {
+        this.showNameAvailableNotification(this.updateForm.errors[0]);
+        return;
+      }
+
+      if (response.isSuccess && this.updateForm.valid && this.updateForm.touched)
         this.sendUpdateRequest(model);
     });
   }
