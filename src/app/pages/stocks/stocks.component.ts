@@ -32,7 +32,6 @@ export class StockComponent implements OnInit {
 
   constructor(
     private names: StockNames,
-    private registersNames: RegistersNames,
     private service: StockService<StockModel>,
     private router: Router
   ) {}
@@ -66,10 +65,6 @@ export class StockComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  createNew() {
-    this.router.navigate([`create-${this.names.URL_LOWER_CASE}`]);
-  }
-
   softDelete(id: string) {
     console.log(id);
     firstValueFrom(this.service.softDelete(id))
@@ -90,11 +85,11 @@ export class StockComponent implements OnInit {
     }
   }
 
-  update(id: string) {
-    this.router.navigate([`update-${this.names.URL_LOWER_CASE}`, id]);
+  navigateToCreate() {
+    this.router.navigate([`create-${this.names.URL_LOWER_CASE}`]);
   }
 
-  registers() {
-    this.router.navigate([this.registersNames.URL_LOWER_CASE_PLURAL]);
+  navigateToUpdate(id: string) {
+    this.router.navigate([`update-${this.names.URL_LOWER_CASE}`, id]);
   }
 }

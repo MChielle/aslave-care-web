@@ -15,7 +15,6 @@ import { firstValueFrom } from "rxjs";
 declare var $: any;
 type UserFields =
   | "supplier"
-  | "supplierId"
   | "donation"
   | "description"
   | "apply"
@@ -36,7 +35,6 @@ export class UpdateRegisterInStockComponent implements OnInit {
   public updateForm: FormGroup;
   public formErrors: FormErrors = {
     supplier: "",
-    supplierId: "",
     donation: "",
     description: "",
     apply: "",
@@ -91,8 +89,10 @@ export class UpdateRegisterInStockComponent implements OnInit {
               }
             );
           this.updateForm.patchValue(this.registerIn);
-          this.selectSupplier(this.registerIn.supplier);
-          this.cdr.detectChanges();
+          setTimeout(() => {
+            console.log(this.registerIn.supplier);
+            this.selectSupplier(this.registerIn.supplier);            
+          }, 200);
         }
       }
     );
@@ -134,7 +134,6 @@ export class UpdateRegisterInStockComponent implements OnInit {
 
   selectSupplier(supplier: SupplierModel) {
     try {
-      this.updateForm.controls["supplierId"].setValue(supplier?.id);
       this.updateForm.controls["supplier"].setValue(supplier);
       this.cdr.detectChanges();
     } catch (error) {

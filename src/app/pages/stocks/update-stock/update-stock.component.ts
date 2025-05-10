@@ -76,54 +76,39 @@ export class UpdateStockComponent implements OnInit {
     });
   }
 
-  get id() {
-    return this.updateForm.get("id").value;
-  }
-  get name() {
-    return this.updateForm.get("name").value;
-  }
-  get description() {
-    return this.updateForm.get("description").value;
-  }
-  get quantity() {
-    return this.updateForm.get("quantity").value;
-  }
-  get quantityLowWarning() {
-    return this.updateForm.get("quantityLowWarning").value;
-  }
-  get disable() {
-    return this.updateForm.get("disable").value;
-  }
-
-  get stockTypeId() {
-    return this.updateForm.get("stockTypeId").value;
-  }
-
   loadStockTypes() {
-    this.stockTypeService.getToList().subscribe((response) => {
-      if (response.isSuccess) {
-        setTimeout(() => {
-          this.stockTypes = response.data;
-        }, 200);
-      }
-    });
+    try {
+      this.stockTypeService.getToList().subscribe((response) => {
+        if (response.isSuccess) {
+          setTimeout(() => {
+            this.stockTypes = response.data;
+          }, 200);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   ngOnInit(): void {
-    this.propertyLenght = PropertyLenghtConstants;
-    this.initForm();
-    this.loadStockTypes();
-    const stockId = this.route.snapshot.paramMap.get("id");
-    if (stockId)
-      firstValueFrom(this.service.getById(stockId)).then((response) => {
-        if (response.isSuccess) {
-          const stock = response.data as StockModel;
-          this.updateForm.patchValue(stock);
-        }
-      });
+    try {
+      this.propertyLenght = PropertyLenghtConstants;
+      this.initForm();
+      this.loadStockTypes();
+      const stockId = this.route.snapshot.paramMap.get("id");
+      if (stockId)
+        firstValueFrom(this.service.getById(stockId)).then((response) => {
+          if (response.isSuccess) {
+            const stock = response.data as StockModel;
+            this.updateForm.patchValue(stock);
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  showNameAvailableNotification(text: string) {
+  showNotification(text: string) {
     const notification = this.notificationService.buildNotification(
       text,
       "warning",
@@ -134,40 +119,46 @@ export class UpdateStockComponent implements OnInit {
   }
 
   sendUpdateRequest(stock: StockModel) {
-    this.service.update(stock).subscribe((response) => {
-      if (response.isSuccess) {
-        this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
-      }
-    });
+    try {
+      this.service.update(stock).subscribe((response) => {
+        if (response.isSuccess) {
+          this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   update() {
-    const model = this.updateForm.value as StockModel;
-    const parameters = new StockModel();
-    parameters.name = model.name;
-    this.service.getByParameters(parameters).subscribe((response) => {
-      if (
-        response.isSuccess &&
-        response.data[0] &&
-        response.data[0].name == model.name
-      ) {
-        this.showNameAvailableNotification(
-          "Conflito, este nome pertence a outro cadastro."
-        );
-        return;
-      }
+    try {
+      const model = this.updateForm.value as StockModel;
+      const parameters = new StockModel();
+      parameters.name = model.name;
+      this.service.getByParameters(parameters).subscribe((response) => {
+        if (
+          response.isSuccess &&
+          response.data[0] &&
+          response.data[0].name == model.name &&
+          response.data[0].id != model.id
+        ) {
+          this.showNotification(
+            "Conflito, este nome pertence a outro cadastro."
+          );
+          return;
+        }
 
-      if (this.updateForm.errors || !this.updateForm.touched) {
-        this.showNameAvailableNotification(this.updateForm.errors[0]);
-        return;
-      }
+        if (this.updateForm.controls.errors) {
+          this.showNotification(this.updateForm.controls.errors?.getError.name);
+          return;
+        }
 
-      if (response.isSuccess && this.updateForm.valid && this.updateForm.touched)
-        this.sendUpdateRequest(model);
-    });
-  }
-  catch(error) {
-    console.log("update", error);
+        if (response.isSuccess && this.updateForm.valid)
+          this.sendUpdateRequest(model);
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   cancel() {

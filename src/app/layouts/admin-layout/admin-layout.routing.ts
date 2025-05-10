@@ -36,7 +36,7 @@ export const AdminLayoutRoutes: Routes = [
 
     { path: 'registers-out', component: RegistersOutComponent},    
     { path: 'create-register-out', component: CreateRegisterOutStockComponent },    
-    { path: 'update-register-out', component: UpdateRegisterOutStockComponent },    
+    { path: 'update-register-out/:id', component: UpdateRegisterOutStockComponent },    
 
     { path: 'dashboard', component: DashboardComponent },
     { path: 'user-profile', component: UserProfileComponent },
