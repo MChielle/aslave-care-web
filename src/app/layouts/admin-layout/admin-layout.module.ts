@@ -34,6 +34,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from "@angular/material/sort";
+import { NgxMaskModule } from 'ngx-mask';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { MatSortModule } from "@angular/material/sort";
     MatTooltipModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    NgxMaskModule
   ],
   declarations: [
     DashboardComponent,
