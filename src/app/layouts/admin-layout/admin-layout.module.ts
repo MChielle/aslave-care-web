@@ -35,6 +35,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from "@angular/material/sort";
 import { NgxMaskModule } from 'ngx-mask';
+import { RestockReportComponent } from "app/pages/reports/restock-report/restock-report.component";
+import { ReportsComponent } from "app/pages/reports/reports.component";
 
 
 @NgModule({
@@ -80,6 +82,9 @@ import { NgxMaskModule } from 'ngx-mask';
     RegistersOutComponent,
     CreateRegisterOutStockComponent,
     UpdateRegisterOutStockComponent,
+
+    RestockReportComponent,
+    ReportsComponent,
   ],
   exports: [RouterModule],
 })

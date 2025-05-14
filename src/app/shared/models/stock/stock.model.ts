@@ -1,3 +1,6 @@
+import { RegisterInStockModel } from "../register-in-stock/register-in-stock.model";
+import { RegisterOutStockModel } from "../register-out-stock/register-out-stock.model";
+
 export class StockModel {
   id: string;
   name: string;
@@ -6,4 +9,6 @@ export class StockModel {
   quantity: number;
   quantityLowWarning: number;
   stockTypeId: string;
+  registerInStocks: RegisterInStockModel[];
+  registerOutStocks: RegisterOutStockModel[];
 }
