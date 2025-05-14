@@ -9,6 +9,7 @@ import { firstValueFrom } from "rxjs";
 import { formatDate } from "@angular/common";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
+import { environment } from "environments/environment";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -59,7 +60,7 @@ export class RestockReportComponent implements OnInit {
   }
 
   generatePdfRestockReport() {
-    const tableHeader = [
+    const tableBody = [
       [
         { text: "Nome", bold: true },
         { text: "Fornecedor", bold: true },
@@ -111,89 +112,31 @@ export class RestockReportComponent implements OnInit {
           table: {
             headerRows: 1,
             widths: ["auto", "auto", "auto", "*", "*"],
-            body: tableHeader,
+            body: tableBody,
           },
         },
+        {
+          text: `Total de items ${this.dataSource.data.length}`,
+          bold: true,
+          alignment: "right",
+          margin: [0, 10, 0, 10],
+        },
       ],
+      footer: {
+        stack: [
+          {
+            text: `Documento emitido pelo sistema ${environment.APPLICATION_NAME}`,
+            alignment: "center",
+            fontSize: 10,
+          },
+        ],
+      },
     };
 
     let pdf = pdfMake.createPdf(docDefinition);
     console.log(pdf);
     pdf.open();
   }
-
-  // downloadRestockReport() {
-  //   const tableHeader = [
-  //     { text: "Nome", bold: true },
-  //     { text: "Fornecedor", bold: true },
-  //     { text: "Tipo", bold: true },
-  //     { text: "Quantidade", bold: true },
-  //     { text: "Menor Preço", bold: true },
-  //   ];
-
-  //   const tableData = [
-  //     ...this.dataSource.data.map((row) => [
-  //       row.name ?? "",
-  //       row.supplierName ?? "",
-  //       row.stockTypeId ?? "",
-  //       row.quantity ?? "",
-  //       row.lowerPrice ?? "",
-  //     ]),
-  //   ];
-
-  //   const tableBody = [
-  //     {
-  //       headerRows: 1,
-  //       widths: ["*", "*", "*", "*", "auto"],
-  //       body: [
-  //         tableHeader,
-  //         //tableData
-  //       ],
-  //     },
-  //   ];
-
-  //   let docDefinition = {
-  //     language: "pt-BR",
-  //     info: {
-  //       title: "Lista de compras",
-  //       author: "Aslave Care",
-  //       subject: "restock report",
-  //     },
-  //     content: [
-  //       {
-  //         text: "Lista de compras",
-  //         bold: true,
-  //         fontSize: 20,
-  //         alignment: "center",
-  //         margin: [0, 0, 0, 20],
-  //       },
-  //       {
-  //         text: "Relatório de suprimentos com estoque abaixo do limite.",
-  //       },
-  //       {
-  //         text: `Data: ${formatDate(Date.now(), "dd/MM/yyyy", "en-US")}`,
-  //         alignment: "right",
-  //         margin: [0, 10, 0, 10],
-  //       },
-  //       {
-  //         layout: "lightHorizontalLines",
-  //         style: "table",
-  //         margin: [0, 0, 0, 100],
-  //         table: [
-  //           { text: "Nome", bold: true },
-  //           { text: "Fornecedor", bold: true },
-  //           { text: "Tipo", bold: true },
-  //           { text: "Quantidade", bold: true },
-  //           { text: "Menor Preço", bold: true },
-  //         ],
-  //       },
-  //     ],
-  //   };
-
-  //   let pdf = pdfMake.createPdf(docDefinition);
-  //   console.log(pdf);
-  //   pdf.open();
-  // }
 
   reloadDataSource() {
     let source = this.stocks.map(

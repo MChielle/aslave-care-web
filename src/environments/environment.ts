@@ -6,4 +6,5 @@
 export const environment = {
   PRODUCTION: false,
   BASE_URL: 'https://localhost:5001/api',
+  APPLICATION_NAME: "Aslave Care Software"
 };
