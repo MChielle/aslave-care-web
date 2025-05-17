@@ -47,6 +47,14 @@
               >
                 Email é obrigatório.
               </div>
+              <div
+                *ngIf="
+                  updateForm.controls.email.touched &&
+                  updateForm.controls.email.errors?.invalidEmail
+                "
+              >
+                Email é inválido.
+              </div>
             </div>
             <div class="col-md-4">
               <input

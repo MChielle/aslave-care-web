@@ -11,7 +11,6 @@ import { NotificationService } from "app/shared/services/notification/notificati
 import { SupplierModel } from "app/shared/models/supplier/supplier.model";
 import { SupplierNames } from "app/shared/utils/names";
 import { ValidatorHelper } from "app/shared/utils/helpers/validator.helper";
-import { param } from "jquery";
 declare var $: any;
 
 type UserFields = "name" | "email" | "phoneNumber";
@@ -23,6 +22,7 @@ type FormErrors = { [u in UserFields]: string };
   styleUrls: ["./create-supplier.component.scss"],
 })
 export class CreateSupplierComponent implements OnInit {
+
   public createForm: FormGroup;
   public formErrors: FormErrors = {
     name: "",
