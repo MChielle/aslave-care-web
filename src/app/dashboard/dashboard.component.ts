@@ -14,6 +14,7 @@ import * as Chartist from "chartist";
   styleUrls: ["./dashboard.component.css"],
 })
 export class DashboardComponent implements OnInit {
+  boardTopScale: number = 300;
   public stocks: StockModel[] = new Array();
   public lowerStock: number = 5;
   public actualMonthDonations: number = 0;
@@ -137,7 +138,7 @@ export class DashboardComponent implements OnInit {
           tension: 0,
         }),
         low: 0,
-        high: 500,
+        high: this.boardTopScale,
         chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
       };
 
@@ -179,7 +180,7 @@ export class DashboardComponent implements OnInit {
           tension: 0,
         }),
         low: 0,
-        high: 500,
+        high: this.boardTopScale,
         chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
       };
 
@@ -221,7 +222,7 @@ export class DashboardComponent implements OnInit {
           showGrid: false,
         },
         low: 0,
-        high: 500,
+        high: this.boardTopScale,
         chartPadding: { top: 0, right: 5, bottom: 0, left: 0 },
       };
 
