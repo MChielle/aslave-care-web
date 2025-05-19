@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="card">
       <div class="card-header card-header-info">
-        <h4 class="card-title">Estoque</h4>
+        <h4 class="card-title">Aquisição</h4>
         <p class="card-category">Alterar Aquisição</p>
       </div>
       <div class="card-body">
@@ -13,7 +13,7 @@
                 placeholder="Fornecedor"
                 shownValue="name"
                 [itemList]="suppliers"
-                [selectedValue]="this.updateForm.controls['supplier'].value"
+                [selectedValue]="this.updateForm.controls.supplier.value"
                 (itemChanged)="selectSupplier($event)"
               ></app-autocomplete>
             </div>
@@ -47,13 +47,14 @@
               <div class="form-group">
                 <mat-form-field class="example-full-width">
                   <textarea
-                  matInput
-                  formControlName="description"
-                  type="text"
-                  class="form-control"
-                  id="description"
-                  name="description"
-                  placeholder="Descrição"
+                    matInput
+                    formControlName="description"
+                    type="text"
+                    class="form-control"
+                    id="description"
+                    name="description"
+                    placeholder="Descrição"
+                    maxlength="{{ propertyLenght.DESCRIPTION }}"
                   ></textarea>
                 </mat-form-field>
               </div>
@@ -94,6 +95,9 @@
                     type="number"
                     name="quantity{{ i }}"
                     [(ngModel)]="selectedSupply.quantity"
+                    step="0.01"
+                    min="0"
+                    max="99999999.99"
                   />
                 </td>
                 <td>
@@ -101,6 +105,9 @@
                     type="number"
                     name="price{{ i }}"
                     [(ngModel)]="selectedSupply.price"
+                    step="0.01"
+                    min="0"
+                    max="99999999.99"
                   />
                 </td>
                 <td class="text-right">
@@ -117,13 +124,13 @@
           </table>
         </div>
         <button
-        mat-raised-button
-        type="button"
-        (click)="cancel()"
-        class="btn btn-danger pull-right"
-      >
-        Cancelar
-      </button>
+          mat-raised-button
+          type="button"
+          (click)="cancel()"
+          class="btn btn-danger pull-right"
+        >
+          Cancelar
+        </button>
         <button
           mat-raised-button
           type="button"

@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { PropertyLenghtConstants } from "app/shared/constants/property-lenght.constants";
 import { RegisterInSelectedSupply } from "app/shared/models/register-in-stock/register-in-selected-supplies.model";
 import { RegisterInModel } from "app/shared/models/register-in/register-in.model";
 import { StockModel } from "app/shared/models/stock/stock.model";
@@ -27,6 +28,7 @@ type FormErrors = { [u in UserFields]: string };
   styleUrls: ["./update-register-in-stock.component.scss"],
 })
 export class UpdateRegisterInStockComponent implements OnInit {
+  public propertyLenght;
   public suppliers: SupplierModel[];
   public supplies: StockModel[];
   public supply: string;
@@ -63,7 +65,20 @@ export class UpdateRegisterInStockComponent implements OnInit {
     });
   }
 
+  initForm() {
+    this.updateForm.controls.id.setValue(this.registerIn.id);
+    this.updateForm.controls.donation.setValue(this.registerIn.donation);
+    this.updateForm.controls.description.setValue(this.registerIn.description);
+    this.updateForm.controls.apply.setValue(this.registerIn.apply);
+    this.updateForm.controls.supplierId.setValue(this.registerIn.supplierId);
+    this.updateForm.controls.supplier.setValue(this.registerIn.supplier);
+    this.updateForm.controls.registerInStocks.setValue(
+      this.registerIn.registerInStocks
+    );
+  }
+
   ngOnInit(): void {
+    this.propertyLenght = PropertyLenghtConstants;
     this.supplierService.getToList().subscribe((response) => {
       if (response.isSuccess) this.suppliers = response.data;
     });
@@ -76,7 +91,6 @@ export class UpdateRegisterInStockComponent implements OnInit {
       (response) => {
         if (response.isSuccess) {
           this.registerIn = response.data as RegisterInModel;
-          this.registerIn.id = registerInId;
           this.selectedSupplies =
             this.registerIn.registerInStocks.map<RegisterInSelectedSupply>(
               (x) => {
@@ -88,19 +102,15 @@ export class UpdateRegisterInStockComponent implements OnInit {
                 );
               }
             );
-          this.updateForm.patchValue(this.registerIn);
-          setTimeout(() => {
-            console.log(this.registerIn.supplier);
-            this.selectSupplier(this.registerIn.supplier);            
-          }, 200);
+          this.initForm();
         }
       }
     );
   }
 
-  showNameAvailableNotification() {
+  showNotification(text: string) {
     const notification = this.notificationService.buildNotification(
-      "Conflito, este nome pertence a outro cadastro.",
+      text,
       "warning",
       "bottom",
       "right"
@@ -115,29 +125,28 @@ export class UpdateRegisterInStockComponent implements OnInit {
           this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
       });
     } catch (error) {
-      console.log("sendUpdateRequest", error);
+      console.log(error);
     }
   }
 
   update() {
     try {
-      this.updateForm.controls["registerInStocks"].setValue(
-        this.selectedSupplies
-      );
+      this.updateForm.controls.registerInStocks.setValue(this.selectedSupplies);
       const model = this.updateForm.value as RegisterInModel;
-      console.log({model});
+      console.log({ model });
       this.sendUpdateRequest(model);
     } catch (error) {
-      console.log("create", error);
+      console.log(error);
     }
   }
 
   selectSupplier(supplier: SupplierModel) {
     try {
-      this.updateForm.controls["supplier"].setValue(supplier);
+      this.updateForm.controls.supplier.setValue(supplier);
+      this.updateForm.controls.supplierId.setValue(supplier.id);
       this.cdr.detectChanges();
     } catch (error) {
-      console.log("selectSupplier", error);
+      console.log(error);
     }
   }
 
@@ -157,7 +166,7 @@ export class UpdateRegisterInStockComponent implements OnInit {
 
       this.selectedSupplies.push(selectedSupply);
     } catch (error) {
-      console.log("selectSupply", error);
+      console.log(error);
     }
   }
 
@@ -167,7 +176,7 @@ export class UpdateRegisterInStockComponent implements OnInit {
         (x) => x.stockId != id
       );
     } catch (error) {
-      console.log("deleteSupply", error);
+      console.log(error);
     }
   }
 
@@ -175,7 +184,7 @@ export class UpdateRegisterInStockComponent implements OnInit {
     try {
       this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
     } catch (error) {
-      console.log("cancel", error);
+      console.log(error);
     }
   }
 }

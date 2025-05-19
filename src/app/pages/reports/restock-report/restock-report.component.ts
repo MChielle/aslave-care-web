@@ -143,10 +143,10 @@ export class RestockReportComponent implements OnInit {
       (x) =>
         new RestockReportModel(
           x.name,
-          x.registerInStocks[0].registerIn.supplier.name,
+          x.registerInStocks[0]?.registerIn?.supplier?.name ?? "",
           x.stockTypeId,
           x.quantity,
-          x.registerInStocks[0].price
+          x.registerInStocks[0]?.price ?? 0
         )
     );
 

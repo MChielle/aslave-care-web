@@ -92,7 +92,6 @@ export class RegistersInComponent implements OnInit {
   softDelete(id: string) {
     firstValueFrom(this.service.softDelete(id))
       .then((response) => {
-        console.log(response);
         this.registersIn = this.registersIn.filter((x) => x.id !== id);
         this.reloadDataSource();
       })

@@ -68,7 +68,7 @@
                     Data
                   </th>
                   <td mat-cell *matCellDef="let registerOut">
-                    {{ registerOut.applyDate }}
+                    {{ registerOut.applyDate | date : "dd/MM/yyyy - HH:mm" }}
                   </td>
                 </ng-container>
 

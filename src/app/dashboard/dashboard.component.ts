@@ -35,7 +35,8 @@ export class DashboardComponent implements OnInit {
 
   getTotalStocksLowQuantity() {
     this.stockService.getTotalStocksQuantityWarning().subscribe((response) => {
-      if (response.isSuccess) this.totalStocksQuantityWarning = response.data.total;
+      if (response.isSuccess)
+        this.totalStocksQuantityWarning = response.data.total;
     });
   }
 
@@ -108,7 +109,11 @@ export class DashboardComponent implements OnInit {
     this.buildShoppingChart();
   }
 
-  buildShoppingChart(){
+  getActualMonthShopping() {
+    this.buildShoppingChart();
+  }
+
+  buildShoppingChart() {
     this.registerInService.getShoppingPerMonth().subscribe((response) => {
       if (!response.isSuccess) return;
       const shoppingPerMonth = response.data;
@@ -126,7 +131,7 @@ export class DashboardComponent implements OnInit {
         labels: labels,
         series: [series],
       };
-  
+
       const optionsShoppingChart: any = {
         lineSmooth: Chartist.Interpolation.cardinal({
           tension: 0,
@@ -135,15 +140,19 @@ export class DashboardComponent implements OnInit {
         high: 500,
         chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
       };
-  
+
       var dailyShoppingChart = new Chartist.Line(
         "#dailySalesChart",
         dataShoppingChart,
         optionsShoppingChart
       );
-  
+
       this.startAnimationForLineChart(dailyShoppingChart);
     });
+  }
+
+  getActualMonthConsumptions() {
+    this.buildConsumptionsChart();
   }
 
   buildConsumptionsChart() {
@@ -157,14 +166,14 @@ export class DashboardComponent implements OnInit {
         labels.unshift(item.month);
         series.unshift(item.total);
       });
-      
+
       this.actualMonthConsumptions = consumptionsPerMonth[0]?.total ?? 0;
 
       const dataConsumptionsChart: any = {
         labels: labels,
         series: [series],
       };
-  
+
       const optionsConsumptionsChart: any = {
         lineSmooth: Chartist.Interpolation.cardinal({
           tension: 0,
@@ -173,15 +182,20 @@ export class DashboardComponent implements OnInit {
         high: 500,
         chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
       };
-  
+
       var ConsumptionsChart = new Chartist.Line(
         "#completedTasksChart",
         dataConsumptionsChart,
         optionsConsumptionsChart
       );
-  
+
       this.startAnimationForLineChart(ConsumptionsChart);
-    });}
+    });
+  }
+
+  getActualMonthDonation() {
+    this.buildDonationsChart();
+  }
 
   buildDonationsChart() {
     this.registerInService.getDonationsPerMonth().subscribe((response) => {
@@ -196,7 +210,7 @@ export class DashboardComponent implements OnInit {
       });
 
       this.actualMonthDonations = donationsPerMonth[0]?.total ?? 0;
-      
+
       var dataDonationsChart = {
         labels: labels,
         series: [series],
@@ -224,14 +238,14 @@ export class DashboardComponent implements OnInit {
           },
         ],
       ];
-      
+
       var DonationsChart = new Chartist.Bar(
         "#websiteViewsChart",
         dataDonationsChart,
         optionsDonationsChart,
         responsiveOptions
       );
-      
+
       this.startAnimationForBarChart(DonationsChart);
     });
   }
