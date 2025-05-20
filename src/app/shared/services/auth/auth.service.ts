@@ -9,6 +9,7 @@ import { Constants } from "../../constants/aslavecare.constants";
 import jwt_decode from "jwt-decode";
 import { ResponseBase } from "app/shared/Responses/response-base";
 import { SignInAuthenticationModel } from "app/shared/models/signin/signin-authentication.model";
+import { SignInChangePasswordModel } from "app/shared/models/signin/signin-change-password.model";
 
 @Injectable({
   providedIn: "root",
@@ -42,8 +43,8 @@ export class AuthService {
     return this.baseService.post(`signin/change-password/${email}`, {});
   }
 
-  public confirmChangePassword(newPassword) {
-    return this.baseService.post(`signin/change-password`, newPassword);
+  public confirmChangePassword(newPassword: SignInChangePasswordModel) {
+    return this.baseService.post<ResponseBase<any>>(`signin/change-password`, newPassword);
   }
 
   public logout() {

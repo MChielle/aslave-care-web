@@ -37,6 +37,8 @@ import { MatSortModule } from "@angular/material/sort";
 import { NgxMaskModule } from 'ngx-mask';
 import { RestockReportComponent } from "app/pages/reports/restock-report/restock-report.component";
 import { ReportsComponent } from "app/pages/reports/reports.component";
+import { UserPerfilComponent } from "app/pages/users/user-perfil/user-perfil.component";
+import { UsersComponent } from "app/pages/users/users.component";
 
 
 @NgModule({
@@ -85,6 +87,9 @@ import { ReportsComponent } from "app/pages/reports/reports.component";
 
     RestockReportComponent,
     ReportsComponent,
+
+    UserPerfilComponent,
+    UsersComponent,
   ],
   exports: [RouterModule],
 })
