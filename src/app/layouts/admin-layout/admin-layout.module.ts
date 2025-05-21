@@ -4,7 +4,7 @@ import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AdminLayoutRoutes } from "./admin-layout.routing";
 import { DashboardComponent } from "../../dashboard/dashboard.component";
-import { UserProfileComponent } from "../../user-profile/user-profile.component";
+import { UserProfileComponent } from "../../pages/users/user-profile/user-profile.component";
 import { TableListComponent } from "../../table-list/table-list.component";
 import { TypographyComponent } from "../../typography/typography.component";
 import { IconsComponent } from "../../icons/icons.component";
@@ -37,7 +37,6 @@ import { MatSortModule } from "@angular/material/sort";
 import { NgxMaskModule } from 'ngx-mask';
 import { RestockReportComponent } from "app/pages/reports/restock-report/restock-report.component";
 import { ReportsComponent } from "app/pages/reports/reports.component";
-import { UserPerfilComponent } from "app/pages/users/user-perfil/user-perfil.component";
 import { UsersComponent } from "app/pages/users/users.component";
 
 
@@ -60,7 +59,6 @@ import { UsersComponent } from "app/pages/users/users.component";
   ],
   declarations: [
     DashboardComponent,
-    UserProfileComponent,
     TableListComponent,
     TypographyComponent,
     IconsComponent,
@@ -88,8 +86,8 @@ import { UsersComponent } from "app/pages/users/users.component";
     RestockReportComponent,
     ReportsComponent,
 
-    UserPerfilComponent,
     UsersComponent,
+    UserProfileComponent,
   ],
   exports: [RouterModule],
 })

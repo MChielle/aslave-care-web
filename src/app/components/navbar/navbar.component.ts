@@ -48,6 +48,10 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(["change-password"]);
   }
 
+  navigateToUserProfile() {
+    this.router.navigate(["user-profile"]);
+  }
+
   logout() {
     this.authService.logout();
   }
