@@ -1,1 +1,146 @@
-<p>users works!</p>
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">Usuários</h4>
+            <p class="card-category">Registros de usuários</p>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field class="standard">
+                  <mat-label>Buscar...</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    id="search"
+                    name="search"
+                    placeholder="Nome"
+                    (keyup)="applyFilter($event)"
+                    #input
+                  />
+                </mat-form-field>
+              </div>
+              <div class="col-md-2"></div>
+              <div class="col-md-4 pull-right">
+                <button
+                  mat-raised-button
+                  type="button"
+                  (click)="navigateToCreate()"
+                  class="btn btn-success pull-right"
+                >
+                  Criar usuário
+                </button>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <mat-table
+                mat-table
+                matSort
+                [dataSource]="dataSource"
+                class="table-responsive"
+              >
+                <ng-container matColumnDef="name">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    class="text-primary col-md-4"
+                  >
+                    Nome
+                  </th>
+                  <td mat-cell *matCellDef="let profile">
+                    {{ profile.name }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    class="text-primary col-md-3"
+                  >
+                    Email
+                  </th>
+                  <td mat-cell *matCellDef="let profile">
+                    {{ profile.user.email }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="phoneNumber">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    class="text-primary col-md-2"
+                  >
+                    Telefone
+                  </th>
+                  <td mat-cell *matCellDef="let profile">
+                    {{ profile.user.phoneNumber }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="disable">
+                  <th mat-header-cell class="text-primary col-md-1" *matHeaderCellDef>
+                    Inativo
+                  </th>
+                  <td mat-cell *matCellDef="let profile">
+                    <input
+                      disabled
+                      type="checkbox"
+                      [checked]="profile.disable"
+                    />
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    class="text-right text-primary col-md-2"
+                  >
+                    Ações
+                  </th>
+                  <td mat-cell *matCellDef="let stock" class="text-right">
+                    <button
+                      mat-raised-button
+                      class="btn btn-sm btn-trash btn-info"
+                      tooltip="Editar"
+                      (click)="navigateToUpdate(stock.id)"
+                    >
+                      <i class="fa fa-pencil"></i>
+                    </button>
+                    &nbsp;
+                    <button
+                      mat-raised-button
+                      class="btn btn-sm btn-trash btn-danger"
+                      tooltip="Excluir"
+                      (click)="softDelete(stock.id)"
+                    >
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+              </mat-table>
+              <mat-paginator
+                [pageSize]="10"
+                [pageSizeOptions]="[5, 10, 20]"
+                showFirstLastButtons
+              ></mat-paginator>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

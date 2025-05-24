@@ -1,0 +1,9 @@
+import { BaseModel } from "../base/base.model";
+import { UserModel } from "../user/user.model";
+
+export class ManagerModel extends BaseModel<string>{
+    name: string;
+    disable: boolean;
+    userId: string;
+    user: UserModel;    
+}

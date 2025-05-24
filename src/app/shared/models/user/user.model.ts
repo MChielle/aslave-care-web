@@ -2,6 +2,7 @@ import { UserRole } from "../user-role/user-role.model";
 import { UserValidationModel } from "../user-validation/user-validation.model";
 
 export class UserModel {
+    name: string;
     phoneNumber: string;
     email: string;
     password: string;

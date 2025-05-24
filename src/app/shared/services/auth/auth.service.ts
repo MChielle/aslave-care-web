@@ -114,4 +114,11 @@ export class AuthService {
     let role = decoded["role"];
     return role === "Master";
   }
+
+  public getRole() {
+    let jwt = this.localStorageService.getToken();
+    let decoded = jwt_decode(jwt);
+    let role = decoded["role"];
+    return role;
+  }
 }

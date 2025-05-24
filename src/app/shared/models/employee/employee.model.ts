@@ -1,11 +1,11 @@
-import { UserSignInModel } from "../user/user-signin.model";
+import { BaseModel } from "../base/base.model";
+import { UserModel } from "../user/user.model";
 
-export class EmployeeModel{
+export class EmployeeModel extends BaseModel<string>{
         name: string;
-        about: string;
         photoPath: string;
         disable: boolean;
         userId: string;
-        user: UserSignInModel;
+        user: UserModel;
 }
 
