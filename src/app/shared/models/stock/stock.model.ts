@@ -1,8 +1,8 @@
+import { BaseModel } from "../base/base.model";
 import { RegisterInStockModel } from "../register-in-stock/register-in-stock.model";
 import { RegisterOutStockModel } from "../register-out-stock/register-out-stock.model";
 
-export class StockModel {
-  id: string;
+export class StockModel extends BaseModel<string> {
   name: string;
   disable: boolean;
   description: string;

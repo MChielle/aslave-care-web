@@ -138,3 +138,45 @@ export class StockTypeNames {
     return "tipos de estoque";
   }
 }
+
+@Injectable({
+  providedIn: "root",
+})
+export class UserNames {
+  get API_URL_LOWER_CASE() {
+    return "user";
+  }  
+  get URL_LOWER_CASE() {
+    return "user";
+  }
+  get URL_LOWER_CASE_PLURAL() {
+    return "users";
+  }
+  get USER() {
+    return "Usuário";
+  }
+  get USER_LOWER_CASE() {
+    return "usuário";
+  }
+  get USERS() {
+    return "Usuários";
+  }
+  get USERS_LOWER_CASE() {
+    return "usuários";
+  }
+}
+
+@Injectable({
+  providedIn: "root",
+})
+export class SignInNames {
+  get API_URL_LOWER_CASE() {
+    return "signin";
+  }  
+  get URL_LOWER_CASE() {
+    return "signin";
+  }
+  get URL_LOWER_CASE_PLURAL() {
+    return "signins";
+  }
+}

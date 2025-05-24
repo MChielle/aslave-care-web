@@ -6,7 +6,6 @@ import {
   Validators,
 } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { validateAdditionalItems } from "ajv/dist/vocabularies/applicator/additionalItems";
 import { SupplierModel } from "app/shared/models/supplier/supplier.model";
 import { NotificationService } from "app/shared/services/notification/notification.service";
 import { SupplierService } from "app/shared/services/supplier/supplier.service";

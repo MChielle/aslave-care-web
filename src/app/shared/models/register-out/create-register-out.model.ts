@@ -1,10 +1,10 @@
+import { BaseModel } from "../base/base.model";
 import { RegisterOutStockModel } from "../register-out-stock/register-out-stock.model";
 
-export class CreateRegisterOutModel {
-    id: string;
-    supplierId: string;
-    donation: boolean;
-    description: string;
-    applied: boolean;
-    RegisterInStocks: RegisterOutStockModel[] = new Array();
+export class CreateRegisterOutModel extends BaseModel<string> {
+  supplierId: string;
+  donation: boolean;
+  description: string;
+  applied: boolean;
+  RegisterInStocks: RegisterOutStockModel[] = new Array();
 }

@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router";
 import { DashboardComponent } from "../../dashboard/dashboard.component";
-import { UserProfileComponent } from "../../user-profile/user-profile.component";
+import { UserProfileComponent } from "../../pages/users/user-profile/user-profile.component";
 import { TableListComponent } from "../../table-list/table-list.component";
 import { TypographyComponent } from "../../typography/typography.component";
 import { IconsComponent } from "../../icons/icons.component";
@@ -21,6 +21,8 @@ import { UpdateRegisterOutStockComponent } from "app/pages/registers/registers-o
 import { UpdateRegisterInStockComponent } from "app/pages/registers/registers-in/update-register-in-stock/update-register-in-stock.component";
 import { ReportsComponent } from "app/pages/reports/reports.component";
 import { RestockReportComponent } from "app/pages/reports/restock-report/restock-report.component";
+import { UsersComponent } from "app/pages/users/users.component";
+import { UserGuard } from "app/shared/guards/user.guard";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "suppliers", component: SuppliersComponent },
@@ -42,8 +44,10 @@ export const AdminLayoutRoutes: Routes = [
   { path: "reports", component: ReportsComponent },
   { path: "restock-report", component: RestockReportComponent },
 
-  { path: "dashboard", component: DashboardComponent },
+  { path: "users", canActivate: [UserGuard], component: UsersComponent },
   { path: "user-profile", component: UserProfileComponent },
+
+  { path: "dashboard", component: DashboardComponent },
   { path: "table-list", component: TableListComponent },
   { path: "typography", component: TypographyComponent },
   { path: "icons", component: IconsComponent },
