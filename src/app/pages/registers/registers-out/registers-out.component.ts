@@ -5,8 +5,10 @@ import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
 import { PropertyLenghtConstants } from "app/shared/constants/property-lenght.constants";
 import { RegisterOutModel } from "app/shared/models/register-out/register-out.model";
+import { ViewRegisterOutModel } from "app/shared/models/register-out/view-register-out.model";
 import { NotificationService } from "app/shared/services/notification/notification.service";
 import { RegisterOutService } from "app/shared/services/register-out/register-out.service";
+import { FormatHelper } from "app/shared/utils/helpers/format.helper";
 import { RegisterOutNames } from "app/shared/utils/names";
 import { firstValueFrom } from "rxjs";
 
@@ -19,9 +21,9 @@ declare var $: any;
 })
 export class RegistersOutComponent implements OnInit {
   public propertyLenght;
-  public dataSource: MatTableDataSource<RegisterOutModel>;
-  public registersOut: RegisterOutModel[];
-  public displayedColumns: string[] = ["number", "apply", "date", "description", "actions"];
+  public dataSource: MatTableDataSource<ViewRegisterOutModel>;
+  public registersOut: ViewRegisterOutModel[];
+  public displayedColumns: string[] = ["number", "apply", "formattedApplyDate", "description", "actions"];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -30,7 +32,8 @@ export class RegistersOutComponent implements OnInit {
     private names: RegisterOutNames,
     private service: RegisterOutService<RegisterOutModel>,
     private router: Router,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private formatHelper: FormatHelper
   ) {}
 
   showNotification(text: string) {
@@ -57,7 +60,10 @@ export class RegistersOutComponent implements OnInit {
     firstValueFrom(this.service.getToList())
       .then((response) => {
         if (response.isSuccess && response.data[0]) {
-          this.registersOut = response.data;
+          this.registersOut = response.data.map(
+            (registerOut) =>
+              new ViewRegisterOutModel(this.formatHelper, registerOut)
+          );
           this.registersOut = this.sortByNumber(this.registersOut, false);
           this.reloadDataSource();
         }
@@ -68,16 +74,16 @@ export class RegistersOutComponent implements OnInit {
   }
 
   sortByNumber(
-    models: RegisterOutModel[],
+    models: ViewRegisterOutModel[],
     ascendent: boolean
-  ): RegisterOutModel[] {
+  ): ViewRegisterOutModel[] {
     return ascendent
       ? models.sort((a, b) => a.number - b.number)
       : models.sort((a, b) => b.number - a.number);
   }
 
   reloadDataSource() {
-    this.dataSource = new MatTableDataSource<RegisterOutModel>(
+    this.dataSource = new MatTableDataSource<ViewRegisterOutModel>(
       this.registersOut
     );
     this.dataSource.paginator = this.paginator;

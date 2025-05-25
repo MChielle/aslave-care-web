@@ -180,3 +180,57 @@ export class SignInNames {
     return "signins";
   }
 }
+
+@Injectable({
+  providedIn: "root",
+})
+export class EmployeeNames {
+  get API_URL_LOWER_CASE() {
+    return "employee";
+  }  
+  get URL_LOWER_CASE() {
+    return "employee";
+  }
+  get URL_LOWER_CASE_PLURAL() {
+    return "employees";
+  }
+  get EMPLOYEE() {
+    return "Colaborador";
+  }
+  get EMPLOYEE_LOWER_CASE() {
+    return "colaborador";
+  }
+  get EMPLOYEES() {
+    return "Colaboradores";
+  }
+  get EMPLOYEES_LOWER_CASE() {
+    return "colaboradores";
+  }
+}
+
+@Injectable({
+  providedIn: "root",
+})
+export class ManagerNames {
+  get API_URL_LOWER_CASE() {
+    return "manager";
+  }  
+  get URL_LOWER_CASE() {
+    return "manager";
+  }
+  get URL_LOWER_CASE_PLURAL() {
+    return "managers";
+  }
+  get MANAGER() {
+    return "Administrador";
+  }
+  get MANAGER_LOWER_CASE() {
+    return "administrador";
+  }
+  get MANAGERS() {
+    return "Administradores";
+  }
+  get MANAGERS_LOWER_CASE() {
+    return "administradores";
+  }
+}

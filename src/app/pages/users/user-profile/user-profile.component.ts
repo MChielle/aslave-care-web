@@ -5,7 +5,7 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
-import { UserProfileModel } from "app/shared/models/user/user-profile.model";
+import { ViewUserModel } from "app/shared/models/user/view-user.model";
 import { UserModel } from "app/shared/models/user/user.model";
 import { LocalStorageService } from "app/shared/services/app/local-storage.service";
 import { UserService } from "app/shared/services/user/user.service";
@@ -20,7 +20,7 @@ type FormErrors = { [u in UserFields]: string };
   styleUrls: ["./user-profile.component.scss"],
 })
 export class UserProfileComponent implements OnInit {
-  public userProfile: UserProfileModel;
+  public userProfile: ViewUserModel;
   public updateForm: FormGroup;
   public formErrors: FormErrors = {
     id: "",
@@ -60,7 +60,7 @@ export class UserProfileComponent implements OnInit {
 
   loadForm() {
     this.updateForm.get("id").setValue(this.userProfile.id);
-    this.updateForm.get("name").setValue(this.userProfile.name);
+    this.updateForm.get("name").setValue(this.userProfile.user.name);
     this.updateForm.get("email").setValue(this.userProfile.user.email);
     this.updateForm.get("phoneNumber").setValue(this.userProfile.user.phoneNumber);
     this.updateForm.get("disable").setValue(this.userProfile.disable);

@@ -13,4 +13,12 @@ export class FormatHelper {
         }
         return phoneNumber;
     }
+
+    dateFormatter = (date: Date, defaultValue: string = ""): string => {
+      const formatedDate = new Date(date).toLocaleString("pt-BR");
+      if (formatedDate == "Invalid Date") {
+        return defaultValue;
+      }
+      return formatedDate;
+    }
 }

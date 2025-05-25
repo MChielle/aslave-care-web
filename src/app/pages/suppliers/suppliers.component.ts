@@ -9,6 +9,7 @@ import { MatSort } from "@angular/material/sort";
 import { MatPaginator } from "@angular/material/paginator";
 import { PropertyLenghtConstants } from "app/shared/constants/property-lenght.constants";
 import { MatTableDataSource } from "@angular/material/table";
+import { ViewSupplierModel } from "app/shared/models/supplier/view-supplier.model";
 
 @Component({
   selector: "app-supplier",
@@ -17,8 +18,8 @@ import { MatTableDataSource } from "@angular/material/table";
 })
 export class SuppliersComponent implements OnInit {
   public propertyLenght;
-  public dataSource: MatTableDataSource<SupplierModel>;
-  public suppliers: SupplierModel[];
+  public dataSource: MatTableDataSource<ViewSupplierModel>;
+  public suppliers: ViewSupplierModel[];
   public displayedColumns: string[] = [
     "name",
     "email",
@@ -51,7 +52,9 @@ export class SuppliersComponent implements OnInit {
     firstValueFrom(this.service.getToList())
       .then((response) => {
         if (response.isSuccess) {
-          this.suppliers = response.data;
+          this.suppliers = response.data.map((supplier) => {
+            return new ViewSupplierModel(this.formatHelper, supplier);
+          });
           this.reloadDataSource();
         }
       })
@@ -61,7 +64,7 @@ export class SuppliersComponent implements OnInit {
   }
 
   reloadDataSource() {
-    this.dataSource = new MatTableDataSource<SupplierModel>(this.suppliers);
+    this.dataSource = new MatTableDataSource<ViewSupplierModel>(this.suppliers);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -78,10 +81,10 @@ export class SuppliersComponent implements OnInit {
       });
   }
 
-  applyFilter(event: Event){
+  applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    if(this.dataSource.paginator){
+    if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }

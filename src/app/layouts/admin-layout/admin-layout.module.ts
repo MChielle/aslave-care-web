@@ -38,6 +38,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { RestockReportComponent } from "app/pages/reports/restock-report/restock-report.component";
 import { ReportsComponent } from "app/pages/reports/reports.component";
 import { UsersComponent } from "app/pages/users/users.component";
+import { UpdateUserComponent } from "app/pages/users/update-user/update-user.component";
 
 
 @NgModule({
@@ -88,6 +89,7 @@ import { UsersComponent } from "app/pages/users/users.component";
 
     UsersComponent,
     UserProfileComponent,
+    UpdateUserComponent,
   ],
   exports: [RouterModule],
 })

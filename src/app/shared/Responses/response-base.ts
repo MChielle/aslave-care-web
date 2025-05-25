@@ -1,4 +1,4 @@
-export class ResponseBase<T> {
+export class ResponseBase<TModel> {
     isSuccess: boolean;
-    data: T;
+    data: TModel;
 }

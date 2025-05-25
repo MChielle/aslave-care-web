@@ -1,0 +1,87 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">Perfil</h4>
+            <p class="card-category">Perfil de usuário</p>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="updateForm">
+              <div class="row">
+                <div class="col-md-11">
+                  <input
+                    formControlName="name"
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    name="name"
+                    placeholder="Nome completo"
+                    disabled="true"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-7">
+                  <input
+                    formControlName="email"
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    placeholder="name@exemple.com"
+                    disabled="true"
+                  />
+                </div>
+                <div class="col-md-4">
+                  <input
+                    formControlName="phoneNumber"
+                    type="text"
+                    inputmode="numeric"
+                    class="form-control"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    placeholder="(00) 00000-0000"
+                    disabled="true"
+                  />
+                </div>
+                <div class="col-md-1">
+                  <div>
+                    <label>
+                      <input
+                        formControlName="disable"
+                        type="checkbox"
+                        class="form-control"
+                        id="disable"
+                        name="disable"
+                      />
+                      Inativo
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <button
+                mat-raised-button
+                type="button"
+                (click)="cancel()"
+                class="btn btn-danger pull-right"
+              >
+                Cancelar
+              </button>
+              <button
+                mat-raised-button
+                type="button"
+                (click)="update()"
+                class="btn btn-success pull-right"
+              >
+                Salvar
+              </button>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

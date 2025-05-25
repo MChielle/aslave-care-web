@@ -58,7 +58,7 @@
                   </td>
                 </ng-container>
 
-                <ng-container matColumnDef="date">
+                <ng-container matColumnDef="formattedApplyDate">
                   <th
                     mat-header-cell
                     *matHeaderCellDef
@@ -68,12 +68,16 @@
                     Data
                   </th>
                   <td mat-cell *matCellDef="let registerOut">
-                    {{ registerOut.applyDate | date : "dd/MM/yyyy - HH:mm" }}
+                    {{ registerOut.formattedApplyDate }}
                   </td>
                 </ng-container>
 
                 <ng-container matColumnDef="apply">
-                  <th mat-header-cell class="text-primary col-md-1" *matHeaderCellDef>
+                  <th
+                    mat-header-cell
+                    class="text-primary col-md-1"
+                    *matHeaderCellDef
+                  >
                     Aplicado
                   </th>
                   <td mat-cell *matCellDef="let registerOut">
@@ -139,47 +143,6 @@
                 [pageSizeOptions]="[5, 10, 20]"
                 showFirstLastButtons
               ></mat-paginator>
-              <!-- <table class="table">
-                <thead class="text-primary">
-                  <th>Numero</th>
-                  <th>Aplicado</th>
-                  <th>Data</th>
-                  <th class="text-right">Ações</th>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let register of models">
-                    <td>{{ register.number }}</td>
-                    <td>
-                      <input
-                        class="form-control"
-                        disabled
-                        type="checkbox"
-                        [checked]="register.apply"
-                      />
-                    </td>
-                    <td>{{ register.apply ? register.applyDate : ''}}</td>
-                    <td class="text-right">
-                      <button
-                        mat-raised-button
-                        class="btn btn-sm btn-trash btn-info"
-                        tooltip="Editar"
-                        (click)="navigateToEditRegister(register.id)"
-                      >
-                        <i class="fa fa-pencil"></i>
-                      </button>
-                      &nbsp;
-                      <button
-                        mat-raised-button
-                        class="btn btn-sm btn-trash btn-danger"
-                        tooltip="Excluir"
-                        (click)="softDeleteRegister(register.id)"
-                      >
-                        <i class="fa fa-trash"></i>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table> -->
             </div>
           </div>
         </div>

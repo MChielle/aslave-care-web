@@ -2,17 +2,16 @@ import { Injectable } from "@angular/core";
 import { BaseService } from "../base.service";
 import { ResponseBase } from "app/shared/Responses/response-base";
 import { HttpParams } from "@angular/common/http";
-import { UserNames } from "app/shared/utils/names";
-import { ViewUserModel } from "app/shared/models/user/view-user.model";
+import { EmployeeNames } from "app/shared/utils/names";
 
 @Injectable({
   providedIn: "root",
 })
-export class UserService<TModel> {
+export class EmployeeService<TModel> {
   
   constructor(
     private baseService: BaseService,
-    private names: UserNames
+    private names: EmployeeNames
   ) {}
   
   public getToList() {
@@ -41,15 +40,11 @@ export class UserService<TModel> {
     return this.baseService.get<ResponseBase<TModel>>(`${this.names.URL_LOWER_CASE}/${id}`);
   }
   
+  public getByIdToUpdate(id: string) {
+    return this.baseService.get<ResponseBase<TModel>>(`${this.names.URL_LOWER_CASE}/${id}/to-update`);
+  }  
+
   public update(model) {
     return this.baseService.put<ResponseBase<TModel>>(`${this.names.URL_LOWER_CASE}/${model.id}`, model);
-  }
-  
-  public getByToken() {
-    return this.baseService.get<ResponseBase<ViewUserModel>>(`signin/token`);
-  }
-
-  public getAnyToList() {
-    return this.baseService.get<ResponseBase<ViewUserModel[]>>(`signin/any-to-list`);
   }
 }

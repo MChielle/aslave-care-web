@@ -4,7 +4,8 @@ import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
 import { PropertyLenghtConstants } from "app/shared/constants/property-lenght.constants";
-import { UserProfileModel } from "app/shared/models/user/user-profile.model";
+import { UserType } from "app/shared/enums/role.enum";
+import { ViewUserModel } from "app/shared/models/user/view-user.model";
 import { SignInService } from "app/shared/services/sign-in/sign-in.service";
 import { UserService } from "app/shared/services/user/user.service";
 import { FormatHelper } from "app/shared/utils/helpers/format.helper";
@@ -18,8 +19,8 @@ import { firstValueFrom } from "rxjs";
 })
 export class UsersComponent implements OnInit {
   public propertyLenght;
-  public dataSource: MatTableDataSource<UserProfileModel>;
-  public users: UserProfileModel[];
+  public dataSource: MatTableDataSource<ViewUserModel>;
+  public users: ViewUserModel[];
   public displayedColumns: string[] = [
     "name",
     "email",
@@ -33,7 +34,7 @@ export class UsersComponent implements OnInit {
 
   constructor(
     private names: UserNames,
-    private service: SignInService<UserProfileModel>,
+    private service: SignInService<ViewUserModel>,
     private router: Router,
     private formatHelper: FormatHelper
   ) {}
@@ -52,7 +53,18 @@ export class UsersComponent implements OnInit {
     firstValueFrom(this.service.getAnyToList())
       .then((response) => {
         if (response.isSuccess) {
-          this.users = response.data;
+          this.users = response.data.map((data) => {
+            let profile = new ViewUserModel();
+            profile.id = data.id;
+            profile.name = data.user.name;
+            profile.disable = data.user.disable;
+            profile.email = data.user.email;
+            profile.phoneNumber = this.formatHelper.phoneNumberFormatter(data.user.phoneNumber);
+            profile.role = data.user.userRoles[0].role.userType
+            profile.userId = data.userId;
+            profile.user = data.user;
+            return profile;
+          });
           this.reloadDataSource();
         }
       })
@@ -62,7 +74,7 @@ export class UsersComponent implements OnInit {
   }
 
   reloadDataSource() {
-    this.dataSource = new MatTableDataSource<UserProfileModel>(this.users);
+    this.dataSource = new MatTableDataSource<ViewUserModel>(this.users);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -79,8 +91,8 @@ export class UsersComponent implements OnInit {
     this.router.navigate([`create-${this.names.URL_LOWER_CASE}`]);
   }
 
-  navigateToUpdate(id: string) {
-    this.router.navigate([`update-${this.names.URL_LOWER_CASE}`, id]);
+  navigateToUpdate(id: string, role: UserType) {
+    this.router.navigate([`update-${this.names.URL_LOWER_CASE}`, {id, role}]);
   }
 
   phoneNumberFormatter(phoneNumber: string) {

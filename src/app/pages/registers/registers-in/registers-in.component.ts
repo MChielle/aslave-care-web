@@ -5,8 +5,10 @@ import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
 import { PropertyLenghtConstants } from "app/shared/constants/property-lenght.constants";
 import { RegisterInModel } from "app/shared/models/register-in/register-in.model";
+import { ViewRegisterInModel } from "app/shared/models/register-in/view-register-in.model";
 import { NotificationService } from "app/shared/services/notification/notification.service";
 import { RegisterInService } from "app/shared/services/register-in/register-in.service";
+import { FormatHelper } from "app/shared/utils/helpers/format.helper";
 import { RegisterInNames } from "app/shared/utils/names";
 import { firstValueFrom } from "rxjs";
 
@@ -19,14 +21,14 @@ declare var $: any;
 })
 export class RegistersInComponent implements OnInit {
   public propertyLenght;
-  public dataSource: MatTableDataSource<RegisterInModel>;
-  public registersIn: RegisterInModel[];
+  public dataSource: MatTableDataSource<ViewRegisterInModel>;
+  public registersIn: ViewRegisterInModel[];
   public displayedColumns: string[] = [
     "number",
-    "name",
     "apply",
     "donation",
-    "date",
+    "formattedApplyDate",
+    "name",
     "actions",
   ];
 
@@ -37,7 +39,8 @@ export class RegistersInComponent implements OnInit {
     private names: RegisterInNames,
     private service: RegisterInService<RegisterInModel>,
     private router: Router,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private formatHelper: FormatHelper    
   ) {}
 
   showNotification(text: string) {
@@ -64,7 +67,9 @@ export class RegistersInComponent implements OnInit {
     firstValueFrom(this.service.getToList())
       .then((response) => {
         if (response.isSuccess && response.data[0]) {
-          this.registersIn = response.data;
+          this.registersIn = response.data.map(
+            (item) => new ViewRegisterInModel(this.formatHelper, item)
+          );
           this.registersIn = this.sortByNumber(this.registersIn, false);
           this.reloadDataSource();
         }
@@ -75,16 +80,16 @@ export class RegistersInComponent implements OnInit {
   }
 
   sortByNumber(
-    models: RegisterInModel[],
+    models: ViewRegisterInModel[],
     ascendent: boolean
-  ): RegisterInModel[] {
+  ): ViewRegisterInModel[] {
     return ascendent
       ? models.sort((a, b) => a.number - b.number)
       : models.sort((a, b) => b.number - a.number);
   }
 
   reloadDataSource() {
-    this.dataSource = new MatTableDataSource<RegisterInModel>(this.registersIn);
+    this.dataSource = new MatTableDataSource<ViewRegisterInModel>(this.registersIn);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
