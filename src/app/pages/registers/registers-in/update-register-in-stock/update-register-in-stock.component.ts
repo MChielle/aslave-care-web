@@ -56,7 +56,6 @@ export class UpdateRegisterInStockComponent implements OnInit {
   ) {
     this.updateForm = this.fb.group({
       id: new FormControl(""),
-      supplier: new FormControl(""),
       supplierId: new FormControl(""),
       donation: new FormControl(false),
       description: new FormControl(""),
@@ -71,7 +70,6 @@ export class UpdateRegisterInStockComponent implements OnInit {
     this.updateForm.controls.description.setValue(this.registerIn.description);
     this.updateForm.controls.apply.setValue(this.registerIn.apply);
     this.updateForm.controls.supplierId.setValue(this.registerIn.supplierId);
-    this.updateForm.controls.supplier.setValue(this.registerIn.supplier);
     this.updateForm.controls.registerInStocks.setValue(
       this.registerIn.registerInStocks
     );
@@ -142,7 +140,6 @@ export class UpdateRegisterInStockComponent implements OnInit {
 
   selectSupplier(supplier: SupplierModel) {
     try {
-      this.updateForm.controls.supplier.setValue(supplier);
       this.updateForm.controls.supplierId.setValue(supplier.id);
       this.cdr.detectChanges();
     } catch (error) {

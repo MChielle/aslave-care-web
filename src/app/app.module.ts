@@ -11,7 +11,6 @@ import { AdminLayoutModule } from './layouts/admin-layout/admin-layout.module';
 import { AuthComponent } from './auth/auth.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
-import { UpdateUserComponent } from './pages/users/update-user/update-user.component';
 
 @NgModule({
   imports: [

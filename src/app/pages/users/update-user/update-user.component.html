@@ -3,48 +3,63 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header card-header-danger">
-            <h4 class="card-title">Perfil</h4>
+          <div class="card-header card-header-info">
+            <h4 class="card-title">Editar Perfil</h4>
             <p class="card-category">Perfil de usuário</p>
           </div>
           <div class="card-body">
             <form [formGroup]="updateForm">
               <div class="row">
-                <div class="col-md-11">
-                  <input
-                    formControlName="name"
-                    type="text"
-                    class="form-control"
-                    id="name"
-                    name="name"
-                    placeholder="Nome completo"
-                    disabled="true"
-                  />
+                <div class="col-md-10">
+                  <mat-form-field class="standard">
+                    <input
+                      matInput
+                      formControlName="name"
+                      type="text"
+                      id="name"
+                      name="name"
+                      placeholder="Nome completo"
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                  <mat-form-field class="standard">
+                    <input
+                      matInput
+                      formControlName="role"
+                      type="text"
+                      id="role"
+                      name="role"
+                      placeholder="Tipo"
+                    />
+                  </mat-form-field>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-7">
-                  <input
-                    formControlName="email"
-                    type="email"
-                    class="form-control"
-                    id="email"
-                    name="email"
-                    placeholder="name@exemple.com"
-                    disabled="true"
-                  />
+                  <mat-form-field class="standard">
+                    <input
+                      matInput
+                      formControlName="email"
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="Email"
+                    />
+                  </mat-form-field>
                 </div>
                 <div class="col-md-4">
-                  <input
-                    formControlName="phoneNumber"
-                    type="text"
-                    inputmode="numeric"
-                    class="form-control"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    placeholder="(00) 00000-0000"
-                    disabled="true"
-                  />
+                  <mat-form-field class="standard">
+                    <input
+                      matInput
+                      formControlName="phoneNumber"
+                      type="text"
+                      inputmode="numeric"
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      placeholder="Telefone"
+                    />
+                  </mat-form-field>
                 </div>
                 <div class="col-md-1">
                   <div>

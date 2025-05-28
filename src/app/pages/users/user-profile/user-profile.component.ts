@@ -59,6 +59,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   loadForm() {
+    console.log(this.userProfile)
     this.updateForm.get("id").setValue(this.userProfile.id);
     this.updateForm.get("name").setValue(this.userProfile.user.name);
     this.updateForm.get("email").setValue(this.userProfile.user.email);

@@ -7,7 +7,8 @@ export class ViewUserModel extends BaseModel<string> {
   disable: boolean;
   email: string;
   phoneNumber: string;  
-  role: UserType;
+  password: string;
+  role: string;
   userId: string;
   user: UserModel;
 }

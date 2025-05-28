@@ -234,3 +234,18 @@ export class ManagerNames {
     return "administradores";
   }
 }
+
+@Injectable({
+  providedIn: "root",
+})
+export class RoleNames {
+  get API_URL_LOWER_CASE() {
+    return "role";
+  }  
+  get URL_LOWER_CASE() {
+    return "role";
+  }
+  get URL_LOWER_CASE_PLURAL() {
+    return "roles";
+  }
+}

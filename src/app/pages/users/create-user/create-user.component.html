@@ -1,0 +1,178 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-success">
+            <h4 class="card-title">Criar Perfil</h4>
+            <p class="card-category">Perfil de usuário</p>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="createForm">
+              <div class="row">
+                <div class="col-md-10">
+                  <mat-form-field class="standard">
+                    <input
+                      matInput
+                      formControlName="name"
+                      type="text"
+                      id="name"
+                      name="name"
+                      placeholder="Nome"
+                      maxlength="{{ propertyLenght.FULL_NAME }}"
+                    />
+                  </mat-form-field>
+                  <div
+                    *ngIf="
+                      createForm.controls.name.touched &&
+                      createForm.controls.name.errors?.required
+                    "
+                  >
+                    Nome é obrigatório.
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <mat-form-field class="standard">
+                    <mat-label>Tipo</mat-label>
+                    <mat-select
+                      formControlName="userType"
+                      id="userType"
+                      autocomplete="off"
+                    >
+                      <mat-option
+                        *ngFor="let role of roles"
+                        [selected]="role.userType == selectedUserType"
+                        [value]="role.userType"
+                      >
+                        {{ role.name }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div
+                  *ngIf="
+                    createForm.controls.userType.touched &&
+                    createForm.controls.userType.errors?.required
+                  "
+                >
+                  Tipo é obrigatório.
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-10">
+                  <mat-form-field class="standard">
+                    <input
+                      matInput
+                      formControlName="email"
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="Email"
+                      maxlength="{{ propertyLenght.EMAIL }}"
+                    />
+                  </mat-form-field>
+                  <div
+                    *ngIf="
+                      createForm.controls.email.touched &&
+                      createForm.controls.email.errors?.required
+                    "
+                  >
+                    Email é obrigatório
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <mat-form-field class="standard">
+                    <input
+                      matInput
+                      formControlName="phoneNumber"
+                      type="text"
+                      inputmode="numeric"
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      placeholder="Telefone"
+                    />
+                  </mat-form-field>
+                  <div
+                    *ngIf="
+                      createForm.controls.phoneNumber.touched &&
+                      createForm.controls.phoneNumber.errors?.required
+                    "
+                  >
+                    Telefone é obrigatório
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field class="standard">
+                    <input
+                      matInput
+                      formControlName="password"
+                      type="password"
+                      id="password"
+                      name="password"
+                      placeholder="Digite uma senha"
+                    />
+                  </mat-form-field>
+                  <div
+                    *ngIf="
+                      createForm.controls.password.touched &&
+                      createForm.controls.password.errors?.required
+                    "
+                  >
+                    Senha é obrigatória
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field class="standard">
+                    <input
+                      matInput
+                      formControlName="repeatPassword"
+                      type="password"
+                      id="repeatPassword"
+                      name="repeatPassword"
+                      placeholder="Repita a senha"
+                    />
+                  </mat-form-field>
+                  <div
+                    *ngIf="
+                      createForm.controls.repeatPassword.touched &&
+                      createForm.controls.repeatPassword.errors?.required
+                    "
+                  >
+                    Repita a senha
+                  </div>
+                  <div
+                    *ngIf="
+                      createForm.controls.repeatPassword.value !=
+                      createForm.controls.password.value
+                    "
+                  >
+                    As senhas não coincidem.
+                  </div>
+                </div>
+              </div>
+              <button
+                mat-raised-button
+                type="button"
+                (click)="cancel()"
+                class="btn btn-danger pull-right"
+              >
+                Cancelar
+              </button>
+              <button
+                mat-raised-button
+                type="button"
+                (click)="create()"
+                class="btn btn-success pull-right"
+              >
+                Salvar
+              </button>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

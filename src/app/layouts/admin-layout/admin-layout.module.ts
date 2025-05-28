@@ -39,6 +39,7 @@ import { RestockReportComponent } from "app/pages/reports/restock-report/restock
 import { ReportsComponent } from "app/pages/reports/reports.component";
 import { UsersComponent } from "app/pages/users/users.component";
 import { UpdateUserComponent } from "app/pages/users/update-user/update-user.component";
+import { CreateUserComponent } from "app/pages/users/create-user/create-user.component";
 
 
 @NgModule({
@@ -90,6 +91,7 @@ import { UpdateUserComponent } from "app/pages/users/update-user/update-user.com
     UsersComponent,
     UserProfileComponent,
     UpdateUserComponent,
+    CreateUserComponent,
   ],
   exports: [RouterModule],
 })

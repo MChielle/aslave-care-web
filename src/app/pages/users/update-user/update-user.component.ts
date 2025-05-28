@@ -54,14 +54,11 @@ export class UpdateUserComponent implements OnInit {
 
   constructor(
     private names: UserNames,
-    private managerNames: ManagerNames,
-    private employeeNames: EmployeeNames,
     private router: Router,
     private route: ActivatedRoute,
     private userService: UserService<UserModel>,
     private employeeService: EmployeeService<EmployeeModel>,
     private managerService: ManagerService<ManagerModel>,
-    private notificationService: NotificationService,
     private fb: FormBuilder
   ) {}
 
@@ -103,8 +100,12 @@ export class UpdateUserComponent implements OnInit {
 
   initForm() {
     try {
-    this.updateForm.patchValue(this.userProfile);    
-    }catch(error) {
+      this.updateForm.patchValue(this.userProfile);
+      this.updateForm.controls.name.disable();
+      this.updateForm.controls.email.disable();
+      this.updateForm.controls.phoneNumber.disable();
+      this.updateForm.controls.role.disable();
+    } catch (error) {
       console.log("initForm", error);
     }
   }
@@ -112,13 +113,12 @@ export class UpdateUserComponent implements OnInit {
   ngOnInit(): void {
     this.buildForm();
     const id = this.route.snapshot.paramMap.get("id");
-    const userRole = this.route.snapshot.paramMap.get("role");
-    const role = UserType[userRole as keyof typeof UserType];
+    const role = this.route.snapshot.paramMap.get("role");
     this.loadUserByRole(id, role);
   }
 
-  loadUserByRole(id: string, role: UserType) {
-    switch (role.toString()) {
+  loadUserByRole(id: string, role: string) {
+    switch (role) {
       case UserType[UserType.Manager]:
         this.loadManager(id);
         break;
@@ -129,14 +129,12 @@ export class UpdateUserComponent implements OnInit {
   }
 
   loadManager(id: string) {
-    firstValueFrom(this.managerService.getByIdToUpdate(id)).then(
-      (response) => {
-        if (response.isSuccess) {
-          this.loadManagerProfile(response.data);
-          this.initForm();
-        }
+    firstValueFrom(this.managerService.getByIdToUpdate(id)).then((response) => {
+      if (response.isSuccess) {
+        this.loadManagerProfile(response.data);
+        this.initForm();
       }
-    );
+    });
   }
 
   loadEmployee(id: string) {
@@ -157,30 +155,32 @@ export class UpdateUserComponent implements OnInit {
     this.userProfile.disable = manager.user.disable;
     this.userProfile.email = manager.user.email;
     this.userProfile.phoneNumber = manager.user.phoneNumber;
-    this.userProfile.role = manager.user.userRoles[0].role.userType;
+    this.userProfile.role = UserType[manager.user.userRoles[0].role.userType];
     this.userProfile.userId = manager.userId;
     this.userProfile.user = manager.user;
-  } 
+  }
 
-    loadEmployeeProfile(employee: EmployeeModel) {
+  loadEmployeeProfile(employee: EmployeeModel) {
     this.userProfile = new ViewUserModel();
     this.userProfile.id = employee.id;
     this.userProfile.name = employee.user.name;
     this.userProfile.disable = employee.user.disable;
     this.userProfile.email = employee.user.email;
     this.userProfile.phoneNumber = employee.user.phoneNumber;
-    this.userProfile.role = employee.user.userRoles[0].role.userType;
+    this.userProfile.role = UserType[employee.user.userRoles[0].role.userType];
     this.userProfile.userId = employee.userId;
     this.userProfile.user = employee.user;
-  } 
+  }
 
   update() {
     this.userProfile.user.disable = this.updateForm.get("disable").value;
     console.log(this.userProfile.user);
-    firstValueFrom(this.userService.update(this.userProfile.user)).then((response) => {
-      if (response.isSuccess)
-        this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
-    });
+    firstValueFrom(this.userService.update(this.userProfile.user)).then(
+      (response) => {
+        if (response.isSuccess)
+          this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
+      }
+    );
   }
   catch(error) {
     console.log("update", error);

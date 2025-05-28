@@ -23,9 +23,10 @@ export class UsersComponent implements OnInit {
   public users: ViewUserModel[];
   public displayedColumns: string[] = [
     "name",
-    "email",
-    "phoneNumber",
     "disable",
+    "role",
+    "phoneNumber",
+    "email",
     "actions",
   ];
 
@@ -60,7 +61,7 @@ export class UsersComponent implements OnInit {
             profile.disable = data.user.disable;
             profile.email = data.user.email;
             profile.phoneNumber = this.formatHelper.phoneNumberFormatter(data.user.phoneNumber);
-            profile.role = data.user.userRoles[0].role.userType
+            profile.role = UserType[data.user.userRoles[0].role.userType]
             profile.userId = data.userId;
             profile.user = data.user;
             return profile;
