@@ -4,3 +4,7 @@ mat-table {
   width: 100%;
   display: table !important;
 }
+
+.mat-header-cell{
+  font-size: medium;
+}
