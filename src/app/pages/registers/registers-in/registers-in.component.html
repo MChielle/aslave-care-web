@@ -38,6 +38,7 @@
                   </div>
                 </div>
               </div>
+              <mat-divider></mat-divider>
               <div class="table-responsive">
                 <mat-table
                   mat-table
@@ -58,7 +59,7 @@
                       {{ registerIn.number }}
                     </td>
                   </ng-container>
-                  
+
                   <ng-container matColumnDef="formattedApplyDate">
                     <th
                       mat-header-cell
@@ -69,7 +70,7 @@
                       Data
                     </th>
                     <td mat-cell *matCellDef="let registerIn">
-                      {{ registerIn.formattedApplyDate}}
+                      {{ registerIn.formattedApplyDate }}
                     </td>
                   </ng-container>
 

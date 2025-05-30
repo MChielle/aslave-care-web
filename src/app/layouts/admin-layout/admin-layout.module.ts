@@ -15,6 +15,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatRippleModule } from "@angular/material/core";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatSelectModule } from "@angular/material/select";
+import { MatDividerModule } from "@angular/material/divider";
 import { StockComponent } from "app/pages/stocks/stocks.component";
 import { SuppliersComponent } from "app/pages/suppliers/suppliers.component";
 import { CreateSupplierComponent } from "app/pages/suppliers/create-supplier/create-supplier.component";
@@ -57,7 +58,8 @@ import { CreateUserComponent } from "app/pages/users/create-user/create-user.com
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    NgxMaskModule
+    MatDividerModule,
+    NgxMaskModule,
   ],
   declarations: [
     DashboardComponent,

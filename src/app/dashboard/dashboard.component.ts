@@ -3,9 +3,11 @@ import { DonationsPerMonthModel } from "app/shared/models/dashboard/donations-pe
 import { RegisterInModel } from "app/shared/models/register-in/register-in.model";
 import { RegisterOutModel } from "app/shared/models/register-out/register-out.model";
 import { StockModel } from "app/shared/models/stock/stock.model";
+import { TaskNoteModel } from "app/shared/models/task-note/task-note.model";
 import { RegisterInService } from "app/shared/services/register-in/register-in.service";
 import { RegisterOutService } from "app/shared/services/register-out/register-out.service";
 import { StockService } from "app/shared/services/stock/stock.service";
+import { TaskNoteService } from "app/shared/services/task-note/task-note.service";
 import * as Chartist from "chartist";
 
 @Component({
@@ -16,6 +18,7 @@ import * as Chartist from "chartist";
 export class DashboardComponent implements OnInit {
   boardTopScale: number = 300;
   public stocks: StockModel[] = new Array();
+  public taskNotes: TaskNoteModel[] = new Array();
   public lowerStock: number = 5;
   public actualMonthDonations: number = 0;
   public actualMonthShopping: number = 0;
@@ -25,8 +28,16 @@ export class DashboardComponent implements OnInit {
   constructor(
     private stockService: StockService<StockModel>,
     private registerInService: RegisterInService<RegisterInModel>,
-    private RegisterOutService: RegisterOutService<RegisterOutModel>
+    private registerOutService: RegisterOutService<RegisterOutModel>,
+    private taskNoteService: TaskNoteService<TaskNoteModel>
   ) {}
+
+  getTaskNotes(){
+    this.taskNoteService.getToList().subscribe((response) => {
+      if (response.isSuccess) this.taskNotes = response.data;
+      console.log(this.taskNotes);
+    });
+  }
 
   getLowerStocks() {
     this.stockService.getLowerStocks(this.lowerStock).subscribe((response) => {
@@ -105,6 +116,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.getLowerStocks();
     this.getTotalStocksLowQuantity();
+    this.getTaskNotes();
     this.buildDonationsChart();
     this.buildConsumptionsChart();
     this.buildShoppingChart();
@@ -157,7 +169,7 @@ export class DashboardComponent implements OnInit {
   }
 
   buildConsumptionsChart() {
-    this.RegisterOutService.getConsumptionsPerMonth().subscribe((response) => {
+    this.registerOutService.getConsumptionsPerMonth().subscribe((response) => {
       if (!response.isSuccess) return;
       const consumptionsPerMonth = response.data;
       let labels: string[] = new Array();

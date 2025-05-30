@@ -6,6 +6,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { Router } from "@angular/router";
+import { PropertyLenghtConstants } from "app/shared/constants/property-lenght.constants";
 import { RegisterInSelectedSupply } from "app/shared/models/register-in-stock/register-in-selected-supplies.model";
 import { CreateRegisterInModel } from "app/shared/models/register-in/create-register-in.model";
 import { RegisterInModel } from "app/shared/models/register-in/register-in.model";
@@ -33,6 +34,7 @@ type FormErrors = { [u in UserFields]: string };
   styleUrls: ["./create-register-in-stock.component.scss"],
 })
 export class CreateRegisterInStockComponent implements OnInit {
+  public propertyLenght;
   public suppliers: SupplierModel[];
   public supplies: StockModel[];
   public supply: string;
@@ -69,6 +71,7 @@ export class CreateRegisterInStockComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.propertyLenght = PropertyLenghtConstants;
     this.supplierService.getToList().subscribe((response) => {
       if (response.isSuccess) this.suppliers = response.data;
     });
@@ -136,7 +139,7 @@ export class CreateRegisterInStockComponent implements OnInit {
       );
 
       this.selectedSupplies.push(selectedSupplie);
-      this.supply = '';
+      this.supply = "";
     } catch (error) {
       console.log("selectSupply", error);
     }

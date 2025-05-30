@@ -19,6 +19,7 @@
             </div>
             <div class="col-md-1">
               <label>
+                Doação
                 <input
                   formControlName="donation"
                   type="checkbox"
@@ -26,11 +27,11 @@
                   id="donation"
                   name="donation"
                 />
-                Doação
               </label>
             </div>
             <div class="col-md-1">
               <label>
+                Aplicar
                 <input
                   formControlName="apply"
                   type="checkbox"
@@ -38,22 +39,21 @@
                   id="apply"
                   name="apply"
                 />
-                Aplicar
               </label>
             </div>
           </div>
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="standard">
                   <textarea
-                  matInput
-                  formControlName="description"
-                  type="text"
-                  class="form-control"
-                  id="description"
-                  name="description"
-                  placeholder="Descrição"
+                    matInput
+                    formControlName="description"
+                    type="text"
+                    class="form-control"
+                    id="description"
+                    name="description"
+                    placeholder="Descrição"
                   ></textarea>
                 </mat-form-field>
               </div>
@@ -63,7 +63,7 @@
         <div class="row">
           <div class="col-md-12">
             <app-autocomplete
-              placeholder="Suprimentos"
+              placeholder="Selecione os suprimentos"
               shownValue="name"
               [itemList]="supplies"
               [selectedValue]="supply"
@@ -90,18 +90,32 @@
                   {{ selectedSupply.name }}
                 </td>
                 <td>
-                  <input
-                    type="number"
-                    name="quantity{{ i }}"
-                    [(ngModel)]="selectedSupply.quantity"
-                  />
+                  <mat-form-field class="standard">
+                    <input
+                      matInput
+                      type="number"
+                      name="quantity{{ i }}"
+                      [(ngModel)]="selectedSupply.quantity"
+                      step="0.01"
+                      min="0"
+                      max="99999999.99"
+                      maxlength="{{ propertyLenght.DECIMAL_8_2 }}"
+                    />
+                  </mat-form-field>
                 </td>
                 <td>
-                  <input
-                    type="number"
-                    name="price{{ i }}"
-                    [(ngModel)]="selectedSupply.price"
-                  />
+                  <mat-form-field class="standard">
+                    <input
+                      matInput
+                      type="number"
+                      name="price{{ i }}"
+                      [(ngModel)]="selectedSupply.price"
+                      step="0.01"
+                      min="0"
+                      max="99999999.99"
+                      maxlength="{{ propertyLenght.DECIMAL_8_2 }}"
+                    />
+                  </mat-form-field>
                 </td>
                 <td class="text-right">
                   <button
@@ -116,14 +130,15 @@
             </tbody>
           </table>
         </div>
+        <mat-divider></mat-divider>
         <button
-        mat-raised-button
-        type="button"
-        (click)="cancel()"
-        class="btn btn-danger pull-right"
-      >
-        Cancelar
-      </button>
+          mat-raised-button
+          type="button"
+          (click)="cancel()"
+          class="btn btn-danger pull-right"
+        >
+          Cancelar
+        </button>
         <button
           mat-raised-button
           type="button"

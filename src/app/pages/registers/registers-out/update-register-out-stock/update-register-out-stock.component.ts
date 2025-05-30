@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { PropertyLenghtConstants } from "app/shared/constants/property-lenght.constants";
 import { RegisterOutSelectedSupply } from "app/shared/models/register-out-stock/register-out-selected-supplies.model";
 import { RegisterOutModel } from "app/shared/models/register-out/register-out.model";
 import { StockModel } from "app/shared/models/stock/stock.model";
@@ -20,6 +21,7 @@ type FormErrors = { [u in UserFields]: string };
   styleUrls: ["./update-register-out-stock.component.scss"],
 })
 export class UpdateRegisterOutStockComponent implements OnInit {
+  public propertyLenght;
   public supplies: StockModel[];
   public supply: string;
   public selectedSupplies: RegisterOutSelectedSupply[] = new Array();
@@ -56,41 +58,37 @@ export class UpdateRegisterOutStockComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    try {
-      this.initForm();
+    this.propertyLenght = PropertyLenghtConstants;
+    this.initForm();
+    this.stockService.getToList().subscribe((response) => {
+      if (response.isSuccess) this.supplies = response.data;
+    });
 
-      this.stockService.getToList().subscribe((response) => {
-        if (response.isSuccess) this.supplies = response.data;
-      });
+    const registerOutId = this.route.snapshot.paramMap.get("id");
+    firstValueFrom(this.service.getByIdToUpdate(registerOutId)).then(
+      (response) => {
+        console.log({ response });
+        if (response.isSuccess) {
+          this.registerOut = response.data as RegisterOutModel;
+          this.registerOut.id = registerOutId;
 
-      const registerOutId = this.route.snapshot.paramMap.get("id");
-      firstValueFrom(this.service.getByIdToUpdate(registerOutId)).then(
-        (response) => {
-          console.log({response});
-          if (response.isSuccess) {
-            this.registerOut = response.data as RegisterOutModel;
-            this.registerOut.id = registerOutId;
+          console.log(this.registerOut);
 
-            console.log(this.registerOut);
-
-            this.selectedSupplies =
-              this.registerOut.registerOutStocks.map<RegisterOutSelectedSupply>(
-                (x) => {
-                  return new RegisterOutSelectedSupply(
-                    x.stockId,
-                    x.stock.name,
-                    x.price,
-                    x.quantity
-                  );
-                }
-              );
-            this.updateForm.patchValue(this.registerOut);
-          }
+          this.selectedSupplies =
+            this.registerOut.registerOutStocks.map<RegisterOutSelectedSupply>(
+              (x) => {
+                return new RegisterOutSelectedSupply(
+                  x.stockId,
+                  x.stock.name,
+                  x.price,
+                  x.quantity
+                );
+              }
+            );
+          this.updateForm.patchValue(this.registerOut);
         }
-      );
-    } catch (error) {
-      console.log(error);
-    }
+      }
+    );
   }
 
   showNameAvailableNotification(text: string) {

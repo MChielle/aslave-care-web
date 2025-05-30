@@ -35,12 +35,9 @@
                 </button>
               </div>
             </div>
+            <mat-divider></mat-divider>
             <div class="table-responsive">
-              <mat-table
-                mat-table
-                matSort
-                [dataSource]="dataSource"
-              >
+              <mat-table mat-table matSort [dataSource]="dataSource">
                 <ng-container matColumnDef="name">
                   <th
                     mat-header-cell

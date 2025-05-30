@@ -249,3 +249,19 @@ export class RoleNames {
     return "roles";
   }
 }
+
+@Injectable({
+  providedIn: "root",
+})
+export class TaskNoteNames {
+  get API_URL_LOWER_CASE() {
+    return "tasknote";
+  }  
+  get URL_LOWER_CASE() {
+    return "tasknote";
+  }
+  get URL_LOWER_CASE_PLURAL() {
+    return "tasknotes";
+  }
+}
+
