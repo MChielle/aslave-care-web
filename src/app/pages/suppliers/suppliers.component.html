@@ -7,64 +7,136 @@
             <h4 class="card-title">Fornecedores</h4>
             <p class="card-category">Registros de fornecedores</p>
           </div>
-          <div>
-            <div class="col-md-4 pull-right">
-              <button
-                mat-raised-button
-                type="button"
-                (click)="createNew()"
-                class="btn btn-success pull-right"
-              >
-                Criar Fornecedor/Doador
-              </button>
-            </div>
-          </div>
           <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field class="standard">
+                  <mat-label>Buscar...</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    id="search"
+                    name="search"
+                    placeholder="Nome"
+                    (keyup)="applyFilter($event)"
+                    #input
+                  />
+                </mat-form-field>
+              </div>
+              <div class="col-md-2"></div>
+              <div class="col-md-4 pull-right">
+                <button
+                  mat-raised-button
+                  type="button"
+                  (click)="navigateToCreate()"
+                  class="btn btn-success pull-right"
+                >
+                  Criar Fornecedor
+                </button>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
             <div class="table-responsive">
-              <table class="table">
-                <thead class="text-primary">
-                  <th>Nome</th>
-                  <th>Email</th>
-                  <th>Telefone</th>
-                  <th>Inativo</th>
-                  <th class="text-right">Ações</th>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let supplier of models">
-                    <td>
-                      {{ supplier.name }}
-                    </td>
-                    <td>
-                      {{ supplier.email }}
-                    </td>
-                    <td>
-                      {{ phoneNumberFormatter(supplier.phoneNumber) }}
-                    </td>
-                    <td>
-                      <input class="form-control" disabled type="checkbox" [checked]="supplier.disable" />
-                    </td>
-                    <td class="text-right">
-                      <button
-                        mat-raised-button
-                        class="btn btn-sm btn-trash btn-info"
-                        tooltip="Editar"
-                        (click)="update(supplier.id)"
-                      >
-                        <i class="fa fa-pencil"></i>
-                      </button>
-                      &nbsp;
-                      <button
-                        mat-raised-button
-                        class="btn btn-sm btn-trash btn-danger"
-                        tooltip="Excluir"
-                        (click)="softDelete(supplier.id)"
-                      >
-                        <i class="fa fa-trash"></i>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <mat-table
+                mat-table
+                matSort
+                [dataSource]="dataSource"
+              >
+                <ng-container matColumnDef="name">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    class="text-primary"
+                  >
+                    Nome
+                  </th>
+                  <td mat-cell *matCellDef="let supplier">
+                    {{ supplier.name }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    class="text-primary"
+                  >
+                    Email
+                  </th>
+                  <td mat-cell *matCellDef="let supplier">
+                    {{ supplier.email }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="phoneNumber">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    class="text-primary"
+                  >
+                    Telefone
+                  </th>
+                  <td mat-cell *matCellDef="let supplier">
+                    {{ supplier.formatedPhoneNumber }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="disable">
+                  <th mat-header-cell class="text-primary" *matHeaderCellDef>
+                    Inativo
+                  </th>
+                  <td mat-cell *matCellDef="let supplier">
+                    <input
+                      disabled
+                      type="checkbox"
+                      [checked]="supplier.disable"
+                    />
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    class="text-right text-primary"
+                  >
+                    Ações
+                  </th>
+                  <td mat-cell *matCellDef="let stock" class="text-right">
+                    <button
+                      mat-raised-button
+                      class="btn btn-sm btn-trash btn-info"
+                      tooltip="Editar"
+                      (click)="navigateToUpdate(stock.id)"
+                    >
+                      <i class="fa fa-pencil"></i>
+                    </button>
+                    &nbsp;
+                    <button
+                      mat-raised-button
+                      class="btn btn-sm btn-trash btn-danger"
+                      tooltip="Excluir"
+                      (click)="softDelete(stock.id)"
+                    >
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+              </mat-table>
+              <mat-paginator
+                [pageSize]="10"
+                [pageSizeOptions]="[5, 10, 20]"
+                showFirstLastButtons
+              ></mat-paginator>
             </div>
           </div>
         </div>

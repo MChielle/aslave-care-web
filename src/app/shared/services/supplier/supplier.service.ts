@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { BaseService } from "../base.service";
-import { SupplierModel } from "app/shared/models/supplier/supplier.model";
 import { ResponseBase } from "app/shared/Responses/response-base";
 import { HttpParams } from "@angular/common/http";
 import { SupplierNames } from "app/shared/utils/names";

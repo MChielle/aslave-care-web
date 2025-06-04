@@ -1,25 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { LocalStorageService } from 'app/shared/services/app/local-storage.service';
-import { AuthService } from 'app/shared/services/auth/auth.service';
-import { ToastrService } from 'ngx-toastr';
-import { Constants } from 'app/shared/constants/aslavecare.constants';
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, Validators, FormControl } from "@angular/forms";
+import { Router, ActivatedRoute } from "@angular/router";
+import { LocalStorageService } from "app/shared/services/app/local-storage.service";
+import { AuthService } from "app/shared/services/auth/auth.service";
+import { ToastrService } from "ngx-toastr";
+import { Constants } from "app/shared/constants/aslavecare.constants";
+import { PropertyLenghtConstants } from "app/shared/constants/property-lenght.constants";
 
-type UserFields = 'email' | 'password';
+type UserFields = "email" | "password";
 type FormErrors = { [u in UserFields]: string };
 
-
 @Component({
-  selector: 'app-signin',
-  templateUrl: './signin.component.html',
-  styleUrls: ['./signin.component.scss']
+  selector: "app-signin",
+  templateUrl: "./signin.component.html",
+  styleUrls: ["./signin.component.scss"],
 })
 export class SigninComponent implements OnInit {
+  public propertyLenght;
   public signInForm: FormGroup;
   public formErrors: FormErrors = {
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   };
 
   public errorMessage: any;
@@ -30,15 +31,16 @@ export class SigninComponent implements OnInit {
     public localStorageService: LocalStorageService,
     private router: Router,
     private route: ActivatedRoute,
-    private toastr: ToastrService,
-  ) { 
+    private toastr: ToastrService
+  ) {
     this.signInForm = new FormGroup({
-      email: new FormControl(''),
-      password: new FormControl(''),
+      email: new FormControl(""),
+      password: new FormControl(""),
     });
   }
 
   ngOnInit() {
+    this.propertyLenght = PropertyLenghtConstants;    
     let lastEmail = this.localStorageService.getItem(
       Constants.LAST_LOGIN_EMAIL
     );
@@ -51,22 +53,20 @@ export class SigninComponent implements OnInit {
 
   signIn() {
     this.authService.showLoader = true;
-    this.authService.signIn(
-        this.signInForm.value['email'],
-        this.signInForm.value['password']
-      )
+    this.authService
+      .signIn(this.signInForm.value["email"], this.signInForm.value["password"])
       .subscribe({
         next: async (res) => {
           this.localStorageService.setItem(
             Constants.LAST_LOGIN_EMAIL,
-            this.signInForm.value['email']
+            this.signInForm.value["email"]
           );
-          this.router.navigate(['dashboard']);
+          this.router.navigate(["dashboard"]);
           this.authService.showLoader = false;
           return;
         },
         error: (err) => {
-          this.toastr.warning('E-mail ou Senha incorretos.');
+          this.toastr.warning("E-mail ou Senha incorretos.");
           this.signInForm.markAllAsTouched();
           this.authService.showLoader = false;
         },
@@ -78,6 +78,6 @@ export class SigninComponent implements OnInit {
   }
 
   public navigateForgetPasswords() {
-      this.router.navigate(['signin', 'forgot-password']);
+    this.router.navigate(["signin", "forgot-password"]);
   }
 }

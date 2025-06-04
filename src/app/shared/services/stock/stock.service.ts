@@ -52,4 +52,8 @@ export class StockService<TModel> {
   public getTotalStocksQuantityWarning() {
     return this.baseService.get<ResponseBase<StocksQuantityWarningModel>>(`${this.names.URL_LOWER_CASE}/total-stocks-quantity-warning`);
   }
+
+  public getRestockReport() {
+    return this.baseService.get<ResponseBase<TModel[]>>(`${this.names.URL_LOWER_CASE}/restock-report`);
+  }
 }

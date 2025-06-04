@@ -6,10 +6,10 @@ import {
   Validators,
 } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { validateAdditionalItems } from "ajv/dist/vocabularies/applicator/additionalItems";
 import { SupplierModel } from "app/shared/models/supplier/supplier.model";
 import { NotificationService } from "app/shared/services/notification/notification.service";
 import { SupplierService } from "app/shared/services/supplier/supplier.service";
+import { ValidatorHelper } from "app/shared/utils/helpers/validator.helper";
 import { SupplierNames } from "app/shared/utils/names";
 import { firstValueFrom } from "rxjs";
 declare var $: any;
@@ -43,7 +43,7 @@ export class UpdateSupplierComponent implements OnInit {
     this.updateForm = this.fb.group({
       id: new FormControl(""),
       name: new FormControl("", [Validators.required]),
-      email: new FormControl("", [Validators.required]),
+      email: new FormControl("", [Validators.required, ValidatorHelper.isValidEmail]),
       phoneNumber: new FormControl("", [Validators.required]),
       disable: new FormControl(false),
     });

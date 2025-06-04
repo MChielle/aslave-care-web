@@ -8,19 +8,18 @@
       <div class="card-body">
         <form [formGroup]="updateForm">
           <div class="row">
-            <div class="col-md-6">
-              <label class="col-form-label">
-                Nome
-              </label>
+            <div class="col-md-12">
+              <mat-form-field class="example-full-width">
                 <input
+                  matInput
                   formControlName="name"
                   type="text"
-                  class="form-control"
                   id="name"
                   name="name"
-                  placeholder="Nome do item"
-                  required
+                  placeholder="Nome"
+                  maxlength="{{ propertyLenght.FULL_NAME }}"
                 />
+              </mat-form-field>
               <div
                 *ngIf="
                   updateForm.controls.name.touched &&
@@ -30,29 +29,80 @@
                 Nome é obrigatório.
               </div>
             </div>
-            <div class="col-md-2">
-              <label for="Tipo" class="col-form-label">
-                Tipo
-              </label>
-              <select
-                formControlName="stockTypeId"
-                class="form-control"
-                id="stockTypeId"
-                autocomplete="off"
-                (change)="onChangeStockType($event)"
-              >
-                <option value="" disabled selected>Selecione o tipo</option>
-                <option
-                  *ngFor="let type of stockTypes"
-                  [selected]="type.id == selectedStockTypeId"
-                  [value]="type.id"
-                >
-                  {{ type.id }}
-                </option>
-              </select>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  formControlName="quantity"
+                  type="number"
+                  id="quantity"
+                  name="quantity"
+                  placeholder="Quantidade"
+                  step="0.01"
+                  min="0"
+                  max="99999999.99"
+                />
+              </mat-form-field>
               <div
                 *ngIf="
-                  updateForm.controls.stockTypeId.touched &&
+                  updateForm.controls.quantity.errors?.required
+                "
+              >
+                Quantidade é obrigatória.
+              </div>
+              <div *ngIf="updateForm.controls.quantity.errors?.decimal">
+                Quantidade deve estar entre 0 e 99999999.99.
+              </div>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  formControlName="quantityLowWarning"
+                  type="number"
+                  id="quantityLowWarning"
+                  name="quantityLowWarning"
+                  placeholder="Quantidade mínima"
+                  step="0.01"
+                  min="0"
+                  max="99999999.99"
+                />
+              </mat-form-field>
+              <div
+                *ngIf="
+                  updateForm.controls.quantityLowWarning.errors?.required
+                "
+              >
+                Quantidade mínima é obrigatória.
+              </div>
+              <div
+                *ngIf="updateForm.controls.quantityLowWarning.errors?.decimal"
+              >
+                Quantidade mínima deve estar entre 0 e 99999999.99.
+              </div>
+            </div>
+            <div class="col-md-2">
+              <mat-form-field class="example-full-width">
+                <mat-label>Tipo</mat-label>
+                <mat-select
+                  formControlName="stockTypeId"
+                  id="stockTypeId"
+                  autocomplete="off"
+                  (change)="onChangeStockType($event)"
+                >
+                  <mat-option
+                    *ngFor="let type of stockTypes"
+                    [selected]="type.id == selectedStockTypeId"
+                    [value]="type.id"
+                  >
+                    {{ type.id }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div
+                *ngIf="
                   updateForm.controls.stockTypeId.errors?.required
                 "
               >
@@ -60,43 +110,15 @@
               </div>
             </div>
             <div class="col-md-1">
-              <label for="quantity" class="col-form-label">
-                Quantidade
-              </label>
-                <input
-                  formControlName="quantity"
-                  type="number"
-                  class="form-control"
-                  id="quantity"
-                  name="quantity"
-                  placeholder="0"
-                  required
-                />
-            </div>
-            <div class="col-md-2">
-              <label for="quantityLowWarning" class="col-form-label">
-                Quantidade mínima
-              </label>
-                <input
-                  formControlName="quantityLowWarning"
-                  type="number"
-                  class="form-control"
-                  id="quantityLowWarning"
-                  name="quantityLowWarning"
-                  placeholder="0"
-                  required
-                />
-            </div>
-            <div class="col-md-1">
               <div>
                 <label for="disable" class="col-form-label">
                   Inativo
                   <input
-                  formControlName="disable"
-                  type="checkbox"
-                  class="form-control"
-                  id="disable"
-                  name="disable"
+                    formControlName="disable"
+                    type="checkbox"
+                    class="form-control"
+                    id="disable"
+                    name="disable"
                   />
                 </label>
               </div>
@@ -114,6 +136,7 @@
                     id="description"
                     name="description"
                     placeholder="Descrição"
+                    maxlength="{{ propertyLenght.DESCRIPTION }}"
                   ></textarea>
                 </mat-form-field>
               </div>

@@ -1,40 +1,72 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
-import { ROUTES } from '../sidebar/sidebar.component';
-import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
-import { Router } from '@angular/router';
+import { Component, OnInit, ElementRef } from "@angular/core";
+import { ROUTES } from "../sidebar/sidebar.component";
+import {
+  Location,
+  LocationStrategy,
+  PathLocationStrategy,
+} from "@angular/common";
+import { Router } from "@angular/router";
+import { AuthService } from "app/shared/services/auth/auth.service";
+import { UserNames } from "app/shared/utils/names";
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  selector: "app-navbar",
+  templateUrl: "./navbar.component.html",
+  styleUrls: ["./navbar.component.css"],
 })
 export class NavbarComponent implements OnInit {
-    private listTitles: any[];
-    location: Location;
-      mobile_menu_visible: any = 0;
-    private toggleButton: any;
-    private sidebarVisible: boolean;
+  private listTitles: any[];
+  location: Location;
+  mobile_menu_visible: any = 0;
+  private toggleButton: any;
+  private sidebarVisible: boolean;
 
-    constructor(location: Location,  private element: ElementRef, private router: Router) {
-      this.location = location;
-          this.sidebarVisible = false;
-    }
+  constructor(
+    location: Location,
+    private element: ElementRef,
+    private router: Router,
+    private authService: AuthService,
+    private userNames: UserNames
+  ) {
+    this.location = location;
+    this.sidebarVisible = false;
+  }
 
-    ngOnInit(){
-      this.listTitles = ROUTES.filter(listTitle => listTitle);
-      const navbar: HTMLElement = this.element.nativeElement;
-      this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
-      this.router.events.subscribe((event) => {
-        this.sidebarClose();
-         var $layer: any = document.getElementsByClassName('close-layer')[0];
-         if ($layer) {
-           $layer.remove();
-           this.mobile_menu_visible = 0;
-         }
-     });
-    }
+  canEditUsers(){
+    return !this.authService.isEmployee();
+  }
 
-    sidebarOpen() {
+  ngOnInit() {
+    this.listTitles = ROUTES.filter((listTitle) => listTitle);
+    const navbar: HTMLElement = this.element.nativeElement;
+    this.toggleButton = navbar.getElementsByClassName("navbar-toggler")[0];
+    this.router.events.subscribe((event) => {
+      this.sidebarClose();
+      var $layer: any = document.getElementsByClassName("close-layer")[0];
+      if ($layer) {
+        $layer.remove();
+        this.mobile_menu_visible = 0;
+      }
+    });
+  }
+
+  navigateToUsersList() {
+    this.router.navigate([this.userNames.URL_LOWER_CASE_PLURAL]);
+  }
+
+  navigateToChangePassword() {
+    this.router.navigate(["change-password"]);
+  }
+
+  navigateToUserProfile() {
+    this.router.navigate(["user-profile"]);
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+
+  sidebarOpen() {
         const toggleButton = this.toggleButton;
         const body = document.getElementsByTagName('body')[0];
         setTimeout(function(){
@@ -109,17 +141,17 @@ export class NavbarComponent implements OnInit {
         }
     };
 
-    getTitle(){
-      var titlee = this.location.prepareExternalUrl(this.location.path());
-      if(titlee.charAt(0) === '#'){
-          titlee = titlee.slice( 1 );
-      }
-
-      for(var item = 0; item < this.listTitles.length; item++){
-          if(this.listTitles[item].path === titlee){
-              return this.listTitles[item].title;
-          }
-      }
-      return 'Dashboard';
+  getTitle() {
+    var titlee = this.location.prepareExternalUrl(this.location.path());
+    if (titlee.charAt(0) === "#") {
+      titlee = titlee.slice(1);
     }
+
+    for (var item = 0; item < this.listTitles.length; item++) {
+      if (this.listTitles[item].path === titlee) {
+        return this.listTitles[item].title;
+      }
+    }
+    return "";
+  }
 }

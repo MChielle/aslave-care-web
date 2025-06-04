@@ -6,17 +6,26 @@ import {
   Validators,
 } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { PropertyLenghtConstants } from "app/shared/constants/property-lenght.constants";
 import { StockModel } from "app/shared/models/stock/stock.model";
 import { StockTypeModel } from "app/shared/models/stockType/stock-type.model";
 import { NotificationService } from "app/shared/services/notification/notification.service";
 import { StockService } from "app/shared/services/stock/stock.service";
 import { StockTypeService } from "app/shared/services/stockType/stock-type.service";
 import { StockNames } from "app/shared/utils/names";
+import { DecimalValidator } from "app/shared/validators/quantity.validator";
 import { firstValueFrom } from "rxjs";
 
 declare var $: any;
 
-type UserFields = "id" | "name" | "description" | "disable" | "quantity" | "quantityLowWarning" | "stockTypeId";
+type UserFields =
+  | "id"
+  | "name"
+  | "description"
+  | "disable"
+  | "quantity"
+  | "quantityLowWarning"
+  | "stockTypeId";
 type FormErrors = { [u in UserFields]: string };
 
 @Component({
@@ -25,6 +34,7 @@ type FormErrors = { [u in UserFields]: string };
   styleUrls: ["./update-stock.component.scss"],
 })
 export class UpdateStockComponent implements OnInit {
+  public propertyLenght;
   public updateForm: FormGroup;
   public stockTypes: StockTypeModel[] = [];
   public selectedStockTypeId: string;
@@ -43,68 +53,64 @@ export class UpdateStockComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private service: StockService<StockModel>,
-    private stockTypeService: StockTypeService<StockTypeModel>,    
+    private stockTypeService: StockTypeService<StockTypeModel>,
     private notificationService: NotificationService,
     private fb: FormBuilder
-  ) {
+  ) {}
+
+  initForm() {
     this.updateForm = this.fb.group({
       id: new FormControl(""),
       name: new FormControl("", [Validators.required]),
       description: new FormControl(""),
-      quantity: new FormControl(0, [Validators.required]),
-      quantityLowWarning: new FormControl(0, [Validators.required]),
+      quantity: new FormControl(0, [
+        Validators.required,
+        DecimalValidator.decimal(2),
+      ]),
+      quantityLowWarning: new FormControl(0, [
+        Validators.required,
+        DecimalValidator.decimal(2),
+      ]),
       disable: new FormControl(false),
       stockTypeId: new FormControl("", [Validators.required]),
     });
   }
 
-  get id() {
-    return this.updateForm.get("id").value;
-  }
-  get name() {
-    return this.updateForm.get("name").value;
-  }
-  get description() {
-    return this.updateForm.get("description").value;
-  }
-  get quantity() {
-    return this.updateForm.get("quantity").value;
-  }
-  get quantityLowWarning() {
-    return this.updateForm.get("quantityLowWarning").value;
-  }
-  get disable() {
-    return this.updateForm.get("disable").value;
-  }
-
-  get stockTypeId() {
-    return this.updateForm.get("stockTypeId").value;
-  }
-
   loadStockTypes() {
-    this.stockTypeService.getToList().subscribe((response) => {
-      if (response.isSuccess) {
-        setTimeout(() => {
-          this.stockTypes = response.data;
-        }, 200);
-      }
-    });
+    try {
+      this.stockTypeService.getToList().subscribe((response) => {
+        if (response.isSuccess) {
+          setTimeout(() => {
+            this.stockTypes = response.data;
+          }, 200);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   ngOnInit(): void {
-    this.loadStockTypes();
-    const stockId = this.route.snapshot.paramMap.get("id");
-    firstValueFrom(this.service.getById(stockId)).then((response) => {
-      if (response.isSuccess) {
-        const stock = response.data as StockModel;
-        this.updateForm.patchValue(stock);
-      }
-    });
+    try {
+      this.propertyLenght = PropertyLenghtConstants;
+      this.initForm();
+      this.loadStockTypes();
+      const stockId = this.route.snapshot.paramMap.get("id");
+      if (stockId)
+        firstValueFrom(this.service.getById(stockId)).then((response) => {
+          if (response.isSuccess) {
+            const stock = response.data as StockModel;
+            this.updateForm.patchValue(stock);
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  showNomeAvailableNotification() {
+  showNotification(text: string) {
     const notification = this.notificationService.buildNotification(
-      "Conflito, este nome pertence a outro cadastro.",
+      text,
       "warning",
       "bottom",
       "right"
@@ -113,31 +119,46 @@ export class UpdateStockComponent implements OnInit {
   }
 
   sendUpdateRequest(stock: StockModel) {
-    this.service.update(stock).subscribe((response) => {
-      if (response.isSuccess) {
-        this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
-      }
-    });
+    try {
+      this.service.update(stock).subscribe((response) => {
+        if (response.isSuccess) {
+          this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   update() {
-    const model = this.updateForm.value as StockModel;
-    const parameters = new StockModel();
-    parameters.name = model.name;
-    this.service.getByParameters(parameters).subscribe((response) => {
-      if (
-        response.isSuccess &&
-        (!response?.data[0] || response?.data[0]?.id == model.id) &&
-        this.updateForm.valid
-      ) {
-        this.sendUpdateRequest(model);
-      } else {
-        this.showNomeAvailableNotification();
-      }
-    });
-  }
-  catch(error) {
-    console.log("update", error);
+    try {
+      const model = this.updateForm.value as StockModel;
+      const parameters = new StockModel();
+      parameters.name = model.name;
+      this.service.getByParameters(parameters).subscribe((response) => {
+        if (
+          response.isSuccess &&
+          response.data[0] &&
+          response.data[0].name == model.name &&
+          response.data[0].id != model.id
+        ) {
+          this.showNotification(
+            "Conflito, este nome pertence a outro cadastro."
+          );
+          return;
+        }
+
+        if (this.updateForm.controls.errors) {
+          this.showNotification(this.updateForm.controls.errors?.getError.name);
+          return;
+        }
+
+        if (response.isSuccess && this.updateForm.valid)
+          this.sendUpdateRequest(model);
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   cancel() {

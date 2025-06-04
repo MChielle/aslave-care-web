@@ -1,5 +1,6 @@
-export class SupplierModel {
-    id: string;
+import { BaseModel } from "../base/base.model";
+
+export class SupplierModel extends BaseModel<string> {
     name: string;
     email: string;
     phoneNumber: string;

@@ -7,75 +7,128 @@
             <h4 class="card-title">Estoque</h4>
             <p class="card-category">Registros de estoque</p>
           </div>
-          <div>
-            <div class="col-md-4 pull-right">
-              <div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field class="standard">
+                  <mat-label>Buscar...</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    id="search"
+                    name="search"
+                    placeholder="Nome"
+                    (keyup)="applyFilter($event)"
+                    #input
+                  />
+                </mat-form-field>
+              </div>
+              <div class="col-md-2"></div>
+              <div class="col-md-4 pull-right">
                 <button
                   mat-raised-button
                   type="button"
-                  (click)="createNew()"
+                  (click)="navigateToCreate()"
                   class="btn btn-success pull-right"
                 >
                   Novo Insumo
                 </button>
-              </div>              
+              </div>
             </div>
-          </div>
-          <div class="card-body">
+            <mat-divider></mat-divider>
             <div class="table-responsive">
-              <table class="table">
-                <thead class="text-primary">
-                  <th>Nome</th>
-                  <th>Tipo</th>
-                  <th>Quantidade</th>
-                  <th>Limite</th>
-                  <th>Inativo</th>
-                  <th class="text-right">Ações</th>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let stock of models">
-                    <td>
-                      {{ stock.name }}
-                    </td>
-                    <td>
-                      {{ stock.stockTypeId }}
-                    </td>
-                    <td>
-                      {{ stock.quantity }}
-                    </td>
-                    <td>
-                      {{ stock.quantityLowWarning }}
-                    </td>
-                    <td>
-                      <input
-                        class="form-control"
-                        disabled
-                        type="checkbox"
-                        [checked]="stock.disable"
-                      />
-                    </td>
-                    <td class="text-right">
-                      <button
-                        mat-raised-button
-                        class="btn btn-sm btn-trash btn-info"
-                        tooltip="Editar"
-                        (click)="update(stock.id)"
-                      >
-                        <i class="fa fa-pencil"></i>
-                      </button>
-                      &nbsp;
-                      <button
-                        mat-raised-button
-                        class="btn btn-sm btn-trash  btn-danger"
-                        tooltip="Excluir"
-                        (click)="softDelete(stock.id)"
-                      >
-                        <i class="fa fa-trash"></i>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <mat-table mat-table matSort [dataSource]="dataSource">
+                <ng-container matColumnDef="name">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    class="text-primary"
+                  >
+                    Nome
+                  </th>
+                  <td mat-cell *matCellDef="let stock">{{ stock.name }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="stockTypeId">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    class="text-primary"
+                  >
+                    Tipo
+                  </th>
+                  <td mat-cell *matCellDef="let stock">
+                    {{ stock.stockTypeId }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="quantity">
+                  <th mat-header-cell class="text-primary" *matHeaderCellDef>
+                    Quantidade
+                  </th>
+                  <td mat-cell *matCellDef="let stock">{{ stock.quantity }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="quantityLowWarning">
+                  <th mat-header-cell class="text-primary" *matHeaderCellDef>
+                    Limite
+                  </th>
+                  <td mat-cell *matCellDef="let stock">
+                    {{ stock.quantityLowWarning }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="disable">
+                  <th mat-header-cell class="text-primary" *matHeaderCellDef>
+                    Inativo
+                  </th>
+                  <td mat-cell *matCellDef="let stock">
+                    <input disabled type="checkbox" [checked]="stock.disable" />
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions" class="">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    class="text-right text-primary"
+                  >
+                    Ações
+                  </th>
+                  <td mat-cell *matCellDef="let stock" class="text-right">
+                    <button
+                      mat-raised-button
+                      class="btn btn-sm btn-trash btn-info"
+                      tooltip="Editar"
+                      (click)="navigateToUpdate(stock.id)"
+                    >
+                      <i class="fa fa-pencil"></i>
+                    </button>
+                    &nbsp;
+                    <button
+                      mat-raised-button
+                      class="btn btn-sm btn-trash btn-danger"
+                      tooltip="Excluir"
+                      (click)="softDelete(stock.id)"
+                    >
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+              </mat-table>
+              <mat-paginator
+                [pageSize]="10"
+                [pageSizeOptions]="[5, 10, 20]"
+                showFirstLastButtons
+              ></mat-paginator>
             </div>
           </div>
         </div>

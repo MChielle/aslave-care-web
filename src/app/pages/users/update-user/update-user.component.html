@@ -1,0 +1,102 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-info">
+            <h4 class="card-title">Editar Perfil</h4>
+            <p class="card-category">Perfil de usuário</p>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="updateForm">
+              <div class="row">
+                <div class="col-md-10">
+                  <mat-form-field class="standard">
+                    <input
+                      matInput
+                      formControlName="name"
+                      type="text"
+                      id="name"
+                      name="name"
+                      placeholder="Nome completo"
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                  <mat-form-field class="standard">
+                    <input
+                      matInput
+                      formControlName="role"
+                      type="text"
+                      id="role"
+                      name="role"
+                      placeholder="Tipo"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-7">
+                  <mat-form-field class="standard">
+                    <input
+                      matInput
+                      formControlName="email"
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="Email"
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <mat-form-field class="standard">
+                    <input
+                      matInput
+                      formControlName="phoneNumber"
+                      type="text"
+                      inputmode="numeric"
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      placeholder="Telefone"
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="col-md-1">
+                  <div>
+                    <label>
+                      <input
+                        formControlName="disable"
+                        type="checkbox"
+                        class="form-control"
+                        id="disable"
+                        name="disable"
+                      />
+                      Inativo
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <button
+                mat-raised-button
+                type="button"
+                (click)="cancel()"
+                class="btn btn-danger pull-right"
+              >
+                Cancelar
+              </button>
+              <button
+                mat-raised-button
+                type="button"
+                (click)="update()"
+                class="btn btn-success pull-right"
+              >
+                Salvar
+              </button>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

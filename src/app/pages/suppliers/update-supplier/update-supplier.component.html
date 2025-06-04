@@ -8,16 +8,18 @@
       <div class="card-body">
         <form [formGroup]="updateForm">
           <div class="row">
-            <div class="col-md-11">
-              <input
-                formControlName="name"
-                type="text"
-                class="form-control"
-                id="name"
-                name="name"
-                placeholder="João da Silva"
-                required
-              />
+            <div class="col-md-12">
+              <mat-form-field class="standard">
+                <input
+                  matInput
+                  formControlName="name"
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Nome completo"
+                  required
+                />
+              </mat-form-field>
               <div
                 *ngIf="
                   updateForm.controls.name.touched &&
@@ -30,15 +32,17 @@
           </div>
           <div class="row">
             <div class="col-md-7">
-              <input
-                formControlName="email"
-                type="email"
-                class="form-control"
-                id="email"
-                name="email"
-                placeholder="name@exemple.com"
-                required
-              />
+              <mat-form-field class="standard">
+                <input
+                  matInput
+                  formControlName="email"
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Email"
+                  required
+                />
+              </mat-form-field>
               <div
                 *ngIf="
                   updateForm.controls.email.touched &&
@@ -47,20 +51,30 @@
               >
                 Email é obrigatório.
               </div>
+              <div
+                *ngIf="
+                  updateForm.controls.email.touched &&
+                  updateForm.controls.email.errors?.invalidEmail
+                "
+              >
+                Email é inválido.
+              </div>
             </div>
             <div class="col-md-4">
-              <input
-                formControlName="phoneNumber"
-                type="text"
-                inputmode="numeric"
-                class="form-control"
-                id="phoneNumber"
-                name="phoneNumber"
-                placeholder="(00) 00000-0000"
-                maxlength="11"
-                minlength="10"
-                required
-              />
+              <mat-form-field class="standard">
+                <input
+                  matInput
+                  formControlName="phoneNumber"
+                  type="text"
+                  inputmode="numeric"
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  placeholder="Telefone"
+                  maxlength="11"
+                  minlength="10"
+                  required
+                />
+              </mat-form-field>
               <div
                 *ngIf="
                   updateForm.controls.phoneNumber.touched &&

@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
+import { PropertyLenghtConstants } from "app/shared/constants/property-lenght.constants";
 import { RegisterOutSelectedSupply } from "app/shared/models/register-out-stock/register-out-selected-supplies.model";
 import { CreateRegisterOutModel } from "app/shared/models/register-out/create-register-out.model";
 import { RegisterOutModel } from "app/shared/models/register-out/register-out.model";
@@ -22,6 +23,8 @@ type FormErrors = { [u in UserFields]: string };
   styleUrls: ["./create-register-out-stock.component.scss"],
 })
 export class CreateRegisterOutStockComponent implements OnInit {
+  public propertyLenght;
+
   public supplies: StockModel[];
   public supply: string;
   public selectedSupplies: RegisterOutSelectedSupply[] = new Array();
@@ -50,6 +53,7 @@ export class CreateRegisterOutStockComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.propertyLenght = PropertyLenghtConstants;
     this.stockService.getToList().subscribe((response) => {
       if (response.isSuccess) this.supplies = response.data;
     });
@@ -78,7 +82,7 @@ export class CreateRegisterOutStockComponent implements OnInit {
 
   create() {
     try {
-      console.log('create');
+      console.log("create");
       this.createForm.controls["registerOutStocks"].setValue(
         this.selectedSupplies
       );

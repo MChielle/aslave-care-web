@@ -1,17 +1,18 @@
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
+import { PropertyLenghtConstants } from "app/shared/constants/property-lenght.constants";
 import { RegisterOutSelectedSupply } from "app/shared/models/register-out-stock/register-out-selected-supplies.model";
-import { CreateRegisterOutModel } from "app/shared/models/register-out/create-register-out.model";
 import { RegisterOutModel } from "app/shared/models/register-out/register-out.model";
 import { StockModel } from "app/shared/models/stock/stock.model";
 import { NotificationService } from "app/shared/services/notification/notification.service";
 import { RegisterOutService } from "app/shared/services/register-out/register-out.service";
 import { StockService } from "app/shared/services/stock/stock.service";
 import { RegisterOutNames } from "app/shared/utils/names";
+import { firstValueFrom } from "rxjs";
 
 declare var $: any;
-type UserFields = "description" | "apply" | "registerOutStocks";
+type UserFields = "id" | "description" | "apply" | "registerOutStocks";
 type FormErrors = { [u in UserFields]: string };
 
 @Component({
@@ -20,12 +21,14 @@ type FormErrors = { [u in UserFields]: string };
   styleUrls: ["./update-register-out-stock.component.scss"],
 })
 export class UpdateRegisterOutStockComponent implements OnInit {
+  public propertyLenght;
   public supplies: StockModel[];
   public supply: string;
   public selectedSupplies: RegisterOutSelectedSupply[] = new Array();
   public registerOut: RegisterOutModel = new RegisterOutModel();
   public updateForm: FormGroup;
   public formErrors: FormErrors = {
+    id: "",
     description: "",
     apply: "",
     registerOutStocks: "",
@@ -38,24 +41,59 @@ export class UpdateRegisterOutStockComponent implements OnInit {
     private stockService: StockService<StockModel>,
     private notificationService: NotificationService,
     private router: Router,
-    private cdr: ChangeDetectorRef
-  ) {
-    this.updateForm = this.fb.group({
-      description: new FormControl(""),
-      apply: new FormControl(false),
-      registerOutStocks: new FormControl(""),
-    });
+    private route: ActivatedRoute
+  ) {}
+
+  initForm() {
+    try {
+      this.updateForm = this.fb.group({
+        id: new FormControl(""),
+        description: new FormControl(""),
+        apply: new FormControl(false),
+        registerOutStocks: new FormControl(""),
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   ngOnInit(): void {
+    this.propertyLenght = PropertyLenghtConstants;
+    this.initForm();
     this.stockService.getToList().subscribe((response) => {
       if (response.isSuccess) this.supplies = response.data;
     });
+
+    const registerOutId = this.route.snapshot.paramMap.get("id");
+    firstValueFrom(this.service.getByIdToUpdate(registerOutId)).then(
+      (response) => {
+        console.log({ response });
+        if (response.isSuccess) {
+          this.registerOut = response.data as RegisterOutModel;
+          this.registerOut.id = registerOutId;
+
+          console.log(this.registerOut);
+
+          this.selectedSupplies =
+            this.registerOut.registerOutStocks.map<RegisterOutSelectedSupply>(
+              (x) => {
+                return new RegisterOutSelectedSupply(
+                  x.stockId,
+                  x.stock.name,
+                  x.price,
+                  x.quantity
+                );
+              }
+            );
+          this.updateForm.patchValue(this.registerOut);
+        }
+      }
+    );
   }
 
-  showNameAvailableNotification() {
+  showNameAvailableNotification(text: string) {
     const notification = this.notificationService.buildNotification(
-      "Conflito, este nome pertence a outro cadastro.",
+      text,
       "warning",
       "bottom",
       "right"
@@ -70,7 +108,7 @@ export class UpdateRegisterOutStockComponent implements OnInit {
           this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
       });
     } catch (error) {
-      console.log("sendUpdateRequest", error);
+      console.log(error);
     }
   }
 
@@ -79,10 +117,11 @@ export class UpdateRegisterOutStockComponent implements OnInit {
       this.updateForm.controls["registerOutStocks"].setValue(
         this.selectedSupplies
       );
-      const model = this.updateForm.value as RegisterOutModel;
-      this.sendUpdateRequest(model);
+      const registerOutModel = this.updateForm.value as RegisterOutModel;
+      console.log("this.updateForm.valid", this.updateForm.valid);
+      if (this.updateForm.valid) this.sendUpdateRequest(registerOutModel);
     } catch (error) {
-      console.log("update", error);
+      console.log(error);
     }
   }
 
@@ -91,6 +130,7 @@ export class UpdateRegisterOutStockComponent implements OnInit {
       const alreadySelected = this.selectedSupplies.find(
         (x) => x.stockId == stock.id
       );
+
       if (alreadySelected) return;
 
       const selectedSupply = new RegisterOutSelectedSupply(
@@ -100,10 +140,9 @@ export class UpdateRegisterOutStockComponent implements OnInit {
         0
       );
 
-      this.selectedSupplies.push(selectedSupply);
-      console.log(this.selectedSupplies);
+      this.selectedSupplies.unshift(selectedSupply);
     } catch (error) {
-      console.log("selectSupply", error);
+      console.log(error);
     }
   }
 
@@ -113,15 +152,11 @@ export class UpdateRegisterOutStockComponent implements OnInit {
         (x) => x.stockId != id
       );
     } catch (error) {
-      console.log("deleteSupply", error);
+      console.log(error);
     }
   }
 
   cancel() {
-    try {
-      this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
-    } catch (error) {
-      console.log("cancel", error);
-    }
+    this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
   }
 }

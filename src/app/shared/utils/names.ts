@@ -138,3 +138,130 @@ export class StockTypeNames {
     return "tipos de estoque";
   }
 }
+
+@Injectable({
+  providedIn: "root",
+})
+export class UserNames {
+  get API_URL_LOWER_CASE() {
+    return "user";
+  }  
+  get URL_LOWER_CASE() {
+    return "user";
+  }
+  get URL_LOWER_CASE_PLURAL() {
+    return "users";
+  }
+  get USER() {
+    return "Usuário";
+  }
+  get USER_LOWER_CASE() {
+    return "usuário";
+  }
+  get USERS() {
+    return "Usuários";
+  }
+  get USERS_LOWER_CASE() {
+    return "usuários";
+  }
+}
+
+@Injectable({
+  providedIn: "root",
+})
+export class SignInNames {
+  get API_URL_LOWER_CASE() {
+    return "signin";
+  }  
+  get URL_LOWER_CASE() {
+    return "signin";
+  }
+  get URL_LOWER_CASE_PLURAL() {
+    return "signins";
+  }
+}
+
+@Injectable({
+  providedIn: "root",
+})
+export class EmployeeNames {
+  get API_URL_LOWER_CASE() {
+    return "employee";
+  }  
+  get URL_LOWER_CASE() {
+    return "employee";
+  }
+  get URL_LOWER_CASE_PLURAL() {
+    return "employees";
+  }
+  get EMPLOYEE() {
+    return "Colaborador";
+  }
+  get EMPLOYEE_LOWER_CASE() {
+    return "colaborador";
+  }
+  get EMPLOYEES() {
+    return "Colaboradores";
+  }
+  get EMPLOYEES_LOWER_CASE() {
+    return "colaboradores";
+  }
+}
+
+@Injectable({
+  providedIn: "root",
+})
+export class ManagerNames {
+  get API_URL_LOWER_CASE() {
+    return "manager";
+  }  
+  get URL_LOWER_CASE() {
+    return "manager";
+  }
+  get URL_LOWER_CASE_PLURAL() {
+    return "managers";
+  }
+  get MANAGER() {
+    return "Administrador";
+  }
+  get MANAGER_LOWER_CASE() {
+    return "administrador";
+  }
+  get MANAGERS() {
+    return "Administradores";
+  }
+  get MANAGERS_LOWER_CASE() {
+    return "administradores";
+  }
+}
+
+@Injectable({
+  providedIn: "root",
+})
+export class RoleNames {
+  get API_URL_LOWER_CASE() {
+    return "role";
+  }  
+  get URL_LOWER_CASE() {
+    return "role";
+  }
+  get URL_LOWER_CASE_PLURAL() {
+    return "roles";
+  }
+}
+
+@Injectable({
+  providedIn: "root",
+})
+export class TaskNoteNames {
+  get API_URL_LOWER_CASE() {
+    return "tasknote";
+  }  
+  get URL_LOWER_CASE() {
+    return "tasknote";
+  }
+  get URL_LOWER_CASE_PLURAL() {
+    return "tasknotes";
+  }
+}
+

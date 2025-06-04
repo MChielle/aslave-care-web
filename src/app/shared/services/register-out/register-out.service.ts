@@ -9,43 +9,64 @@ import { ConsumptionsPerMonthModel } from "app/shared/models/dashboard/consumpti
   providedIn: "root",
 })
 export class RegisterOutService<TModel> {
-  
   constructor(
     private baseService: BaseService,
     private names: RegisterOutNames
   ) {}
-  
+
   public getToList() {
-    return this.baseService.get<ResponseBase<TModel[]>>(`${this.names.API_URL_LOWER_CASE}/to-list`);
+    return this.baseService.get<ResponseBase<TModel[]>>(
+      `${this.names.API_URL_LOWER_CASE}/to-list`
+    );
   }
-  
+
   public create(model) {
-    return this.baseService.post<ResponseBase<TModel>>(this.names.API_URL_LOWER_CASE, model);
+    return this.baseService.post<ResponseBase<TModel>>(
+      this.names.API_URL_LOWER_CASE,
+      model
+    );
   }
-  
+
   public getByParameters(model: TModel) {
     let params = new HttpParams();
-    Object.keys(model).forEach(key => {
-      if(model[key])
-        params = params.set(key, model[key]);
+    Object.keys(model).forEach((key) => {
+      if (model[key]) params = params.set(key, model[key]);
     });
-    
-    return this.baseService.getByParams<ResponseBase<TModel[]>>(`${this.names.API_URL_LOWER_CASE}/get-by-parameters`, params);
+
+    return this.baseService.getByParams<ResponseBase<TModel[]>>(
+      `${this.names.API_URL_LOWER_CASE}/get-by-parameters`,
+      params
+    );
   }
-  
+
   public softDelete(id: string) {
-    return this.baseService.delete<ResponseBase<TModel>>(`${this.names.API_URL_LOWER_CASE}/${id}`);
+    return this.baseService.delete<ResponseBase<TModel>>(
+      `${this.names.API_URL_LOWER_CASE}/${id}`
+    );
   }
-  
+
   public getById(id: string) {
-    return this.baseService.get<ResponseBase<TModel>>(`${this.names.API_URL_LOWER_CASE}/${id}`);
+    return this.baseService.get<ResponseBase<TModel>>(
+      `${this.names.API_URL_LOWER_CASE}/${id}`
+    );
   }
-  
+
   public update(model) {
-    return this.baseService.put<ResponseBase<TModel>>(`${this.names.API_URL_LOWER_CASE}/${model.id}`, model);
+    return this.baseService.put<ResponseBase<TModel>>(
+      `${this.names.API_URL_LOWER_CASE}/${model.id}`,
+      model
+    );
   }
-  
+
+  public getByIdToUpdate(id: string) {
+    return this.baseService.get<ResponseBase<TModel>>(
+      `${this.names.API_URL_LOWER_CASE}/${id}/to-update`
+    );
+  }
+
   public getConsumptionsPerMonth() {
-    return this.baseService.get<ResponseBase<ConsumptionsPerMonthModel[]>>(`${this.names.API_URL_LOWER_CASE}/consumptions-per-month`);
+    return this.baseService.get<ResponseBase<ConsumptionsPerMonthModel[]>>(
+      `${this.names.API_URL_LOWER_CASE}/consumptions-per-month`
+    );
   }
 }

@@ -1,8 +1,8 @@
 <div class="main-content">
   <div class="container-fluid">
     <div class="card">
-      <div class="card-header card-header-warning">
-        <h4 class="card-title">Estoque</h4>
+      <div class="card-header card-header-success">
+        <h4 class="card-title">Consumo</h4>
         <p class="card-category">Dados do Consumo</p>
       </div>
       <div class="card-body">
@@ -10,7 +10,7 @@
           <div class="row">
             <div class="col-md-11">
               <div class="form-group">
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="standard">
                   <textarea
                     matInput
                     formControlName="description"
@@ -25,6 +25,7 @@
             </div>
             <div class="col-md-1">
               <label>
+                Aplicar
                 <input
                   formControlName="apply"
                   type="checkbox"
@@ -32,7 +33,6 @@
                   id="apply"
                   name="apply"
                 />
-                Aplicar
               </label>
             </div>
           </div>
@@ -40,7 +40,7 @@
         <div class="row">
           <div class="col-md-12">
             <app-autocomplete
-              placeholder="Suprimentos"
+              placeholder="Selecione os suprimentos"
               shownValue="name"
               [itemList]="supplies"
               [selectedValue]="supply"
@@ -66,11 +66,18 @@
                   {{ selectedSupply.name }}
                 </td>
                 <td>
-                  <input
-                    type="number"
-                    name="quantity{{ i }}"
-                    [(ngModel)]="selectedSupply.quantity"
-                  />
+                  <mat-form-field class="standard">
+                    <input
+                      matInput
+                      type="number"
+                      name="quantity{{ i }}"
+                      [(ngModel)]="selectedSupply.quantity"
+                      step="0.01"
+                      min="0"
+                      max="99999999.99"
+                      maxlength="{{ propertyLenght.DECIMAL_8_2 }}"
+                    />
+                  </mat-form-field>
                 </td>
                 <td class="text-right">
                   <button
@@ -85,6 +92,7 @@
             </tbody>
           </table>
         </div>
+        <mat-divider></mat-divider>
         <button
           mat-raised-button
           type="button"
