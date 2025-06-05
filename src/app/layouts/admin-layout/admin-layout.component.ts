@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { Location, LocationStrategy, PathLocationStrategy, PopStateEvent } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { Location, PopStateEvent } from '@angular/common';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import PerfectScrollbar from 'perfect-scrollbar';
 import * as $ from "jquery";
@@ -21,8 +21,6 @@ export class AdminLayoutComponent implements OnInit {
       const isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
 
       if (isWindows && !document.getElementsByTagName('body')[0].classList.contains('sidebar-mini')) {
-          // if we are on windows OS we activate the perfectScrollbar function
-
           document.getElementsByTagName('body')[0].classList.add('perfect-scrollbar-on');
       } else {
           document.getElementsByTagName('body')[0].classList.remove('perfect-scrollbar-off');
@@ -59,7 +57,6 @@ export class AdminLayoutComponent implements OnInit {
       let $sidebar_responsive = $('body > .navbar-collapse');
       let $sidebar_img_container = $sidebar.find('.sidebar-background');
 
-
       if(window_width > 767){
           if($('.fixed-plugin .dropdown').hasClass('show-dropdown')){
               $('.fixed-plugin .dropdown').addClass('open');
@@ -68,7 +65,6 @@ export class AdminLayoutComponent implements OnInit {
       }
 
       $('.fixed-plugin a').click(function(event){
-        // Alex if we click on switch, stop propagation of the event, so the dropdown will not be hide, otherwise we set the  section active
           if($(this).hasClass('switch-trigger')){
               if(event.stopPropagation){
                   event.stopPropagation();
@@ -128,16 +124,6 @@ export class AdminLayoutComponent implements OnInit {
   }
   ngAfterViewInit() {
       this.runOnRouteChange();
-  }
-  isMaps(path){
-      var titlee = this.location.prepareExternalUrl(this.location.path());
-      titlee = titlee.slice( 1 );
-      if(path == titlee){
-          return false;
-      }
-      else {
-          return true;
-      }
   }
   runOnRouteChange(): void {
     if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
