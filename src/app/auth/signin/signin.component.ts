@@ -6,6 +6,8 @@ import { AuthService } from "app/shared/services/auth/auth.service";
 import { ToastrService } from "ngx-toastr";
 import { Constants } from "app/shared/constants/aslavecare.constants";
 import { PropertyLenghtConstants } from "app/shared/constants/property-lenght.constants";
+import { NotificationService } from "app/shared/services/notification/notification.service";
+declare var $: any;
 
 type UserFields = "email" | "password";
 type FormErrors = { [u in UserFields]: string };
@@ -31,7 +33,8 @@ export class SigninComponent implements OnInit {
     public localStorageService: LocalStorageService,
     private router: Router,
     private route: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private notificationService: NotificationService
   ) {
     this.signInForm = new FormGroup({
       email: new FormControl(""),
@@ -40,7 +43,7 @@ export class SigninComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.propertyLenght = PropertyLenghtConstants;    
+    this.propertyLenght = PropertyLenghtConstants;
     let lastEmail = this.localStorageService.getItem(
       Constants.LAST_LOGIN_EMAIL
     );
@@ -49,6 +52,16 @@ export class SigninComponent implements OnInit {
       this.localStorageService.setItem(Constants.LAST_LOGIN_EMAIL, lastEmail);
       this.signInForm.patchValue({ email: lastEmail });
     }
+  }
+
+  showNotification(text: string) {
+    const notification = this.notificationService.buildNotification(
+      text,
+      "primary",
+      "bottom",
+      "right"
+    );
+    $.notify(notification.content, notification.format);
   }
 
   signIn() {
@@ -66,7 +79,7 @@ export class SigninComponent implements OnInit {
           return;
         },
         error: (err) => {
-          this.toastr.warning("E-mail ou Senha incorretos.");
+          this.showNotification("E-mail ou Senha incorretos.");
           this.signInForm.markAllAsTouched();
           this.authService.showLoader = false;
         },

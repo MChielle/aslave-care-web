@@ -76,6 +76,56 @@
                   </div>
                 </div>
               </div>
+              <div *ngIf="userMaster" class="row">
+                <div class="col-md-6">
+                  <mat-form-field class="standard">
+                    <input
+                      matInput
+                      formControlName="password"
+                      type="password"
+                      id="password"
+                      name="password"
+                      placeholder="Nova senha"
+                    />
+                  </mat-form-field>
+                  <div
+                    *ngIf="
+                      updateForm.controls.password.touched &&
+                      updateForm.controls.password.errors?.required
+                    "
+                  >
+                    Senha é obrigatório.
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field class="standard">
+                    <input
+                      matInput
+                      formControlName="repeatPassword"
+                      type="password"
+                      id="repeatPassword"
+                      name="repeatPassword"
+                      placeholder="Repita a senha"
+                    />
+                  </mat-form-field>
+                  <div
+                    *ngIf="
+                      updateForm.controls.repeatPassword.touched &&
+                      updateForm.controls.repeatPassword.errors?.required
+                    "
+                  >
+                    Senha é obrigatório.
+                  </div>
+                  <div
+                    *ngIf="
+                      updateForm.controls.repeatPassword.value !=
+                      updateForm.controls.password.value
+                    "
+                  >
+                    Repita a mesma senha.
+                  </div>
+                </div>
+              </div>
               <button
                 mat-raised-button
                 type="button"

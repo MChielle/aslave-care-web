@@ -45,6 +45,10 @@ export class UserService<TModel> {
     return this.baseService.put<ResponseBase<TModel>>(`${this.names.URL_LOWER_CASE}/${model.id}`, model);
   }
   
+  public updateByMaster(model) {
+    return this.baseService.put<ResponseBase<TModel>>(`${this.names.URL_LOWER_CASE}/${model.id}/change-data`, model);
+  }
+
   public getByToken() {
     return this.baseService.get<ResponseBase<ViewUserModel>>(`signin/token`);
   }

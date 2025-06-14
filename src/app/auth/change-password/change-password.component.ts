@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SignInChangePasswordModel } from "app/shared/models/signin/signin-change-password.model";
 import { LocalStorageService } from "app/shared/services/app/local-storage.service";
@@ -9,7 +9,7 @@ import { ToastrService } from "ngx-toastr";
 
 declare var $: any;
 
-type UserFields = "newPassword" | "repeatNewPassword";
+type UserFields = "oldPassword" | "newPassword" | "repeatNewPassword";
 type FormErrors = { [u in UserFields]: string };
 
 @Component({
@@ -21,6 +21,7 @@ export class ChangePasswordComponent implements OnInit {
   public changePasswordForm: FormGroup;
   public model: SignInChangePasswordModel;
   public formErrors: FormErrors = {
+    oldPassword: "",
     newPassword: "",
     repeatNewPassword: "",
   };
@@ -36,8 +37,9 @@ export class ChangePasswordComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.changePasswordForm = new FormGroup({
-      newPassword: new FormControl(""),
-      repeatNewPassword: new FormControl(""),
+      oldPassword: new FormControl("", Validators.required),
+      newPassword: new FormControl("", Validators.required),
+      repeatNewPassword: new FormControl("", Validators.required),
     });
   }
 
@@ -59,18 +61,18 @@ export class ChangePasswordComponent implements OnInit {
 
   changePassword() {
     if (
+      this.changePasswordForm.controls.oldPassword.value != null &&
       this.changePasswordForm.controls.newPassword.value ==
-      this.changePasswordForm.controls.repeatNewPassword.value
+        this.changePasswordForm.controls.repeatNewPassword.value
     ) {
       this.model = new SignInChangePasswordModel(
+        this.changePasswordForm.controls.oldPassword.value,
         this.changePasswordForm.controls.newPassword.value
       );
       this.authService
         .confirmChangePassword(this.model)
         .subscribe((response) => {
-          if (response.isSuccess) {
-            this.authService.logout();
-          }
+          this.authService.logout();
         });
     }
   }

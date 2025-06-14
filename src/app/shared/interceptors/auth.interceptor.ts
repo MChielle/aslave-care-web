@@ -11,13 +11,16 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
+import { NotificationService } from '../services/notification/notification.service';
+declare var $: any;
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(
     private localStorageService: LocalStorageService,
     private authService: AuthService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private notificationService: NotificationService
   ) {}
   intercept(
     request: HttpRequest<any>,
@@ -31,9 +34,10 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(authReq).pipe(
       catchError((error) => {
         if (error.status === 401) {
-          this.toastr.warning(
-            'Token de autorização inválido, tente logar novamente'
-          );
+          // this.toastr.warning(
+          //   'Token de autorização inválido, tente logar novamente'
+          // );
+          this.showNotification('Token de autorização inválido, tente logar novamente');
           this.authService.logout();
         } else {
           // Handle other errors
@@ -41,5 +45,14 @@ export class AuthInterceptor implements HttpInterceptor {
         return throwError(() => error);
       })
     );
+  }
+  showNotification(text: string) {
+    const notification = this.notificationService.buildNotification(
+      text,
+      "primary",
+      "bottom",
+      "right"
+    );
+    $.notify(notification.content, notification.format);
   }
 }

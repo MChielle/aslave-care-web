@@ -1,7 +1,9 @@
 export class SignInChangePasswordModel{
-    password: string
-    
-    constructor(password: string) {
-        this.password = password;
+    oldPassword: string
+    newPassword: string
+
+    constructor(oldPassword: string, newPassword: string) {
+        this.oldPassword = oldPassword;
+        this.newPassword = newPassword;
     }
 }
