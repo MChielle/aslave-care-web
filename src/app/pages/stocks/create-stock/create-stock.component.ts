@@ -103,7 +103,7 @@ export class CreateStockComponent implements OnInit {
   showNameAvailableNotification(text: string) {
     const notification = this.notificationService.buildNotification(
       text,
-      "warning",
+      "primary",
       "bottom",
       "right"
     );

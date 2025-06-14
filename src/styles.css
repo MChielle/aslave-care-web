@@ -5,6 +5,40 @@ mat-table {
   display: table !important;
 }
 
-.mat-header-cell{
+.mat-header-cell {
   font-size: medium;
+  color: darkred;
+  padding-top: 1% !important;
+  background-color: lightcoral;
+}
+    
+.mat-row{
+  height: 30px !important;
+}
+
+.mat-row:nth-child(odd){
+    background-color: #eeeeee;
+}
+
+.mat-cell{
+  border: none !important;
+}
+
+.input-table-header-cell {
+  font-size: small;
+  color: darkgreen;
+  padding-top: 2% !important;
+  background-color: lightgreen;
+}
+
+.input-table-row {
+  height: 15px;
+  background-color: #eeeeee;
+}
+
+.table-empty-text {
+  font-size: medium;
+  padding-top: 1%;
+  padding-bottom: 2%;
+  text-align: center;
 }

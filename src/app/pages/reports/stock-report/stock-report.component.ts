@@ -1,32 +1,30 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { MatPaginator, MatPaginatorIntl } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
-import { RestockReportModel } from "app/shared/models/report/restock-report.model";
-import { StockModel } from "app/shared/models/stock/stock.model";
-import { firstValueFrom } from "rxjs";
-import { formatDate } from "@angular/common";
+import { Component, OnInit, ViewChild } from '@angular/core';
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import { environment } from "environments/environment";
 import { ReportService } from "app/shared/services/report/report.service";
+import { StockReportModel } from 'app/shared/models/report/stock-report.model';
+import { MatTableDataSource } from '@angular/material/table';
+import { StockModel } from 'app/shared/models/stock/stock.model';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { firstValueFrom } from 'rxjs';
+import { formatDate } from '@angular/common';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
-  selector: "app-restock-report",
-  templateUrl: "./restock-report.component.html",
-  styleUrls: ["./restock-report.component.scss"],
+  selector: 'app-stock-report',
+  templateUrl: './stock-report.component.html',
+  styleUrls: ['./stock-report.component.scss']
 })
-export class RestockReportComponent implements OnInit {
+export class StockReportComponent implements OnInit {
   public propertyLenght;
-  public dataSource: MatTableDataSource<RestockReportModel>;
+  public dataSource: MatTableDataSource<StockReportModel>;
   public stocks: StockModel[];
   public displayedColumns: string[] = [
     "stockName",
-    "supplierName",
     "stockTypeId",
     "quantity",
-    "lowerPrice",
   ];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -35,11 +33,11 @@ export class RestockReportComponent implements OnInit {
   constructor(private service: ReportService) {}
 
   ngOnInit(): void {
-    this.getRestockReport();
+    this.getStockReport();
   }
 
-  getRestockReport() {
-    firstValueFrom(this.service.getRestockReport<StockModel>())
+  getStockReport() {
+    firstValueFrom(this.service.getStockReport<StockModel>())
       .then((response) => {
         if (response.isSuccess) {
           this.stocks = response.data;
@@ -59,46 +57,37 @@ export class RestockReportComponent implements OnInit {
     }
   }
 
-  generatePdfRestockReport() {
+  generatePdfStockReport() {
     const tableBody = [
       [
         { text: "Nome", bold: true },
-        { text: "Fornecedor", bold: true },
         { text: "Tipo", bold: true },
         { text: "Quantidade", bold: true },
-        { text: "Menor Preço", bold: true },
       ],
       ...this.dataSource.data.map((row) => [
         row.stockName?.toString() ?? "",
-        row.supplierName?.toString() ?? "",
         row.stockTypeId?.toString() ?? "",
         row.quantity?.toString() ?? "",
-        row.lowerPrice
-          ? `R$ ${row.lowerPrice.toLocaleString("pt-BR", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}`
-          : "R$ 0,00",
       ]),
     ];
 
     let docDefinition = {
       language: "pt-BR",
       info: {
-        title: "Lista de Compras",
+        title: "Lista de Estoque",
         author: environment.APPLICATION_NAME,
         subject: "restock report",
       },
       content: [
         {
-          text: "Lista de Compras",
+          text: "Lista de Estoque",
           bold: true,
           fontSize: 20,
           alignment: "center",
           margin: [0, 0, 0, 20],
         },
         {
-          text: "Relatório de suprimentos com estoque abaixo do limite.",
+          text: "Relatório de suprimentos em estoque.",
         },
         {
           text: `Data: ${formatDate(Date.now(), "dd/MM/yyyy", "en-US")}`,
@@ -111,7 +100,7 @@ export class RestockReportComponent implements OnInit {
           margin: [0, 0, 0, 100],
           table: {
             headerRows: 1,
-            widths: ["auto", "auto", "auto", "*", "*"],
+            widths: ["auto", "*", "*"],
             body: tableBody,
           },
         },
@@ -141,16 +130,14 @@ export class RestockReportComponent implements OnInit {
   reloadDataSource() {
     let source = this.stocks.map(
       (x) =>
-        new RestockReportModel(
+        new StockReportModel(
           x.name,
-          x.registerInStocks[0]?.registerIn?.supplier?.name ?? "",
           x.stockTypeId,
           x.quantity,
-          x.registerInStocks[0]?.price ?? 0
         )
     );
 
-    this.dataSource = new MatTableDataSource<RestockReportModel>(source);
+    this.dataSource = new MatTableDataSource<StockReportModel>(source);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }

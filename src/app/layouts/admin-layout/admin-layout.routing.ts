@@ -1,5 +1,5 @@
 import { Routes } from "@angular/router";
-import { DashboardComponent } from "../../dashboard/dashboard.component";
+import { DashboardComponent } from "../../pages/dashboard/dashboard.component";
 import { UserProfileComponent } from "../../pages/users/user-profile/user-profile.component";
 import { StockComponent } from "app/pages/stocks/stocks.component";
 import { SuppliersComponent } from "app/pages/suppliers/suppliers.component";
@@ -19,6 +19,8 @@ import { UsersComponent } from "app/pages/users/users.component";
 import { UserGuard } from "app/shared/guards/user.guard";
 import { UpdateUserComponent } from "app/pages/users/update-user/update-user.component";
 import { CreateUserComponent } from "app/pages/users/create-user/create-user.component";
+import { DonationsReportComponent } from "app/pages/reports/donations-report/donations-report.component";
+import { StockReportComponent } from "app/pages/reports/stock-report/stock-report.component";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "suppliers", component: SuppliersComponent },
@@ -39,6 +41,9 @@ export const AdminLayoutRoutes: Routes = [
 
   { path: "reports", component: ReportsComponent },
   { path: "restock-report", component: RestockReportComponent },
+  { path: "donations-report", component: DonationsReportComponent },
+  { path: "stock-report", component: StockReportComponent },
+  
 
   { path: "users", canActivate: [UserGuard], component: UsersComponent },
   { path: "update-user", canActivate: [UserGuard], component: UpdateUserComponent },

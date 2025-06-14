@@ -50,7 +50,7 @@
                       mat-header-cell
                       *matHeaderCellDef
                       mat-sort-header
-                      class="text-primary col-md-1"
+                      class="col-md-1"
                     >
                       Número
                     </th>
@@ -64,7 +64,7 @@
                       mat-header-cell
                       *matHeaderCellDef
                       mat-sort-header
-                      class="text-primary col-md-2"
+                      class="col-md-2"
                     >
                       Data
                     </th>
@@ -74,11 +74,7 @@
                   </ng-container>
 
                   <ng-container matColumnDef="apply">
-                    <th
-                      mat-header-cell
-                      class="text-primary col-md-1"
-                      *matHeaderCellDef
-                    >
+                    <th mat-header-cell class="col-md-1" *matHeaderCellDef>
                       Aplicado
                     </th>
                     <td mat-cell *matCellDef="let registerIn">
@@ -91,11 +87,7 @@
                   </ng-container>
 
                   <ng-container matColumnDef="donation">
-                    <th
-                      mat-header-cell
-                      class="text-primary col-md-1"
-                      *matHeaderCellDef
-                    >
+                    <th mat-header-cell class="col-md-1" *matHeaderCellDef>
                       Doação
                     </th>
                     <td mat-cell *matCellDef="let registerIn">
@@ -112,7 +104,7 @@
                       mat-header-cell
                       *matHeaderCellDef
                       mat-sort-header
-                      class="text-primary col-md-3"
+                      class="col-md-3"
                     >
                       Fornecedor
                     </th>
@@ -125,7 +117,7 @@
                     <th
                       mat-header-cell
                       *matHeaderCellDef
-                      class="text-right text-primary col-md-2"
+                      class="text-right col-md-2"
                     >
                       Ações
                     </th>
@@ -162,9 +154,15 @@
                     *matRowDef="let row; columns: displayedColumns"
                   ></tr>
                 </mat-table>
+                <div
+                  *ngIf="dataSource.data.length == 0"
+                  class="table-empty-text"
+                >
+                  Nenhum registro encontrado!
+                </div>
                 <mat-paginator
                   [pageSize]="10"
-                  [pageSizeOptions]="[5, 10, 20]"
+                  [pageSizeOptions]="[10, 20, 50]"
                   showFirstLastButtons
                 ></mat-paginator>
               </div>

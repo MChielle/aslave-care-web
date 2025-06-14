@@ -10,10 +10,10 @@
           <div class="row">
             <div class="col-md-10">
               <app-autocomplete
-                placeholder="Fornecedores"
+                placeholder="Fornecedor"
                 shownValue="name"
                 [itemList]="suppliers"
-                [selectedValue]="this.createForm.controls['supplier'].value"
+                [selectedValue]="this.createForm.controls.supplierId.value"
                 (itemChanged)="selectSupplier($event)"
               ></app-autocomplete>
             </div>
@@ -63,7 +63,7 @@
         <div class="row">
           <div class="col-md-12">
             <app-autocomplete
-              placeholder="Selecione os suprimentos"
+              placeholder="Selecione o insumo"
               shownValue="name"
               [itemList]="supplies"
               [selectedValue]="supply"
@@ -73,7 +73,7 @@
         </div>
         <div class="table-responsive">
           <table class="table">
-            <thead class="text-primary">
+            <thead class="input-table-header-cell">
               <th>Nome</th>
               <th>Quantidade</th>
               <th>Preço</th>
@@ -129,6 +129,9 @@
               </tr>
             </tbody>
           </table>
+        </div>
+        <div *ngIf="this.selectedSupplies.length == 0" class="table-empty-text">
+          Nenhum registro encontrado!
         </div>
         <mat-divider></mat-divider>
         <button

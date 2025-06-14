@@ -4,10 +4,8 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-danger">
-            <h4 class="card-title">Relatório de reabastecimento</h4>
-            <p class="card-category">
-              Lista de todos os insumos abaixo do limite
-            </p>
+            <h4 class="card-title">Relatório de estoque</h4>
+            <p class="card-category">Lista de todos os insumos em estoque</p>
           </div>
           <div class="card-body">
             <div class="card-body">
@@ -30,7 +28,7 @@
                   <button
                     mat-raised-button
                     type="button"
-                    (click)="generatePdfRestockReport()"
+                    (click)="generatePdfStockReport()"
                     class="btn btn-success pull-right"
                   >
                     Gerar PDF
@@ -54,7 +52,9 @@
                     >
                       Nome
                     </th>
-                    <td mat-cell *matCellDef="let stock">{{ stock.stockName }}</td>
+                    <td mat-cell *matCellDef="let stock">
+                      {{ stock.stockName }}
+                    </td>
                   </ng-container>
 
                   <ng-container matColumnDef="stockTypeId">
@@ -71,43 +71,12 @@
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="supplierName">
-                    <th
-                      mat-header-cell
-                      *matHeaderCellDef
-                      mat-sort-header
-                      class="col-md-3"
-                    >
-                      Fornecedor
-                    </th>
-                    <td mat-cell *matCellDef="let stock">
-                      {{ stock.supplierName }}
-                    </td>
-                  </ng-container>
-
                   <ng-container matColumnDef="quantity">
-                    <th
-                      mat-header-cell
-                      class="col-md-1"
-                      *matHeaderCellDef
-                    >
+                    <th mat-header-cell class="col-md-1" *matHeaderCellDef>
                       Quantidade
                     </th>
                     <td mat-cell *matCellDef="let stock">
                       {{ stock.quantity }}
-                    </td>
-                  </ng-container>
-
-                  <ng-container matColumnDef="lowerPrice">
-                    <th
-                      mat-header-cell
-                      class="col-md-1"
-                      *matHeaderCellDef
-                    >
-                      Menor preço
-                    </th>
-                    <td mat-cell *matCellDef="let stock">
-                      {{ stock.lowerPrice }}
                     </td>
                   </ng-container>
 

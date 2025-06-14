@@ -7,7 +7,6 @@ import { PropertyLenghtConstants } from "app/shared/constants/property-lenght.co
 import { UserType } from "app/shared/enums/role.enum";
 import { ViewUserModel } from "app/shared/models/user/view-user.model";
 import { SignInService } from "app/shared/services/sign-in/sign-in.service";
-import { UserService } from "app/shared/services/user/user.service";
 import { FormatHelper } from "app/shared/utils/helpers/format.helper";
 import { UserNames } from "app/shared/utils/names";
 import { firstValueFrom } from "rxjs";

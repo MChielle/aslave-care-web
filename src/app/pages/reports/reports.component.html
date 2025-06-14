@@ -8,14 +8,28 @@
             <p class="card-category">Relatórios Estoque</p>
           </div>
           <div class="card-body">
-            <button
-              mat-raised-button
-              type="button"
-              (click)="navigateToRestockReport()"
-              class="btn btn-success"
-            >
-              Lista de compras
-            </button>
+            <div class="row">
+              <div class="col-md-3">
+                <button
+                  mat-raised-button
+                  type="button"
+                  (click)="navigateToRestockReport()"
+                  class="btn btn-success"
+                >
+                  Lista de compras
+                </button>
+              </div>
+              <div class="col-md-3">
+                <button
+                  mat-raised-button
+                  type="button"
+                  (click)="navigateToStockReport()"
+                  class="btn btn-success"
+                >
+                  Suprimentos no estoque
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -28,6 +42,14 @@
             <p class="card-category">Relatórios</p>
           </div>
           <div class="card-body">
+            <button
+              mat-raised-button
+              type="button"
+              (click)="navigateToDonationReport()"
+              class="btn btn-success"
+            >
+              Relatório de Doações
+            </button>
           </div>
         </div>
       </div>
