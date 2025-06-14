@@ -87,13 +87,13 @@ export class DonationsReportComponent implements OnInit {
         let docDefinition = {
           language: "pt-BR",
           info: {
-            title: "Lista de doações",
+            title: "Lista de Doações",
             author: environment.APPLICATION_NAME,
             subject: "restock report",
           },
           content: [
             {
-              text: "Lista de doações",
+              text: "Lista de Doações",
               bold: true,
               fontSize: 20,
               alignment: "center",

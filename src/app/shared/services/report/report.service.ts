@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BaseService } from "../base.service";
 import { ResponseBase } from "app/shared/Responses/response-base";
-import { ReportNames, StockNames } from "app/shared/utils/names";
+import { ReportNames } from "app/shared/utils/names";
 
 @Injectable({
   providedIn: "root",
@@ -20,8 +20,12 @@ export class ReportService {
   public getDonationsReport<TReport>(initialDate: Date, finalDate: Date) {
     return this.baseService.get<ResponseBase<TReport[]>>(`${this.names.URL_LOWER_CASE}/donations-report/${initialDate.toISOString()}/${finalDate.toISOString()}`);
   }
-
-  getTopDonors<TReport>(top: number) {
+  
+  public getTopDonors<TReport>(top: number) {
     return this.baseService.get<ResponseBase<TReport[]>>(`${this.names.URL_LOWER_CASE}/month-top-donors-report/${top}`);
+  }
+
+  public getStockReport<TReport>() {
+    return this.baseService.get<ResponseBase<TReport[]>>(`${this.names.URL_LOWER_CASE}/stock-report`);
   }
 }

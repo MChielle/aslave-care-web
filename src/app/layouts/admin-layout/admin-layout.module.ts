@@ -36,6 +36,7 @@ import { UpdateUserComponent } from "app/pages/users/update-user/update-user.com
 import { CreateUserComponent } from "app/pages/users/create-user/create-user.component";
 import { DonationsReportComponent } from "app/pages/reports/donations-report/donations-report.component";
 import { MatDatepickerModule } from "@angular/material/datepicker";
+import { StockReportComponent } from "app/pages/reports/stock-report/stock-report.component";
 
 @NgModule({
   imports: [
@@ -75,6 +76,7 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
     CreateRegisterOutStockComponent,
     UpdateRegisterOutStockComponent,
 
+    StockReportComponent,
     DonationsReportComponent,
     RestockReportComponent,
     ReportsComponent,
