@@ -7,17 +7,21 @@ import { ReportNames, StockNames } from "app/shared/utils/names";
   providedIn: "root",
 })
 export class ReportService {
+  
+  constructor(
+    private baseService: BaseService,
+    private names: ReportNames
+  ) {}
+  
+  public getRestockReport<TReport>() {
+    return this.baseService.get<ResponseBase<TReport[]>>(`${this.names.URL_LOWER_CASE}/restock-report`);
+  }
+  
+  public getDonationsReport<TReport>(initialDate: Date, finalDate: Date) {
+    return this.baseService.get<ResponseBase<TReport[]>>(`${this.names.URL_LOWER_CASE}/donations-report/${initialDate.toISOString()}/${finalDate.toISOString()}`);
+  }
 
-      constructor(
-        private baseService: BaseService,
-        private names: ReportNames
-      ) {}
-    
-    public getRestockReport<TReport>() {
-        return this.baseService.get<ResponseBase<TReport[]>>(`${this.names.URL_LOWER_CASE}/restock-report`);
-    }
-
-    public getDonationsReport<TReport>(initialDate: Date, finalDate: Date) {
-        return this.baseService.get<ResponseBase<TReport[]>>(`${this.names.URL_LOWER_CASE}/donations-report/${initialDate.toISOString()}/${finalDate.toISOString()}`);
-    }
+  getTopDonors<TReport>(top: number) {
+    return this.baseService.get<ResponseBase<TReport[]>>(`${this.names.URL_LOWER_CASE}/month-top-donors-report/${top}`);
+  }
 }

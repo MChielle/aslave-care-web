@@ -1,11 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { DonationsPerMonthModel } from "app/shared/models/dashboard/donations-per-month.model";
+import { MonthTopDonersModel as MonthTopDonorsModel } from "app/shared/models/dashboard/month-top-donors";
 import { RegisterInModel } from "app/shared/models/register-in/register-in.model";
 import { RegisterOutModel } from "app/shared/models/register-out/register-out.model";
 import { StockModel } from "app/shared/models/stock/stock.model";
 import { TaskNoteModel } from "app/shared/models/task-note/task-note.model";
 import { RegisterInService } from "app/shared/services/register-in/register-in.service";
 import { RegisterOutService } from "app/shared/services/register-out/register-out.service";
+import { ReportService } from "app/shared/services/report/report.service";
 import { StockService } from "app/shared/services/stock/stock.service";
 import { TaskNoteService } from "app/shared/services/task-note/task-note.service";
 import * as Chartist from "chartist";
@@ -18,8 +20,10 @@ import * as Chartist from "chartist";
 export class DashboardComponent implements OnInit {
   boardTopScale: number = 300;
   public stocks: StockModel[] = new Array();
-  public taskNotes: TaskNoteModel[] = new Array();
+  public monthTopDonors: MonthTopDonorsModel[] = new Array();
+  // public taskNotes: TaskNoteModel[] = new Array();
   public lowerStock: number = 5;
+  public topDoners: number = 5;
   public actualMonthDonations: number = 0;
   public actualMonthShopping: number = 0;
   public actualMonthConsumptions: number = 0;
@@ -29,15 +33,16 @@ export class DashboardComponent implements OnInit {
     private stockService: StockService<StockModel>,
     private registerInService: RegisterInService<RegisterInModel>,
     private registerOutService: RegisterOutService<RegisterOutModel>,
-    private taskNoteService: TaskNoteService<TaskNoteModel>
+    // private taskNoteService: TaskNoteService<TaskNoteModel>,
+    private reportService: ReportService,
   ) {}
 
-  getTaskNotes(){
-    this.taskNoteService.getToList().subscribe((response) => {
-      if (response.isSuccess) this.taskNotes = response.data;
-      console.log(this.taskNotes);
-    });
-  }
+  // getTaskNotes(){
+  //   this.taskNoteService.getToList().subscribe((response) => {
+  //     if (response.isSuccess) this.taskNotes = response.data;
+  //     console.log(this.taskNotes);
+  //   });
+  // }
 
   getLowerStocks() {
     this.stockService.getLowerStocks(this.lowerStock).subscribe((response) => {
@@ -51,6 +56,27 @@ export class DashboardComponent implements OnInit {
         this.totalStocksQuantityWarning = response.data.total;
     });
   }
+
+  getTopDonors(){
+        this.reportService.getTopDonors<MonthTopDonorsModel>(this.topDoners).subscribe((response) => {
+          console.log(response);
+      if (response.isSuccess){
+        this.monthTopDonors = response.data;      
+        this.monthTopDonors =  this.sortByQuantity(this.monthTopDonors, false);
+       
+      }
+    });
+  }
+
+  sortByQuantity(
+    models: MonthTopDonorsModel[],
+    ascendent: boolean
+  ): MonthTopDonorsModel[] {
+    return ascendent
+      ? models.sort((a, b) => a.quantity - b.quantity)
+      : models.sort((a, b) => b.quantity - a.quantity);
+  }
+
 
   startAnimationForLineChart(chart) {
     let seq: any, delays: any, durations: any;
@@ -116,7 +142,8 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.getLowerStocks();
     this.getTotalStocksLowQuantity();
-    this.getTaskNotes();
+    // this.getTaskNotes();
+    this.getTopDonors();
     this.buildDonationsChart();
     this.buildConsumptionsChart();
     this.buildShoppingChart();

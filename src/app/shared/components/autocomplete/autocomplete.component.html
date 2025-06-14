@@ -1,20 +1,23 @@
 <div class="form-floating w-100 position-relative dropdown-indicator pe-1">
-  <input
-    #selectItemInput
-    name="selectItem"
-    id="selectItem"
-    type="text"
-    class="form-control clickable"
-    (focus)="toggleDropdown()"
-    (blur)="blurDropdown()"
-    (input)="search($event)"
-    [(ngModel)]="searchTerm"
-    [placeholder]="placeholder"
-    autocomplete="off"
-    [disabled]="disabled"
-    [ngClass]="extraClass"
-    [readonly]="isReadonly"
-  />
+  <mat-form-field class="standard">
+    <input
+      matInput
+      #selectItemInput
+      name="selectItem"
+      id="selectItem"
+      type="text"
+      class="clickable"
+      (focus)="toggleDropdown()"
+      (blur)="blurDropdown()"
+      (input)="search($event)"
+      [(ngModel)]="searchTerm"
+      [placeholder]="placeholder"
+      autocomplete="off"
+      [disabled]="disabled"
+      [ngClass]="extraClass"
+      [readonly]="isReadonly"
+    />
+  </mat-form-field>
   <!-- <label for="selectItem">{{ placeholder }}</label> -->
 
   <div

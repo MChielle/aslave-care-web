@@ -3,7 +3,7 @@ import { RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AdminLayoutRoutes } from "./admin-layout.routing";
-import { DashboardComponent } from "../../dashboard/dashboard.component";
+import { DashboardComponent } from "../../pages/dashboard/dashboard.component";
 import { UserProfileComponent } from "../../pages/users/user-profile/user-profile.component";
 import { MatButtonModule } from "@angular/material/button";
 import { MatNativeDateModule, MatRippleModule } from "@angular/material/core";
