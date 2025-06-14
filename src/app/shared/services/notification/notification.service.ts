@@ -5,14 +5,14 @@ import { Injectable } from "@angular/core";
 })
 export class NotificationService {
   constructor() { }
-    buildNotification(message, type = "danger", from = "bottom", align = "right", icon = "notifications") {
+    buildNotification(message, type = "warning", from = "bottom", align = "right", icon = "notifications") {
         return {
             content:{
-                        icon: "notifications",
+                        icon: icon,
                         message: message,
                     },
             format: {
-                        type: 'warning',
+                        type: type,
                         timer: 2000,
                         placement: {
                             from: from,
