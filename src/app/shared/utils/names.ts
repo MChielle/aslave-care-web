@@ -265,3 +265,17 @@ export class TaskNoteNames {
   }
 }
 
+@Injectable({
+  providedIn: "root",
+})
+export class ReportNames {
+  get API_URL_LOWER_CASE() {
+    return "report";
+  }  
+  get URL_LOWER_CASE() {
+    return "report";
+  }
+  get URL_LOWER_CASE_PLURAL() {
+    return "reports";
+  }
+}
