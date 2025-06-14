@@ -18,4 +18,8 @@ export class ReportsComponent implements OnInit {
   navigateToRestockReport(){
     this.router.navigate([`restock-report`]);
   }
+
+  navigateToDonationReport(){
+    this.router.navigate([`donations-report`]);
+  }
 }

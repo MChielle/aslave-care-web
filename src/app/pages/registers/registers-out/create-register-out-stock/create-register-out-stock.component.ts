@@ -62,7 +62,7 @@ export class CreateRegisterOutStockComponent implements OnInit {
   showNameAvailableNotification() {
     const notification = this.notificationService.buildNotification(
       "Conflito, este nome pertence a outro cadastro.",
-      "warning",
+      "primary",
       "bottom",
       "right"
     );

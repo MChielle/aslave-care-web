@@ -19,6 +19,7 @@ import { UsersComponent } from "app/pages/users/users.component";
 import { UserGuard } from "app/shared/guards/user.guard";
 import { UpdateUserComponent } from "app/pages/users/update-user/update-user.component";
 import { CreateUserComponent } from "app/pages/users/create-user/create-user.component";
+import { DonationsReportComponent } from "app/pages/reports/donations-report/donations-report.component";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "suppliers", component: SuppliersComponent },
@@ -39,6 +40,7 @@ export const AdminLayoutRoutes: Routes = [
 
   { path: "reports", component: ReportsComponent },
   { path: "restock-report", component: RestockReportComponent },
+  { path: "donations-report", component: DonationsReportComponent },
 
   { path: "users", canActivate: [UserGuard], component: UsersComponent },
   { path: "update-user", canActivate: [UserGuard], component: UpdateUserComponent },

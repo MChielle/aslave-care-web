@@ -4,12 +4,12 @@ import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { RestockReportModel } from "app/shared/models/report/restock-report.model";
 import { StockModel } from "app/shared/models/stock/stock.model";
-import { StockService } from "app/shared/services/stock/stock.service";
 import { firstValueFrom } from "rxjs";
 import { formatDate } from "@angular/common";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import { environment } from "environments/environment";
+import { ReportService } from "app/shared/services/report/report.service";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -22,7 +22,7 @@ export class RestockReportComponent implements OnInit {
   public dataSource: MatTableDataSource<RestockReportModel>;
   public stocks: StockModel[];
   public displayedColumns: string[] = [
-    "name",
+    "stockName",
     "supplierName",
     "stockTypeId",
     "quantity",
@@ -32,14 +32,14 @@ export class RestockReportComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private service: StockService<StockModel>) {}
+  constructor(private service: ReportService) {}
 
   ngOnInit(): void {
     this.getRestockReport();
   }
 
   getRestockReport() {
-    firstValueFrom(this.service.getRestockReport())
+    firstValueFrom(this.service.getRestockReport<StockModel>())
       .then((response) => {
         if (response.isSuccess) {
           this.stocks = response.data;
@@ -69,7 +69,7 @@ export class RestockReportComponent implements OnInit {
         { text: "Menor Preço", bold: true },
       ],
       ...this.dataSource.data.map((row) => [
-        row.name?.toString() ?? "",
+        row.stockName?.toString() ?? "",
         row.supplierName?.toString() ?? "",
         row.stockTypeId?.toString() ?? "",
         row.quantity?.toString() ?? "",
@@ -86,7 +86,7 @@ export class RestockReportComponent implements OnInit {
       language: "pt-BR",
       info: {
         title: "Lista de compras",
-        author: "Aslave Care",
+        author: environment.APPLICATION_NAME,
         subject: "restock report",
       },
       content: [

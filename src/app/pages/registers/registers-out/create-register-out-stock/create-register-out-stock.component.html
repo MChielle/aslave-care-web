@@ -50,7 +50,7 @@
         </div>
         <div class="table-responsive">
           <table class="table">
-            <thead class="text-primary">
+            <thead class="input-table-header-cell">
               <th>Nome</th>
               <th>Quantidade</th>
               <th class="text-right">Ações</th>
@@ -91,6 +91,9 @@
               </tr>
             </tbody>
           </table>
+        </div>
+        <div *ngIf="this.selectedSupplies.length == 0" class="table-empty-text">
+          Nenhum registro encontrado!
         </div>
         <mat-divider></mat-divider>
         <button

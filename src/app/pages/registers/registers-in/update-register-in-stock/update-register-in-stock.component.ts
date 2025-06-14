@@ -15,7 +15,7 @@ import { firstValueFrom } from "rxjs";
 
 declare var $: any;
 type UserFields =
-  | "supplier"
+  | "supplierId"
   | "donation"
   | "description"
   | "apply"
@@ -36,7 +36,7 @@ export class UpdateRegisterInStockComponent implements OnInit {
   public registerIn: RegisterInModel = new RegisterInModel();
   public updateForm: FormGroup;
   public formErrors: FormErrors = {
-    supplier: "",
+    supplierId: "",
     donation: "",
     description: "",
     apply: "",

@@ -6,7 +6,7 @@ import { AdminLayoutRoutes } from "./admin-layout.routing";
 import { DashboardComponent } from "../../dashboard/dashboard.component";
 import { UserProfileComponent } from "../../pages/users/user-profile/user-profile.component";
 import { MatButtonModule } from "@angular/material/button";
-import { MatRippleModule } from "@angular/material/core";
+import { MatNativeDateModule, MatRippleModule } from "@angular/material/core";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatSelectModule } from "@angular/material/select";
 import { MatDividerModule } from "@angular/material/divider";
@@ -23,19 +23,19 @@ import { RegistersInComponent } from "app/pages/registers/registers-in/registers
 import { RegistersOutComponent } from "app/pages/registers/registers-out/registers-out.component";
 import { UpdateRegisterOutStockComponent } from "app/pages/registers/registers-out/update-register-out-stock/update-register-out-stock.component";
 import { UpdateRegisterInStockComponent } from "app/pages/registers/registers-in/update-register-in-stock/update-register-in-stock.component";
-
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from "@angular/material/table";
+import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
-import { NgxMaskModule } from 'ngx-mask';
+import { NgxMaskModule } from "ngx-mask";
 import { RestockReportComponent } from "app/pages/reports/restock-report/restock-report.component";
 import { ReportsComponent } from "app/pages/reports/reports.component";
 import { UsersComponent } from "app/pages/users/users.component";
 import { UpdateUserComponent } from "app/pages/users/update-user/update-user.component";
 import { CreateUserComponent } from "app/pages/users/create-user/create-user.component";
-
+import { DonationsReportComponent } from "app/pages/reports/donations-report/donations-report.component";
+import { MatDatepickerModule } from "@angular/material/datepicker";
 
 @NgModule({
   imports: [
@@ -53,16 +53,16 @@ import { CreateUserComponent } from "app/pages/users/create-user/create-user.com
     MatPaginatorModule,
     MatSortModule,
     MatDividerModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     NgxMaskModule,
   ],
   declarations: [
     DashboardComponent,
     AutocompleteComponent,
-
     SuppliersComponent,
     CreateSupplierComponent,
     UpdateSupplierComponent,
-
     StockComponent,
     CreateStockComponent,
     UpdateStockComponent,
@@ -70,11 +70,12 @@ import { CreateUserComponent } from "app/pages/users/create-user/create-user.com
     RegistersInComponent,
     CreateRegisterInStockComponent,
     UpdateRegisterInStockComponent,
-    
+
     RegistersOutComponent,
     CreateRegisterOutStockComponent,
     UpdateRegisterOutStockComponent,
 
+    DonationsReportComponent,
     RestockReportComponent,
     ReportsComponent,
 

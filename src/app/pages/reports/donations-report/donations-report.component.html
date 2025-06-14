@@ -1,0 +1,131 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">Relatório de doações</h4>
+            <p class="card-category">
+              Lista de todos os insumos doados no período
+            </p>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-5">
+                <mat-form-field class="standard">
+                  <input
+                    matInput
+                    type="text"
+                    id="search"
+                    name="search"
+                    placeholder="Buscar..."
+                    (keyup)="applyFilter($event)"
+                    #input
+                  />
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field class="standard">
+                  <mat-date-range-input [rangePicker]="picker">
+                    <input
+                      matStartDate
+                      placeholder="Data inicial"
+                      [(ngModel)]="initialDate"
+                    />
+                    <input
+                      matEndDate
+                      placeholder="Data final"
+                      [(ngModel)]="finalDate"
+                    />
+                  </mat-date-range-input>
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker"
+                  ></mat-datepicker-toggle>
+                  <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+              </div>
+              <div class="col-md-2 pull-right">
+                <button
+                  mat-raised-button
+                  type="button"
+                  (click)="getDonationsReport()"
+                  class="btn btn-warning pull-right"
+                >
+                  Gerar
+                </button>
+              </div>
+              <div class="col-md-2 pull-right">
+                <button
+                  mat-raised-button
+                  type="button"
+                  (click)="generatePdfDonationsReport()"
+                  class="btn btn-success pull-right"
+                >
+                  Baixar
+                </button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <mat-table
+                mat-table
+                matSort
+                [dataSource]="dataSource"
+                class="table-responsive"
+              >
+                  <ng-container matColumnDef="stockName">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    class="col-md-2"
+                  >
+                    Nome
+                  </th>
+                  <td mat-cell *matCellDef="let stock">
+                    {{ stock.stockName }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="stockTypeId">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    class="col-md-2"
+                  >
+                    Tipo
+                  </th>
+                  <td mat-cell *matCellDef="let stock">
+                    {{ stock.stockTypeId }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="quantity">
+                  <th mat-header-cell class="col-md-1" *matHeaderCellDef>
+                    Quantidade
+                  </th>
+                  <td mat-cell *matCellDef="let stock">
+                    {{ stock.quantity }}
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+              </mat-table>
+              <mat-paginator
+                [pageSize]="10"
+                [pageSizeOptions]="[10, 20, 50, 100]"
+                showFirstLastButtons
+              ></mat-paginator>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
