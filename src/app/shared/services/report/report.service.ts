@@ -21,8 +21,8 @@ export class ReportService {
     return this.baseService.get<ResponseBase<TReport[]>>(`${this.names.URL_LOWER_CASE}/donations-report/${initialDate.toISOString()}/${finalDate.toISOString()}`);
   }
   
-  public getTopDonors<TReport>(top: number) {
-    return this.baseService.get<ResponseBase<TReport[]>>(`${this.names.URL_LOWER_CASE}/month-top-donors-report/${top}`);
+  public getTopDonors<TReport>() {
+    return this.baseService.get<ResponseBase<TReport[]>>(`${this.names.URL_LOWER_CASE}/month-top-donors-report`);
   }
 
   public getStockReport<TReport>() {

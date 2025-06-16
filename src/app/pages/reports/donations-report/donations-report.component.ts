@@ -1,6 +1,6 @@
 import { ContentObserver } from "@angular/cdk/observers";
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder } from "@angular/forms";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
@@ -12,7 +12,6 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import { formatDate } from "@angular/common";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
 
 @Component({
   selector: "app-donations-report",
@@ -29,6 +28,7 @@ export class DonationsReportComponent implements OnInit {
     "stockName",
     "stockTypeId",
     "quantity",
+    "total",
   ];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -36,8 +36,7 @@ export class DonationsReportComponent implements OnInit {
 
   constructor(private service: ReportService, private fb: FormBuilder) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -52,11 +51,11 @@ export class DonationsReportComponent implements OnInit {
     this.initialDate.setMinutes(0);
     this.finalDate.setHours(23);
     this.finalDate.setMinutes(59);
-    
+
     firstValueFrom(
       this.service.getDonationsReport<DonationReportModel>(
         this.initialDate,
-        this.finalDate,
+        this.finalDate
       )
     )
       .then((response) => {
@@ -71,74 +70,84 @@ export class DonationsReportComponent implements OnInit {
   }
 
   generatePdfDonationsReport() {
-        const tableBody = [
-          [
-            { text: "Nome", bold: true },
-            { text: "Tipo", bold: true },
-            { text: "Quantidade", bold: true },
-          ],
-          ...this.dataSource.data.map((row) => [
-            row.stockName?.toString() ?? "",
-            row.stockTypeId?.toString() ?? "",
-            row.quantity?.toString() ?? "",
-          ]),
-        ];
-    
-        let docDefinition = {
-          language: "pt-BR",
-          info: {
-            title: "Lista de Doações",
-            author: environment.APPLICATION_NAME,
-            subject: "restock report",
+    const tableBody = [
+      [
+        { text: "Nome", bold: true },
+        { text: "Tipo", bold: true },
+        { text: "Quantidade", bold: true },
+        { text: "Total", bold: true },
+      ],
+      ...this.dataSource.data.map((row) => [
+        row.stockName?.toString() ?? "",
+        row.stockTypeId?.toString() ?? "",
+        row.quantity?.toString() ?? "",
+        row.total
+          ? `R$ ${row.total.toLocaleString("pt-BR", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}`
+          : "R$ 0,00",
+      ]),
+    ];
+
+    let docDefinition = {
+      language: "pt-BR",
+      info: {
+        title: "Lista de Doações",
+        author: environment.APPLICATION_NAME,
+        subject: "restock report",
+      },
+      content: [
+        {
+          text: "Lista de Doações",
+          bold: true,
+          fontSize: 20,
+          alignment: "center",
+          margin: [0, 0, 0, 20],
+        },
+        {
+          text: `Relatório de suprimentos doados no período de ${formatDate(
+            this.initialDate,
+            "dd/MM/yyyy",
+            "en-Us"
+          )} até ${formatDate(this.finalDate, "dd/MM/yyyy", "en-Us")}`,
+        },
+        {
+          text: `Data: ${formatDate(Date.now(), "dd/MM/yyyy", "en-US")}`,
+          alignment: "right",
+          margin: [0, 10, 0, 10],
+        },
+        {
+          layout: "lightHorizontalLines",
+          style: "table",
+          margin: [0, 0, 0, 100],
+          table: {
+            headerRows: 1,
+            widths: ["auto", "auto", "*", "*"],
+            body: tableBody,
           },
-          content: [
-            {
-              text: "Lista de Doações",
-              bold: true,
-              fontSize: 20,
-              alignment: "center",
-              margin: [0, 0, 0, 20],
-            },
-            {
-              text: `Relatório de suprimentos doados no período de ${formatDate(this.initialDate, "dd/MM/yyyy", "en-Us")} até ${formatDate(this.finalDate, "dd/MM/yyyy", "en-Us")}`,
-            },
-            {
-              text: `Data: ${formatDate(Date.now(), "dd/MM/yyyy", "en-US")}`,
-              alignment: "right",
-              margin: [0, 10, 0, 10],
-            },
-            {
-              layout: "lightHorizontalLines",
-              style: "table",
-              margin: [0, 0, 0, 100],
-              table: {
-                headerRows: 1,
-                widths: ["auto", "*", "*"],
-                body: tableBody,
-              },
-            },
-            {
-              text: `Total de items ${this.dataSource.data.length}`,
-              bold: true,
-              alignment: "right",
-              margin: [0, 10, 0, 10],
-            },
-          ],
-          footer: {
-            stack: [
-              {
-                text: `Documento emitido pelo sistema ${environment.APPLICATION_NAME}`,
-                alignment: "center",
-                fontSize: 10,
-              },
-            ],
+        },
+        {
+          text: `Total de items ${this.dataSource.data.length}`,
+          bold: true,
+          alignment: "right",
+          margin: [0, 10, 0, 10],
+        },
+      ],
+      footer: {
+        stack: [
+          {
+            text: `Documento emitido pelo sistema ${environment.APPLICATION_NAME}`,
+            alignment: "center",
+            fontSize: 10,
           },
-        };
-    
-        let pdf = pdfMake.createPdf(docDefinition);
-        console.log(pdf);
-        pdf.open();
-      
+        ],
+      },
+    };
+
+    let pdf = pdfMake.createPdf(docDefinition);
+    console.log(pdf);
+    pdf.open();
   }
 
   reloadDataSource() {
