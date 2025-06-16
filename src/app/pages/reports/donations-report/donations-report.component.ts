@@ -69,7 +69,13 @@ export class DonationsReportComponent implements OnInit {
       });
   }
 
+  getTotalDonations() {
+    return this.dataSource.data.reduce((summ, v) => (summ += v.total), 0);
+  }
+
   generatePdfDonationsReport() {
+    const total = this.getTotalDonations();
+
     const tableBody = [
       [
         { text: "Nome", bold: true },
@@ -88,6 +94,20 @@ export class DonationsReportComponent implements OnInit {
             })}`
           : "R$ 0,00",
       ]),
+      [
+        { text: "", bold: true },
+        { text: "", bold: true },
+        { text: "", bold: true },
+        {
+          text: total
+            ? `R$ ${total.toLocaleString("pt-BR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}`
+            : "R$ 0,00",
+          bold: true,
+        },
+      ],
     ];
 
     let docDefinition = {
