@@ -18,7 +18,7 @@ import * as Chartist from "chartist";
   styleUrls: ["./dashboard.component.css"],
 })
 export class DashboardComponent implements OnInit {
-  boardTopScale: number = 300;
+  boardTopScale: number = 400;
   public stocks: StockModel[] = new Array();
   public monthTopDonors: MonthTopDonorsModel[] = new Array();
   // public taskNotes: TaskNoteModel[] = new Array();
