@@ -2,17 +2,17 @@ export class DonationReportModel {
   stockName: string;
   stockTypeId: string;
   quantity: number;
-  donationDate: number;
+  total: number;
 
   constructor(
     stockName: string,
     stockTypeId: string,
     quantity: number,
-    donationDate: number
+    total: number,
   ) {
     this.stockName = stockName;
     this.stockTypeId = stockTypeId;
     this.quantity = quantity;
-    this.donationDate = donationDate;
+    this.total = total;
   }
 }

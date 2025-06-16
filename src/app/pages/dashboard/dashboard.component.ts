@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
     private registerInService: RegisterInService<RegisterInModel>,
     private registerOutService: RegisterOutService<RegisterOutModel>,
     // private taskNoteService: TaskNoteService<TaskNoteModel>,
-    private reportService: ReportService,
+    private reportService: ReportService
   ) {}
 
   // getTaskNotes(){
@@ -57,15 +57,16 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  getTopDonors(){
-        this.reportService.getTopDonors<MonthTopDonorsModel>(this.topDoners).subscribe((response) => {
-          console.log(response);
-      if (response.isSuccess){
-        this.monthTopDonors = response.data;      
-        this.monthTopDonors =  this.sortByQuantity(this.monthTopDonors, false);
-       
-      }
-    });
+  getTopDonors() {
+    this.reportService
+      .getTopDonors<MonthTopDonorsModel>()
+      .subscribe((response) => {
+        if (response.isSuccess) {
+          this.monthTopDonors = response.data;
+          this.monthTopDonors = this.sortByQuantity(this.monthTopDonors, false);
+          this.monthTopDonors = this.monthTopDonors.slice(0, this.topDoners);
+        }
+      });
   }
 
   sortByQuantity(
@@ -76,7 +77,6 @@ export class DashboardComponent implements OnInit {
       ? models.sort((a, b) => a.quantity - b.quantity)
       : models.sort((a, b) => b.quantity - a.quantity);
   }
-
 
   startAnimationForLineChart(chart) {
     let seq: any, delays: any, durations: any;

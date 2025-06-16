@@ -1,5 +1,5 @@
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { NgModule } from "@angular/core";
+import { DEFAULT_CURRENCY_CODE, LOCALE_ID, NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { AppRoutingModule } from "./app.routing";
@@ -12,7 +12,9 @@ import { AuthComponent } from "./auth/auth.component";
 import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
 import { AuthInterceptor } from "./shared/interceptors/auth.interceptor";
 import { MAT_DATE_LOCALE } from "@angular/material/core";
-
+import localePt from '@angular/common/locales/pt';
+import { registerLocaleData } from "@angular/common";
+registerLocaleData(localePt);
 
 @NgModule({
   imports: [
@@ -33,7 +35,9 @@ import { MAT_DATE_LOCALE } from "@angular/material/core";
       useClass: AuthInterceptor,
       multi: true,
     },
-    {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'},
+    { provide: LOCALE_ID, useValue: "pt-BR" },
+    { provide: MAT_DATE_LOCALE, useValue: "pt-BR" },
+    { provide: DEFAULT_CURRENCY_CODE, useValue: "BRL" },
   ],
   bootstrap: [AppComponent],
 })
