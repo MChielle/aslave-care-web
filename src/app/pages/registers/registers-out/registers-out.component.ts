@@ -23,7 +23,13 @@ export class RegistersOutComponent implements OnInit {
   public propertyLenght;
   public dataSource: MatTableDataSource<ViewRegisterOutModel>;
   public registersOut: ViewRegisterOutModel[];
-  public displayedColumns: string[] = ["number", "apply", "formattedApplyDate", "description", "actions"];
+  public displayedColumns: string[] = [
+    "number",
+    "apply",
+    "formattedApplyDate",
+    "description",
+    "actions",
+  ];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -123,5 +129,9 @@ export class RegistersOutComponent implements OnInit {
       `update-${this.names.URL_LOWER_CASE}`,
       registerOut.id,
     ]);
+  }
+
+  navigateToView(registerOut: RegisterOutModel) {
+    this.router.navigate([`view-${this.names.URL_LOWER_CASE}`, registerOut.id]);
   }
 }

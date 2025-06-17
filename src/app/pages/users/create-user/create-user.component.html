@@ -48,14 +48,14 @@
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
-                </div>
-                <div
-                  *ngIf="
-                    createForm.controls.userType.touched &&
-                    createForm.controls.userType.errors?.required
-                  "
-                >
-                  Tipo é obrigatório.
+                  <div
+                    *ngIf="
+                      createForm.controls.userType.touched &&
+                      createForm.controls.userType.errors?.required
+                    "
+                  >
+                    Tipo é obrigatório.
+                  </div>
                 </div>
               </div>
               <div class="row">
@@ -152,6 +152,7 @@
                   </div>
                 </div>
               </div>
+              <mat-divider></mat-divider>
               <button
                 mat-raised-button
                 type="button"

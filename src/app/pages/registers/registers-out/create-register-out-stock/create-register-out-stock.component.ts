@@ -79,15 +79,14 @@ export class CreateRegisterOutStockComponent implements OnInit {
       console.log("sendCreateRequest", error);
     }
   }
-
+  
   create() {
     try {
-      console.log("create");
       this.createForm.controls["registerOutStocks"].setValue(
         this.selectedSupplies
       );
       const model = this.createForm.value as CreateRegisterOutModel;
-      console.log(model);
+      this.createForm.markAllAsTouched();
       this.sendCreateRequest(model);
     } catch (error) {
       console.log("create", error);

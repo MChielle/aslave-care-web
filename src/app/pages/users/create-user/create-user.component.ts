@@ -98,8 +98,8 @@ export class CreateUserComponent implements OnInit {
       ]),
       phoneNumber: new FormControl("", [Validators.required]),
       userType: new FormControl("", [Validators.required]),
-      password: new FormControl(""),
-      repeatPassword: new FormControl(""),
+      password: new FormControl("", [Validators.required]),
+      repeatPassword: new FormControl("", [Validators.required]),
     });
   }
 
@@ -143,6 +143,7 @@ export class CreateUserComponent implements OnInit {
     const model = this.createForm.value as ViewUserModel;
     const parameters = new UserModel();
     parameters.email = model.email;
+    this.createForm.markAllAsTouched();
     this.userService.getByParameters(parameters).subscribe((response) => {
       if (!response.isSuccess) {
         this.showNotification("Erro, não foi possível consultar email.");
@@ -156,15 +157,6 @@ export class CreateUserComponent implements OnInit {
         return;
       }
 
-      console.log(model);
-      console.log(this.createForm.valid);
-      console.log(this.createForm.controls.userType.value);
-      console.log(this.createForm.controls.email.errors);
-      console.log(this.createForm.controls.name.errors);
-      console.log(this.createForm.controls.phoneNumber.errors);
-      console.log(this.createForm.controls.password.errors);
-      console.log(this.createForm.controls.repeatPassword.errors);
-      console.log(this.createForm.controls.userType.errors);
       if (this.createForm.valid) {
         if (UserType[this.createForm.controls.userType.value] == UserType[UserType.Manager])
           this.sendCreateManagerRequest(this.BuildManagerUser(model));

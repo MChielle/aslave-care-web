@@ -14,6 +14,7 @@ import { AuthInterceptor } from "./shared/interceptors/auth.interceptor";
 import { MAT_DATE_LOCALE } from "@angular/material/core";
 import localePt from '@angular/common/locales/pt';
 import { registerLocaleData } from "@angular/common";
+import { ViewRegisterOutStockComponent } from './pages/registers/registers-out/view-register-out-stock/view-register-out-stock.component';
 registerLocaleData(localePt);
 
 @NgModule({

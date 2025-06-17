@@ -21,6 +21,8 @@ import { UpdateUserComponent } from "app/pages/users/update-user/update-user.com
 import { CreateUserComponent } from "app/pages/users/create-user/create-user.component";
 import { DonationsReportComponent } from "app/pages/reports/donations-report/donations-report.component";
 import { StockReportComponent } from "app/pages/reports/stock-report/stock-report.component";
+import { ViewRegisterInStockComponent } from "app/pages/registers/registers-in/view-register-in-stock/view-register-in-stock.component";
+import { ViewRegisterOutStockComponent } from "app/pages/registers/registers-out/view-register-out-stock/view-register-out-stock.component";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "suppliers", component: SuppliersComponent },
@@ -34,10 +36,12 @@ export const AdminLayoutRoutes: Routes = [
   { path: "registers-in", component: RegistersInComponent },
   { path: "create-register-in", component: CreateRegisterInStockComponent },
   { path: "update-register-in/:id", component: UpdateRegisterInStockComponent },
+  { path: "view-register-in/:id", component: ViewRegisterInStockComponent },
 
   { path: "registers-out", component: RegistersOutComponent },
   { path: "create-register-out", component: CreateRegisterOutStockComponent },
   { path: "update-register-out/:id", component: UpdateRegisterOutStockComponent,},
+  { path: "view-register-out/:id", component: ViewRegisterOutStockComponent },
 
   { path: "reports", component: ReportsComponent },
   { path: "restock-report", component: RestockReportComponent },

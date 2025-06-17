@@ -37,6 +37,8 @@ import { CreateUserComponent } from "app/pages/users/create-user/create-user.com
 import { DonationsReportComponent } from "app/pages/reports/donations-report/donations-report.component";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { StockReportComponent } from "app/pages/reports/stock-report/stock-report.component";
+import { ViewRegisterInStockComponent } from "app/pages/registers/registers-in/view-register-in-stock/view-register-in-stock.component";
+import { ViewRegisterOutStockComponent } from "app/pages/registers/registers-out/view-register-out-stock/view-register-out-stock.component";
 
 @NgModule({
   imports: [
@@ -71,10 +73,12 @@ import { StockReportComponent } from "app/pages/reports/stock-report/stock-repor
     RegistersInComponent,
     CreateRegisterInStockComponent,
     UpdateRegisterInStockComponent,
+    ViewRegisterInStockComponent,
 
     RegistersOutComponent,
     CreateRegisterOutStockComponent,
     UpdateRegisterOutStockComponent,
+    ViewRegisterOutStockComponent,
 
     StockReportComponent,
     DonationsReportComponent,

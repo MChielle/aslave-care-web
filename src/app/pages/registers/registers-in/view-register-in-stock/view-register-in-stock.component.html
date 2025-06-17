@@ -1,21 +1,25 @@
 <div class="main-content">
   <div class="container-fluid">
     <div class="card">
-      <div class="card-header card-header-success">
-        <h4 class="card-title">Estoque</h4>
-        <p class="card-category">Dados da Aquisição</p>
+      <div class="card-header card-header-primary">
+        <h4 class="card-title">Aquisição</h4>
+        <p class="card-category">Alterar Aquisição</p>
       </div>
       <div class="card-body">
-        <form [formGroup]="createForm">
+        <form [formGroup]="viewForm">
           <div class="row">
             <div class="col-md-10">
-              <app-autocomplete
-                placeholder="Fornecedor"
-                shownValue="name"
-                [itemList]="suppliers"
-                [selectedValue]="this.createForm.controls.supplierId.value"
-                (itemChanged)="selectSupplier($event)"
-              ></app-autocomplete>
+              <mat-form-field class="standard">
+                <input
+                  matInput
+                  formControlName="supplierName"
+                  type="text"
+                  id="supplierName"
+                  name="supplierName"
+                  placeholder="Nome"
+                  disabled
+                />
+              </mat-form-field>
             </div>
             <div class="col-md-1">
               <label>
@@ -26,6 +30,7 @@
                   class="form-control"
                   id="donation"
                   name="donation"
+                  disabled
                 />
               </label>
             </div>
@@ -38,6 +43,7 @@
                   class="form-control"
                   id="apply"
                   name="apply"
+                  disabled
                 />
               </label>
             </div>
@@ -60,24 +66,12 @@
             </div>
           </div>
         </form>
-        <div class="row">
-          <div class="col-md-12">
-            <app-autocomplete
-              placeholder="Selecione o insumo"
-              shownValue="name"
-              [itemList]="supplies"
-              [selectedValue]="supply"
-              (itemChanged)="selectSupply($event)"
-            ></app-autocomplete>
-          </div>
-        </div>
         <div class="table-responsive">
           <table class="table">
-            <thead class="input-table-header-cell">
+            <thead class="view-table-header-cell">
               <th>Nome</th>
               <th>Quantidade</th>
-              <th>Preço</th>
-              <th class="text-right">Ações</th>
+              <th class="text-right">Preço</th>
             </thead>
             <tbody>
               <tr
@@ -96,10 +90,7 @@
                       type="number"
                       name="quantity{{ i }}"
                       [(ngModel)]="selectedSupply.quantity"
-                      step="0.01"
-                      min="0"
-                      max="99999999.99"
-                      maxlength="{{ propertyLenght.DECIMAL_8_2 }}"
+                      disabled
                     />
                   </mat-form-field>
                 </td>
@@ -110,28 +101,13 @@
                       type="number"
                       name="price{{ i }}"
                       [(ngModel)]="selectedSupply.price"
-                      step="0.01"
-                      min="0"
-                      max="99999999.99"
-                      maxlength="{{ propertyLenght.DECIMAL_8_2 }}"
+                      disabled
                     />
                   </mat-form-field>
-                </td>
-                <td class="text-right">
-                  <button
-                    class="btn btn-sm btn-trash btn-danger"
-                    tooltip="Excluir"
-                    (click)="deleteSupply(selectedSupply.stockId)"
-                  >
-                    <i class="fa fa-trash"></i>
-                  </button>
                 </td>
               </tr>
             </tbody>
           </table>
-        </div>
-        <div *ngIf="this.selectedSupplies.length == 0" class="table-empty-text">
-          Nenhum registro encontrado!
         </div>
         <mat-divider></mat-divider>
         <button
@@ -141,14 +117,6 @@
           class="btn btn-danger pull-right"
         >
           Cancelar
-        </button>
-        <button
-          mat-raised-button
-          type="button"
-          (click)="create()"
-          class="btn btn-success pull-right"
-        >
-          Salvar
         </button>
         <div class="clearfix"></div>
       </div>

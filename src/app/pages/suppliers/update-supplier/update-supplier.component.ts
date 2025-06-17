@@ -43,7 +43,10 @@ export class UpdateSupplierComponent implements OnInit {
     this.updateForm = this.fb.group({
       id: new FormControl(""),
       name: new FormControl("", [Validators.required]),
-      email: new FormControl("", [Validators.required, ValidatorHelper.isValidEmail]),
+      email: new FormControl("", [
+        Validators.required,
+        ValidatorHelper.isValidEmail,
+      ]),
       phoneNumber: new FormControl("", [Validators.required]),
       disable: new FormControl(false),
     });
@@ -99,6 +102,7 @@ export class UpdateSupplierComponent implements OnInit {
     const model = this.updateForm.value as SupplierModel;
     const parameters = new SupplierModel();
     parameters.email = model.email;
+    this.updateForm.markAllAsTouched();
     this.supplierService.getByParameters(parameters).subscribe((response) => {
       if (
         response.isSuccess &&
@@ -115,7 +119,7 @@ export class UpdateSupplierComponent implements OnInit {
     console.log("update", error);
   }
 
-  cancel(){
+  cancel() {
     this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
   }
 }

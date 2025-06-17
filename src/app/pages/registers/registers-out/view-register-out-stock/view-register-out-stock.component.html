@@ -1,0 +1,85 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header card-header-primary">
+        <h4 class="card-title">Aquisição</h4>
+        <p class="card-category">Alterar Aquisição</p>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="viewForm">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-11">
+                <mat-form-field class="standard">
+                  <textarea
+                    matInput
+                    formControlName="description"
+                    type="text"
+                    class="form-control"
+                    id="description"
+                    name="description"
+                    placeholder="Descrição"
+                  ></textarea>
+                </mat-form-field>
+              </div>
+              <div class="col-md-1">
+                <label>
+                  Aplicar
+                  <input
+                    formControlName="apply"
+                    type="checkbox"
+                    class="form-control"
+                    id="apply"
+                    name="apply"
+                    disabled
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="table-responsive">
+          <table class="table">
+            <thead class="view-table-header-cell">
+              <th>Nome</th>
+              <th>Quantidade</th>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let selectedSupply of this.selectedSupplies;
+                  let i = index
+                "
+              >
+                <td>
+                  {{ selectedSupply.name }}
+                </td>
+                <td>
+                  <mat-form-field class="standard">
+                    <input
+                      matInput
+                      type="number"
+                      name="quantity{{ i }}"
+                      [(ngModel)]="selectedSupply.quantity"
+                      disabled
+                    />
+                  </mat-form-field>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <mat-divider></mat-divider>
+        <button
+          mat-raised-button
+          type="button"
+          (click)="cancel()"
+          class="btn btn-danger pull-right"
+        >
+          Cancelar
+        </button>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+</div>

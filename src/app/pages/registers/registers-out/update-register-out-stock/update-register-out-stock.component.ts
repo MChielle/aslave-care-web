@@ -118,7 +118,7 @@ export class UpdateRegisterOutStockComponent implements OnInit {
         this.selectedSupplies
       );
       const registerOutModel = this.updateForm.value as RegisterOutModel;
-      console.log("this.updateForm.valid", this.updateForm.valid);
+      this.updateForm.markAllAsTouched();
       if (this.updateForm.valid) this.sendUpdateRequest(registerOutModel);
     } catch (error) {
       console.log(error);
