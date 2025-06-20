@@ -161,7 +161,7 @@ export class UpdateRegisterInStockComponent implements OnInit {
         0
       );
 
-      this.selectedSupplies.push(selectedSupply);
+      this.selectedSupplies.unshift(selectedSupply);
     } catch (error) {
       console.log(error);
     }
