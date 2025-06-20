@@ -121,6 +121,7 @@ export class CreateStockComponent implements OnInit {
     const model = this.createForm.value as StockModel;
     const parameters = new StockModel();
     parameters.name = model.name;
+    this.createForm.markAllAsTouched();
     this.service.getByParameters(parameters).subscribe((response) => {
       if (
         response.isSuccess &&

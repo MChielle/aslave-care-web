@@ -7,28 +7,42 @@ mat-table {
 
 .mat-header-cell {
   font-size: medium;
-  color: darkred;
+  color: white;
   padding-top: 1% !important;
-  background-color: lightcoral;
+  background-color: #ec4b48;
 }
-    
-.mat-row{
+
+.mat-row {
   height: 30px !important;
 }
 
-.mat-row:nth-child(odd){
-    background-color: #eeeeee;
+.mat-row:nth-child(odd) {
+  background-color: #eeeeee;
 }
 
-.mat-cell{
+.mat-cell {
   border: none !important;
 }
 
 .input-table-header-cell {
   font-size: small;
-  color: darkgreen;
+  color: white;
   padding-top: 2% !important;
-  background-color: lightgreen;
+  background-color: #5db461;
+}
+
+.update-table-header-cell {
+  font-size: small;
+  color: white;
+  padding-top: 2% !important;
+  background-color: #16bbcf;
+}
+
+.view-table-header-cell {
+  font-size: small;
+  color: white;
+  padding-top: 2% !important;
+  background-color: #9f39b5;
 }
 
 .input-table-row {

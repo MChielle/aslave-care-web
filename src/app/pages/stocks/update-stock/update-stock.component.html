@@ -45,11 +45,7 @@
                   max="99999999.99"
                 />
               </mat-form-field>
-              <div
-                *ngIf="
-                  updateForm.controls.quantity.errors?.required
-                "
-              >
+              <div *ngIf="updateForm.controls.quantity.errors?.required">
                 Quantidade é obrigatória.
               </div>
               <div *ngIf="updateForm.controls.quantity.errors?.decimal">
@@ -71,9 +67,7 @@
                 />
               </mat-form-field>
               <div
-                *ngIf="
-                  updateForm.controls.quantityLowWarning.errors?.required
-                "
+                *ngIf="updateForm.controls.quantityLowWarning.errors?.required"
               >
                 Quantidade mínima é obrigatória.
               </div>
@@ -101,11 +95,7 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-              <div
-                *ngIf="
-                  updateForm.controls.stockTypeId.errors?.required
-                "
-              >
+              <div *ngIf="updateForm.controls.stockTypeId.errors?.required">
                 Tipo é obrigatório.
               </div>
             </div>
@@ -142,6 +132,7 @@
               </div>
             </div>
           </div>
+          <mat-divider></mat-divider>
           <button
             mat-raised-button
             type="button"

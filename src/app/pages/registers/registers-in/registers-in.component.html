@@ -126,6 +126,16 @@
                       *matCellDef="let registerIn"
                       class="text-right"
                     >
+                      <div *ngIf="registerIn.apply == true">
+                        <button
+                          mat-raised-button
+                          class="btn btn-sm btn-trash btn-primary"
+                          tooltip="Visualizar"
+                          (click)="navigateToView(registerIn)"
+                        >
+                          <i class="fa fa-eye"></i>
+                        </button>
+                      </div>
                       <div *ngIf="registerIn.apply == false">
                         <button
                           mat-raised-button
@@ -160,6 +170,7 @@
                 >
                   Nenhum registro encontrado!
                 </div>
+                <mat-divider></mat-divider>
                 <mat-paginator
                   [pageSize]="10"
                   [pageSizeOptions]="[10, 20, 50]"

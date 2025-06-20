@@ -108,15 +108,11 @@ export class UpdateUserComponent implements OnInit {
   }
 
   initForm() {
-    try {
-      this.updateForm.patchValue(this.userProfile);
-      this.updateForm.controls.name.disable();
-      this.updateForm.controls.email.disable();
-      this.updateForm.controls.phoneNumber.disable();
-      this.updateForm.controls.role.disable();
-    } catch (error) {
-      console.log("initForm", error);
-    }
+    this.updateForm.patchValue(this.userProfile);
+    this.updateForm.controls.name.disable();
+    this.updateForm.controls.email.disable();
+    this.updateForm.controls.phoneNumber.disable();
+    this.updateForm.controls.role.disable();
   }
 
   ngOnInit(): void {
@@ -162,8 +158,7 @@ export class UpdateUserComponent implements OnInit {
     this.userProfile.user.disable = this.updateForm.controls.disable.value;
 
     if (this.userMaster) {
-      this.userProfile.user.password =
-        this.updateForm.controls.password.value;
+      this.userProfile.user.password = this.updateForm.controls.password.value;
       this.updateAsMaster();
       return;
     }

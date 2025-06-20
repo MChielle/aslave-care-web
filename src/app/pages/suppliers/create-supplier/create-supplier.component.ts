@@ -22,7 +22,7 @@ type UserFields =
   | "disable"
   | "role";
 
-  type FormErrors = { [u in UserFields]: string };
+type FormErrors = { [u in UserFields]: string };
 
 @Component({
   selector: "app-create-supplier",
@@ -30,7 +30,6 @@ type UserFields =
   styleUrls: ["./create-supplier.component.scss"],
 })
 export class CreateSupplierComponent implements OnInit {
-
   public createForm: FormGroup;
   public formErrors: FormErrors = {
     id: "",
@@ -92,30 +91,31 @@ export class CreateSupplierComponent implements OnInit {
     const model = this.createForm.value as SupplierModel;
     const parameters = new SupplierModel();
     parameters.email = model.email;
+    this.createForm.markAllAsTouched();
     this.service.getByParameters(parameters).subscribe((response) => {
-      if(!response.isSuccess) 
-      {
+      if (!response.isSuccess) {
         this.showNotification("Erro, não foi possível consultar email.");
         return;
       }
-      
-      if(response?.data[0]){
-        this.showNotification("Conflito, este email pertence a outro cadastro.");
-        return;
-      } 
 
-      if (this.createForm.valid)
-      {
+      if (response?.data[0]) {
+        this.showNotification(
+          "Conflito, este email pertence a outro cadastro."
+        );
+        return;
+      }
+
+      if (this.createForm.valid) {
         this.sendCreateRequest(model);
         return;
-      }      
+      }
     });
   }
   catch(error) {
     console.log("create", error);
   }
 
-  cancel(){
+  cancel() {
     this.router.navigate([this.names.URL_LOWER_CASE_PLURAL]);
   }
 }

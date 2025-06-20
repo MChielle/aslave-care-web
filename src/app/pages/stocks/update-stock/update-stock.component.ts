@@ -135,6 +135,7 @@ export class UpdateStockComponent implements OnInit {
       const model = this.updateForm.value as StockModel;
       const parameters = new StockModel();
       parameters.name = model.name;
+      this.updateForm.markAllAsTouched();
       this.service.getByParameters(parameters).subscribe((response) => {
         if (
           response.isSuccess &&

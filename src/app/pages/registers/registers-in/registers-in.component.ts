@@ -40,13 +40,13 @@ export class RegistersInComponent implements OnInit {
     private service: RegisterInService<RegisterInModel>,
     private router: Router,
     private notificationService: NotificationService,
-    private formatHelper: FormatHelper    
+    private formatHelper: FormatHelper
   ) {}
 
   showNotification(text: string) {
     const notification = this.notificationService.buildNotification(
       text,
-      "warning",
+      "primary",
       "bottom",
       "right"
     );
@@ -89,7 +89,9 @@ export class RegistersInComponent implements OnInit {
   }
 
   reloadDataSource() {
-    this.dataSource = new MatTableDataSource<ViewRegisterInModel>(this.registersIn);
+    this.dataSource = new MatTableDataSource<ViewRegisterInModel>(
+      this.registersIn
+    );
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -126,5 +128,9 @@ export class RegistersInComponent implements OnInit {
       `update-${this.names.URL_LOWER_CASE}`,
       registerIn.id,
     ]);
+  }
+
+  navigateToView(registerIn: RegisterInModel) {
+    this.router.navigate([`view-${this.names.URL_LOWER_CASE}`, registerIn.id]);
   }
 }

@@ -10,6 +10,7 @@ import { UserModel } from "app/shared/models/user/user.model";
 import { LocalStorageService } from "app/shared/services/app/local-storage.service";
 import { UserService } from "app/shared/services/user/user.service";
 import { ValidatorHelper } from "app/shared/utils/helpers/validator.helper";
+import { Router } from "@angular/router";
 
 type UserFields = "id" | "name" | "email" | "phoneNumber" | "disable";
 type FormErrors = { [u in UserFields]: string };
@@ -32,7 +33,8 @@ export class UserProfileComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private userService: UserService<UserModel>
+    private userService: UserService<UserModel>,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -67,5 +69,7 @@ export class UserProfileComponent implements OnInit {
     this.updateForm.get("disable").setValue(this.userProfile.disable);
   }
 
-  cancel() {}
+  cancel() {
+    this.router.navigate([`dashboard`]);
+  }
 }

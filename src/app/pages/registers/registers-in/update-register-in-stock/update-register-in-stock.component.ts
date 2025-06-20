@@ -131,7 +131,7 @@ export class UpdateRegisterInStockComponent implements OnInit {
     try {
       this.updateForm.controls.registerInStocks.setValue(this.selectedSupplies);
       const model = this.updateForm.value as RegisterInModel;
-      console.log({ model });
+      this.updateForm.markAllAsTouched();
       this.sendUpdateRequest(model);
     } catch (error) {
       console.log(error);

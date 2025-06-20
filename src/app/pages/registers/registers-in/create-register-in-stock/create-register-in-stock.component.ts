@@ -59,11 +59,11 @@ export class CreateRegisterInStockComponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) {
     this.createForm = this.fb.group({
-      supplierId: new FormControl(""),
+      supplierId: new FormControl("", [Validators.required]),
       donation: new FormControl(false),
       description: new FormControl(""),
       apply: new FormControl(false),
-      registerInStocks: new FormControl(""),
+      registerInStocks: new FormControl("", [Validators.required]),
     });
   }
 
@@ -104,7 +104,7 @@ export class CreateRegisterInStockComponent implements OnInit {
         this.selectedSupplies
       );
       const model = this.createForm.value as CreateRegisterInModel;
-      console.log(model);
+      this.createForm.markAllAsTouched();
       this.sendCreateRequest(model);
     } catch (error) {
       console.log("create", error);
@@ -135,7 +135,6 @@ export class CreateRegisterInStockComponent implements OnInit {
       );
 
       this.selectedSupplies.push(selectedSupplie);
-      
     } catch (error) {
       console.log("selectSupply", error);
     }
