@@ -134,7 +134,7 @@ export class CreateRegisterInStockComponent implements OnInit {
         0
       );
 
-      this.selectedSupplies.push(selectedSupplie);
+      this.selectedSupplies.unshift(selectedSupplie);
     } catch (error) {
       console.log("selectSupply", error);
     }
