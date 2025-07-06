@@ -138,7 +138,7 @@ export class UpdateRegisterOutStockComponent implements OnInit {
 
   update() {
     try {
-      this.updateForm.controls["registerOutStocks"].setValue(
+      this.updateForm.controls.registerOutStocks.setValue(
         this.selectedSupplies
       );
       this.updateForm.markAllAsTouched();

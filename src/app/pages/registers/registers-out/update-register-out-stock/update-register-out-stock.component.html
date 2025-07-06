@@ -108,6 +108,14 @@
             </tbody>
           </table>
         </div>
+        <div>
+          <mat-error
+            *ngIf="this.selectedSupplies.length == 0"
+            class="table-empty-text"
+          >
+            Adicione pelo menos um suprimento
+          </mat-error>
+        </div>
         <mat-divider></mat-divider>
         <button
           mat-raised-button
