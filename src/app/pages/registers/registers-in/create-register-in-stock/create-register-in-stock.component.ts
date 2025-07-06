@@ -24,7 +24,8 @@ type UserFields =
   | "donation"
   | "description"
   | "apply"
-  | "registerInStocks";
+  | "registerInStocks"
+  | "applyDate";
 type FormErrors = { [u in UserFields]: string };
 
 @Component({
@@ -46,6 +47,7 @@ export class CreateRegisterInStockComponent implements OnInit {
     description: "",
     apply: "",
     registerInStocks: "",
+    applyDate: "",
   };
 
   constructor(
@@ -64,6 +66,7 @@ export class CreateRegisterInStockComponent implements OnInit {
       description: new FormControl(""),
       apply: new FormControl(false),
       registerInStocks: new FormControl("", [Validators.required]),
+      applyDate: new FormControl(new Date()),
     });
   }
 
@@ -98,14 +101,30 @@ export class CreateRegisterInStockComponent implements OnInit {
     }
   }
 
+  buildRequestModel(): CreateRegisterInModel {
+    try {
+      const model = this.createForm.value as CreateRegisterInModel;
+      model.applyDate.setHours(new Date().getHours());
+      model.applyDate.setMinutes(new Date().getMinutes());
+      model.applyDate.setSeconds(new Date().getSeconds());
+      if (!model.apply) {
+        model.applyDate = null;
+        this.cdr.detectChanges();
+      }
+      return model;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   create() {
     try {
       this.createForm.controls["registerInStocks"].setValue(
         this.selectedSupplies
       );
-      const model = this.createForm.value as CreateRegisterInModel;
       this.createForm.markAllAsTouched();
-      this.sendCreateRequest(model);
+      const model = this.buildRequestModel();
+      if(this.createForm.valid) this.sendCreateRequest(model);
     } catch (error) {
       console.log("create", error);
     }

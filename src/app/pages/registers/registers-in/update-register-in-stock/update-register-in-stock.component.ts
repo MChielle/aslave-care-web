@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { PropertyLenghtConstants } from "app/shared/constants/property-lenght.constants";
 import { RegisterInSelectedSupply } from "app/shared/models/register-in-stock/register-in-selected-supplies.model";
@@ -19,7 +19,8 @@ type UserFields =
   | "donation"
   | "description"
   | "apply"
-  | "registerInStocks";
+  | "registerInStocks"
+  | "applyDate";
 type FormErrors = { [u in UserFields]: string };
 
 @Component({
@@ -41,6 +42,7 @@ export class UpdateRegisterInStockComponent implements OnInit {
     description: "",
     apply: "",
     registerInStocks: "",
+    applyDate: "",
   };
 
   constructor(
@@ -60,7 +62,8 @@ export class UpdateRegisterInStockComponent implements OnInit {
       donation: new FormControl(false),
       description: new FormControl(""),
       apply: new FormControl(false),
-      registerInStocks: new FormControl(""),
+      registerInStocks: new FormControl("", [Validators.required]),
+      applyDate: new FormControl(new Date()),
     });
   }
 
@@ -127,12 +130,28 @@ export class UpdateRegisterInStockComponent implements OnInit {
     }
   }
 
+  buildRequestModel(): RegisterInModel {
+    try {
+      const model = this.updateForm.value as RegisterInModel;
+      model.applyDate.setHours(new Date().getHours());
+      model.applyDate.setMinutes(new Date().getMinutes());
+      model.applyDate.setSeconds(new Date().getSeconds());
+      if (!model.apply) {
+        model.applyDate = null;
+        this.cdr.detectChanges();
+      }
+      return model;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   update() {
     try {
       this.updateForm.controls.registerInStocks.setValue(this.selectedSupplies);
-      const model = this.updateForm.value as RegisterInModel;
       this.updateForm.markAllAsTouched();
-      this.sendUpdateRequest(model);
+      const model = this.buildRequestModel();
+      if(this.updateForm.valid) this.sendUpdateRequest(model);
     } catch (error) {
       console.log(error);
     }

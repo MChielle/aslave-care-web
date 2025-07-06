@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { PropertyLenghtConstants } from "app/shared/constants/property-lenght.constants";
@@ -12,7 +12,12 @@ import { RegisterOutNames } from "app/shared/utils/names";
 import { firstValueFrom } from "rxjs";
 
 declare var $: any;
-type UserFields = "id" | "description" | "apply" | "registerOutStocks";
+type UserFields =
+  | "id"
+  | "description"
+  | "apply"
+  | "registerOutStocks"
+  | "applyDate";
 type FormErrors = { [u in UserFields]: string };
 
 @Component({
@@ -32,6 +37,7 @@ export class UpdateRegisterOutStockComponent implements OnInit {
     description: "",
     apply: "",
     registerOutStocks: "",
+    applyDate: "",
   };
 
   constructor(
@@ -41,7 +47,8 @@ export class UpdateRegisterOutStockComponent implements OnInit {
     private stockService: StockService<StockModel>,
     private notificationService: NotificationService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) {}
 
   initForm() {
@@ -51,6 +58,7 @@ export class UpdateRegisterOutStockComponent implements OnInit {
         description: new FormControl(""),
         apply: new FormControl(false),
         registerOutStocks: new FormControl(""),
+        applyDate: new FormControl(new Date()),
       });
     } catch (error) {
       console.log(error);
@@ -112,14 +120,30 @@ export class UpdateRegisterOutStockComponent implements OnInit {
     }
   }
 
+  buildRequestModel(): RegisterOutModel {
+    try {
+      const model = this.updateForm.value as RegisterOutModel;
+      model.applyDate.setHours(new Date().getHours());
+      model.applyDate.setMinutes(new Date().getMinutes());
+      model.applyDate.setSeconds(new Date().getSeconds());
+      if (!model.apply) {
+        model.applyDate = null;
+        this.cdr.detectChanges();
+      }
+      return model;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   update() {
     try {
-      this.updateForm.controls["registerOutStocks"].setValue(
+      this.updateForm.controls.registerOutStocks.setValue(
         this.selectedSupplies
       );
-      const registerOutModel = this.updateForm.value as RegisterOutModel;
       this.updateForm.markAllAsTouched();
-      if (this.updateForm.valid) this.sendUpdateRequest(registerOutModel);
+      const model = this.buildRequestModel();
+      if (this.updateForm.valid) this.sendUpdateRequest(model);
     } catch (error) {
       console.log(error);
     }

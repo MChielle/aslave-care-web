@@ -8,7 +8,7 @@
       <div class="card-body">
         <form [formGroup]="createForm">
           <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-7">
               <app-autocomplete
                 placeholder="Fornecedor"
                 shownValue="name"
@@ -40,6 +40,25 @@
                   name="apply"
                 />
               </label>
+            </div>
+             <div class="col-md-3">
+              <mat-form-field class="standard">
+                <mat-label>Data Aquisição</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="picker"
+                  formControlName="applyDate"
+                  [disabled]="!createForm.controls.apply.value"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker
+                  #picker
+                  [startAt]="createForm.controls.applyDate.value"
+                ></mat-datepicker>
+              </mat-form-field>
             </div>
           </div>
           <div class="row">
@@ -130,8 +149,13 @@
             </tbody>
           </table>
         </div>
-        <div *ngIf="this.selectedSupplies.length == 0" class="table-empty-text">
-          Nenhum registro encontrado!
+        <div>
+          <mat-error
+            *ngIf="this.selectedSupplies.length == 0"
+            class="table-empty-text"
+          >
+            Adicione pelo menos um suprimento
+          </mat-error>
         </div>
         <mat-divider></mat-divider>
         <button

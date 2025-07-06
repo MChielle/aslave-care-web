@@ -5,6 +5,7 @@ export class CreateRegisterInModel extends BaseModel<string> {
   supplierId: string;
   donation: boolean;
   description: string;
-  applied: boolean;
+  apply: boolean;
+  applyDate?: Date;
   RegisterInStocks: RegisterInStockModel[] = new Array();
 }

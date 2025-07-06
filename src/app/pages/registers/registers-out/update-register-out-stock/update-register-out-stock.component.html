@@ -8,7 +8,7 @@
       <div class="card-body">
         <form [formGroup]="updateForm">
           <div class="row">
-            <div class="col-md-11">
+            <div class="col-md-12">
               <div class="form-group">
                 <mat-form-field class="standard">
                   <textarea
@@ -23,6 +23,17 @@
                 </mat-form-field>
               </div>
             </div>
+          </div>
+          <div class="row">
+            <div class="col-md-8">
+              <app-autocomplete
+                placeholder="Selecione os suprimentos"
+                shownValue="name"
+                [itemList]="supplies"
+                [selectedValue]="supply"
+                (itemChanged)="selectSupply($event)"
+              ></app-autocomplete>
+            </div>
             <div class="col-md-1">
               <label>
                 Aplicar
@@ -35,19 +46,27 @@
                 />
               </label>
             </div>
+            <div class="col-md-3">
+              <mat-form-field class="standard">
+                <mat-label>Data Consumo</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="picker"
+                  formControlName="applyDate"
+                  [disabled]="!updateForm.controls.apply.value"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker
+                  #picker
+                  [startAt]="updateForm.controls.applyDate.value"
+                ></mat-datepicker>
+              </mat-form-field>
+            </div>
           </div>
         </form>
-        <div class="row">
-          <div class="col-md-12">
-            <app-autocomplete
-              placeholder="Selecione os suprimentos"
-              shownValue="name"
-              [itemList]="supplies"
-              [selectedValue]="supply"
-              (itemChanged)="selectSupply($event)"
-            ></app-autocomplete>
-          </div>
-        </div>
         <div class="table-responsive">
           <table class="table">
             <thead class="update-table-header-cell">
@@ -88,6 +107,14 @@
               </tr>
             </tbody>
           </table>
+        </div>
+        <div>
+          <mat-error
+            *ngIf="this.selectedSupplies.length == 0"
+            class="table-empty-text"
+          >
+            Adicione pelo menos um suprimento
+          </mat-error>
         </div>
         <mat-divider></mat-divider>
         <button
