@@ -16,7 +16,7 @@ type FormErrors = { [u in UserFields]: string };
   styleUrls: ['./view-register-out-stock.component.scss']
 })
 export class ViewRegisterOutStockComponent implements OnInit {
-public propertyLenght;
+  public propertyLenght;
   public supply: string;
   public selectedSupplies: RegisterOutSelectedSupply[] = new Array();
   public registerOut: RegisterOutModel = new RegisterOutModel();
