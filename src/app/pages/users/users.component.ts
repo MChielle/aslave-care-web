@@ -17,6 +17,7 @@ import { firstValueFrom } from "rxjs";
   styleUrls: ["./users.component.scss"],
 })
 export class UsersComponent implements OnInit {
+  public showLoader = false;
   public propertyLenght;
   public dataSource: MatTableDataSource<ViewUserModel>;
   public users: ViewUserModel[];
@@ -50,6 +51,7 @@ export class UsersComponent implements OnInit {
   }
 
   getAll() {
+    this.showLoader = true;
     firstValueFrom(this.service.getAnyToList())
       .then((response) => {
         if (response.isSuccess) {
@@ -66,9 +68,11 @@ export class UsersComponent implements OnInit {
             return profile;
           });
           this.reloadDataSource();
+          this.showLoader = false;
         }
       })
       .catch((error) => {
+        this.showLoader = false;
         console.log(error);
       });
   }

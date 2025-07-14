@@ -39,6 +39,8 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { StockReportComponent } from "app/pages/reports/stock-report/stock-report.component";
 import { ViewRegisterInStockComponent } from "app/pages/registers/registers-in/view-register-in-stock/view-register-in-stock.component";
 import { ViewRegisterOutStockComponent } from "app/pages/registers/registers-out/view-register-out-stock/view-register-out-stock.component";
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 @NgModule({
   imports: [
@@ -58,14 +60,17 @@ import { ViewRegisterOutStockComponent } from "app/pages/registers/registers-out
     MatDividerModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatProgressSpinnerModule,
     NgxMaskModule,
   ],
   declarations: [
     DashboardComponent,
     AutocompleteComponent,
+    
     SuppliersComponent,
     CreateSupplierComponent,
     UpdateSupplierComponent,
+    
     StockComponent,
     CreateStockComponent,
     UpdateStockComponent,

@@ -1,12 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, Validators, FormControl } from "@angular/forms";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router } from "@angular/router";
 import { LocalStorageService } from "app/shared/services/app/local-storage.service";
 import { AuthService } from "app/shared/services/auth/auth.service";
-import { ToastrService } from "ngx-toastr";
 import { Constants } from "app/shared/constants/aslavecare.constants";
 import { PropertyLenghtConstants } from "app/shared/constants/property-lenght.constants";
 import { NotificationService } from "app/shared/services/notification/notification.service";
+
 declare var $: any;
 
 type UserFields = "email" | "password";
@@ -18,6 +18,7 @@ type FormErrors = { [u in UserFields]: string };
   styleUrls: ["./signin.component.scss"],
 })
 export class SigninComponent implements OnInit {
+  public showLoader = false;
   public propertyLenght;
   public signInForm: FormGroup;
   public formErrors: FormErrors = {
@@ -32,13 +33,11 @@ export class SigninComponent implements OnInit {
     public authService: AuthService,
     public localStorageService: LocalStorageService,
     private router: Router,
-    private route: ActivatedRoute,
-    private toastr: ToastrService,
     private notificationService: NotificationService
   ) {
     this.signInForm = new FormGroup({
-      email: new FormControl(""),
-      password: new FormControl(""),
+      email: new FormControl("", Validators.required),
+      password: new FormControl("", Validators.required),
     });
   }
 
@@ -65,7 +64,7 @@ export class SigninComponent implements OnInit {
   }
 
   signIn() {
-    this.authService.showLoader = true;
+    this.showLoader = true;
     this.authService
       .signIn(this.signInForm.value["email"], this.signInForm.value["password"])
       .subscribe({
@@ -75,13 +74,13 @@ export class SigninComponent implements OnInit {
             this.signInForm.value["email"]
           );
           this.router.navigate(["dashboard"]);
-          this.authService.showLoader = false;
+          this.showLoader = false;
           return;
         },
         error: (err) => {
           this.showNotification("E-mail ou Senha incorretos.");
           this.signInForm.markAllAsTouched();
-          this.authService.showLoader = false;
+          this.showLoader = false;
         },
       });
   }

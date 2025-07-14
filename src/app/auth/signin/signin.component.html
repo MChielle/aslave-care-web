@@ -3,7 +3,7 @@
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-md-9 col-lg-6 col-xl-5">
         <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+          src="../../../assets/img/logo-login.png"
           class="img-fluid"
           alt="Sample image"
         />
@@ -27,11 +27,18 @@
                   placeholder="Entre com seu email"
                   required
                 />
-                <label class="form-label" for="signInForm">Email</label>
+                <div>
+                  <mat-error
+                    *ngIf="signInForm.get('email')?.hasError('required')"
+                  >
+                    O email é obrigatório.
+                  </mat-error>
+                </div>
               </div>
               <!-- Password input -->
               <div data-mdb-input-init class="form-outline mb-3">
                 <input
+                  matinput
                   formControlName="password"
                   type="password"
                   id="password"
@@ -40,23 +47,39 @@
                   placeholder="Entre com sua senha"
                   required
                 />
-                <label class="form-label" for="signInForm">Senha</label>
+                <div>
+                  <mat-error
+                    *ngIf="signInForm.get('password')?.hasError('required')"
+                  >
+                    O senha é obrigatória.
+                  </mat-error>
+                </div>
               </div>
-<!-- 
+              <!-- 
               <div class="d-flex justify-content-between align-items-center">
                 <a href="#!" class="text-body">Esqueceu a senha?</a>
               </div> -->
 
               <div class="text-center text-lg-start mt-4 pt-2">
                 <button
+                  [disabled]="showLoader || signInForm.invalid"
                   type="button"
                   (click)="signIn()"
                   data-mdb-button-init
                   data-mdb-ripple-init
-                  class="btn btn-primary bg-primary btn-lg"
+                  class="btn bg-primary btn-lg"
                   style="padding-left: 2.5rem; padding-right: 2.5rem"
                 >
-                  Entrar
+                  <span *ngIf="!showLoader">Entrar</span>
+                  <mat-spinner
+                    *ngIf="showLoader"
+                    class="btn-loader"
+                    diameter="20"
+                    mode="indeterminate"
+                    strokeWidth="4"
+                    color="warn"
+                    style="color: #fff"
+                  ></mat-spinner>
                 </button>
               </div>
             </form>

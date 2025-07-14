@@ -7,6 +7,7 @@ import { RegisterInModel } from "./register-in.model";
 export class ViewRegisterInModel extends BaseModel<string> {
   supplierId: string;
   number: number;
+  supplierName: string;
   supplier: SupplierModel;
   donation: boolean;
   applyDate: Date;
@@ -20,6 +21,7 @@ export class ViewRegisterInModel extends BaseModel<string> {
     this.id = registerIn.id;
     this.supplierId = registerIn.supplierId;
     this.number = registerIn.number;
+    this.supplierName = registerIn.supplier.name;
     this.supplier = registerIn.supplier;
     this.donation = registerIn.donation;
     this.applyDate = registerIn.applyDate;

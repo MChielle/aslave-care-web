@@ -101,12 +101,24 @@
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr
-                  mat-row
-                  *matRowDef="let row; columns: displayedColumns"
-                ></tr>
+                <div *ngIf="!showLoader">
+                  <tr
+                    mat-row
+                    *matRowDef="let row; columns: displayedColumns"
+                  ></tr>
+                </div>
               </mat-table>
-              <div *ngIf="dataSource.data.length == 0" class="table-empty-text">
+              <div class="d-flex align-items-center justify-content-center table-loader">
+                <mat-spinner
+                  *ngIf="showLoader"
+                  color="primary"
+                  diameter="40"
+                ></mat-spinner>
+              </div>
+              <div
+                *ngIf="dataSource.data.length == 0 && !showLoader"
+                class="table-empty-text"
+              >
                 Nenhum registro encontrado!
               </div>
               <mat-divider></mat-divider>

@@ -15,6 +15,7 @@ import { firstValueFrom } from "rxjs";
   styleUrls: ["./stocks.component.scss"],
 })
 export class StockComponent implements OnInit {
+  public showLoader = false;
   public propertyLenght;
   public dataSource: MatTableDataSource<StockModel>;
   public stocks: StockModel[];
@@ -47,14 +48,17 @@ export class StockComponent implements OnInit {
   }
 
   getAll() {
+    this.showLoader = true;
     firstValueFrom(this.service.getToList())
       .then((response) => {
         if (response.isSuccess) {
           this.stocks = response.data;
           this.reloadDataSource();
+          this.showLoader = false;
         }
       })
       .catch((error) => {
+        this.showLoader = false;
         console.log(error);
       });
   }
@@ -77,10 +81,10 @@ export class StockComponent implements OnInit {
       });
   }
 
-  applyFilter(event: Event){
+  applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    if(this.dataSource.paginator){
+    if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }

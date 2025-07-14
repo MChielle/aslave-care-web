@@ -9,6 +9,7 @@ import { RecoverPasswordComponent } from './recover-password/recover-password.co
 import { RouterModule } from '@angular/router';
 import { routes } from './auth.routing';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     ToastrModule.forRoot(),
     ReactiveFormsModule,
     MatFormFieldModule,
+    MatProgressSpinnerModule,
   ],
   declarations: [
     SignupComponent,
