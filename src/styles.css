@@ -56,3 +56,8 @@ mat-table {
   padding-bottom: 2%;
   text-align: center;
 }
+
+.table-loader {
+  padding-top: 1%;
+  padding-bottom: 1%;
+}

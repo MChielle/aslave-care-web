@@ -11,13 +11,20 @@
             <h3 class="card-title">{{ totalStocksQuantityWarning }}</h3>
           </div>
           <div class="card-footer">
-            <div class="stats">
+            <div class="stats icon-update">
               <i
-                class="material-icons icon-update"
+                class="material-icons"
                 (click)="getTotalStocksLowQuantity()"
                 >update</i
               >
               Atualizar
+            </div>
+            <div class="align-items-right justify-content-right">
+              <mat-spinner
+                *ngIf="totalStocksQuantityWarningLoader"
+                color="primary"
+                diameter="20"
+              ></mat-spinner>
             </div>
           </div>
         </div>
@@ -32,13 +39,20 @@
             <h3 class="card-title">{{ actualMonthShopping }}</h3>
           </div>
           <div class="card-footer">
-            <div class="stats">
+            <div class="stats icon-update">
               <i
-                class="material-icons icon-update"
+                class="material-icons"
                 (click)="getActualMonthShopping()"
                 >update</i
               >
               Atualizar
+            </div>
+            <div class="align-items-right justify-content-right">
+              <mat-spinner
+                *ngIf="actualMonthShoppingLoader"
+                color="primary"
+                diameter="20"
+              ></mat-spinner>
             </div>
           </div>
         </div>
@@ -53,13 +67,20 @@
             <h3 class="card-title">{{ actualMonthDonations }}</h3>
           </div>
           <div class="card-footer">
-            <div class="stats">
+            <div class="stats icon-update">
               <i
-                class="material-icons icon-update"
+                class="material-icons"
                 (click)="getActualMonthDonation()"
                 >update</i
               >
               Atualizar
+            </div>
+            <div class="align-items-right justify-content-right">
+              <mat-spinner
+                *ngIf="actualMonthDonationsLoader"
+                color="primary"
+                diameter="20"
+              ></mat-spinner>
             </div>
           </div>
         </div>
@@ -74,13 +95,20 @@
             <h3 class="card-title">{{ actualMonthConsumptions }}</h3>
           </div>
           <div class="card-footer">
-            <div class="stats">
+            <div class="stats icon-update">
               <i
-                class="material-icons icon-update"
+                class="material-icons"
                 (click)="getActualMonthConsumptions()"
                 >update</i
               >
               Atualizar
+            </div>
+            <div class="align-items-right justify-content-right">
+              <mat-spinner
+                *ngIf="actualMonthConsumptionsLoader"
+                color="primary"
+                diameter="20"
+              ></mat-spinner>
             </div>
           </div>
         </div>
@@ -97,13 +125,20 @@
             <p class="card-category">Distribuição mensal</p>
           </div>
           <div class="card-footer">
-            <div class="stats">
+            <div class="stats icon-update">
               <i
-                class="material-icons icon-update"
+                class="material-icons"
                 (click)="buildShoppingChart()"
                 >update</i
               >
               Atualizar
+            </div>
+            <div class="align-items-right justify-content-right">
+              <mat-spinner
+                *ngIf="actualMonthShoppingLoader"
+                color="primary"
+                diameter="20"
+              ></mat-spinner>
             </div>
           </div>
         </div>
@@ -118,13 +153,20 @@
             <p class="card-category">Distribuição mensal</p>
           </div>
           <div class="card-footer">
-            <div class="stats">
+            <div class="stats icon-update">
               <i
-                class="material-icons icon-update"
+                class="material-icons"
                 (click)="buildDonationsChart()"
                 >update</i
               >
               Atualizar
+            </div>
+            <div class="align-items-right justify-content-right">
+              <mat-spinner
+                *ngIf="actualMonthDonationsLoader"
+                color="primary"
+                diameter="20"
+              ></mat-spinner>
             </div>
           </div>
         </div>
@@ -139,86 +181,31 @@
             <p class="card-category">Distribuição mensal</p>
           </div>
           <div class="card-footer">
-            <div class="stats">
+            <div class="stats icon-update">
               <i
-                class="material-icons icon-update"
+                class="material-icons"
                 (click)="buildConsumptionsChart()"
                 >update</i
               >
               Atualizar
+            </div>
+            <div class="align-items-right justify-content-right">
+              <mat-spinner
+                *ngIf="actualMonthConsumptionsLoader"
+                color="primary"
+                diameter="20"
+              ></mat-spinner>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="row">
-      <!-- <div class="col-lg-6 col-md-12">
-        <div class="card">
-          <div class="card-header card-header-primary">
-            <h4 class="card-title">Tarefas</h4>
-            <p class="card-category">Lista de atividades</p>
-          </div>
-          <div class="card-body">
-            <table class="table table-hover">
-              <tbody>
-                <tr *ngFor="let taskNote of taskNotes">
-                  <td>
-                    <div class="form-check">
-                      <label class="form-check-label">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value="{{ taskNote.Done }}"
-                        />
-                        <span class="form-check-sign">
-                          <span class="check"></span>
-                        </span>
-                      </label>
-                    </div>
-                  </td>
-                  <td>
-                    <mat-form-field class="standard">
-                      <input
-                        matInput
-                        type="text"
-                        value="{{ taskNote.text }}"
-                      />
-                    </mat-form-field>
-                  </td>
-                  <td class="td-actions text-right">
-                    <button
-                      mat-raised-button
-                      type="button"
-                      matTooltip="Alterar"
-                      [matTooltipPosition]="'above'"
-                      class="btn btn-primary btn-link btn-sm btn-just-icon"
-                    >
-                      <i class="material-icons">edit</i>
-                    </button>
-                    <button
-                      mat-raised-button
-                      type="button"
-                      matTooltip="Remover"
-                      [matTooltipPosition]="'above'"
-                      class="btn btn-danger btn-link btn-sm btn-just-icon"
-                    >
-                      <i class="material-icons">close</i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div> -->
-
       <div class="col-lg-6 col-md-12">
         <div class="card">
           <div class="card-header card-header-primary">
             <h4 class="card-title">Maiores doadores</h4>
-            <p class="card-category">
-              {{ topDoners }} maiores doadores do mês
-            </p>
+            <p class="card-category">{{ topDonors }} maiores doadores do mês</p>
           </div>
           <div class="card-body table-responsive">
             <table class="table table-hover">
@@ -227,7 +214,7 @@
                 <th>Nome</th>
                 <th>Quantidade</th>
               </thead>
-              <tbody>
+              <tbody *ngIf="!topDonorsLoader">
                 <tr *ngFor="let donor of monthTopDonors; let i = index">
                   <td>
                     {{ i + 1 }}
@@ -241,10 +228,22 @@
                 </tr>
               </tbody>
             </table>
+            <div class="d-flex align-items-center justify-content-center">
+              <mat-spinner
+                *ngIf="topDonorsLoader"
+                color="primary"
+                diameter="40"
+              ></mat-spinner>
+            </div>
+            <div
+              *ngIf="monthTopDonors.length == 0 && !topDonorsLoader"
+              class="table-empty-text"
+            >
+              Nenhum registro encontrado!
+            </div>
           </div>
         </div>
       </div>
-
       <div class="col-lg-6 col-md-12">
         <div class="card">
           <div class="card-header card-header-warning">
@@ -260,7 +259,7 @@
                 <th>Quantidade</th>
                 <th>Limite</th>
               </thead>
-              <tbody>
+              <tbody *ngIf="!stockLoader">
                 <tr *ngFor="let stock of stocks">
                   <td>
                     {{ stock.name }}
@@ -274,6 +273,19 @@
                 </tr>
               </tbody>
             </table>
+            <div class="d-flex align-items-center justify-content-center">
+              <mat-spinner
+                *ngIf="stockLoader"
+                color="primary"
+                diameter="40"
+              ></mat-spinner>
+            </div>
+            <div
+              *ngIf="stocks.length == 0 && !stockLoader"
+              class="table-empty-text"
+            >
+              Nenhum registro encontrado!
+            </div>
           </div>
         </div>
       </div>

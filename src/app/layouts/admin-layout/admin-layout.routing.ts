@@ -47,7 +47,6 @@ export const AdminLayoutRoutes: Routes = [
   { path: "restock-report", component: RestockReportComponent },
   { path: "donations-report", component: DonationsReportComponent },
   { path: "stock-report", component: StockReportComponent },
-  
 
   { path: "users", canActivate: [UserGuard], component: UsersComponent },
   { path: "update-user", canActivate: [UserGuard], component: UpdateUserComponent },

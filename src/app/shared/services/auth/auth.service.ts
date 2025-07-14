@@ -15,8 +15,6 @@ import { SignInChangePasswordModel } from "app/shared/models/signin/signin-chang
   providedIn: "root",
 })
 export class AuthService {
-  public showLoader: boolean = false;
-
   constructor(
     private http: HttpClient,
     private baseService: BaseService,

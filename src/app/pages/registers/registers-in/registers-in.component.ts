@@ -20,6 +20,7 @@ declare var $: any;
   styleUrls: ["./registers-in.component.scss"],
 })
 export class RegistersInComponent implements OnInit {
+  public showLoader = false;
   public propertyLenght;
   public dataSource: MatTableDataSource<ViewRegisterInModel>;
   public registersIn: ViewRegisterInModel[];
@@ -64,6 +65,7 @@ export class RegistersInComponent implements OnInit {
   }
 
   getAll() {
+    this.showLoader = true;
     firstValueFrom(this.service.getToList())
       .then((response) => {
         if (response.isSuccess && response.data[0]) {
@@ -72,9 +74,11 @@ export class RegistersInComponent implements OnInit {
           );
           this.registersIn = this.sortByNumber(this.registersIn, false);
           this.reloadDataSource();
+          this.showLoader = false;
         }
       })
       .catch((error) => {
+        this.showLoader = false;
         console.log(error);
       });
   }

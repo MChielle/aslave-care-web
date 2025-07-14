@@ -1,71 +1,72 @@
-import { Component, OnInit } from "@angular/core";
-import { DonationsPerMonthModel } from "app/shared/models/dashboard/donations-per-month.model";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { MonthTopDonersModel as MonthTopDonorsModel } from "app/shared/models/dashboard/month-top-donors";
 import { RegisterInModel } from "app/shared/models/register-in/register-in.model";
 import { RegisterOutModel } from "app/shared/models/register-out/register-out.model";
 import { StockModel } from "app/shared/models/stock/stock.model";
-import { TaskNoteModel } from "app/shared/models/task-note/task-note.model";
 import { RegisterInService } from "app/shared/services/register-in/register-in.service";
 import { RegisterOutService } from "app/shared/services/register-out/register-out.service";
 import { ReportService } from "app/shared/services/report/report.service";
 import { StockService } from "app/shared/services/stock/stock.service";
-import { TaskNoteService } from "app/shared/services/task-note/task-note.service";
 import * as Chartist from "chartist";
 
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",
-  styleUrls: ["./dashboard.component.css"],
+  styleUrls: ["./dashboard.component.scss"],
 })
 export class DashboardComponent implements OnInit {
-  boardTopScale: number = 400;
+  public stockLoader = false;
   public stocks: StockModel[] = new Array();
+  public topDonorsLoader = false;
   public monthTopDonors: MonthTopDonorsModel[] = new Array();
-  // public taskNotes: TaskNoteModel[] = new Array();
   public lowerStock: number = 5;
-  public topDoners: number = 5;
+  // public topDonorsLoader = false;
+  public topDonors: number = 5;
+  public actualMonthDonationsLoader = false;
   public actualMonthDonations: number = 0;
+  public actualMonthShoppingLoader = false;
   public actualMonthShopping: number = 0;
+  public actualMonthConsumptionsLoader = false;
   public actualMonthConsumptions: number = 0;
+  public totalStocksQuantityWarningLoader = false;
   public totalStocksQuantityWarning: number = 0;
 
   constructor(
     private stockService: StockService<StockModel>,
     private registerInService: RegisterInService<RegisterInModel>,
     private registerOutService: RegisterOutService<RegisterOutModel>,
-    // private taskNoteService: TaskNoteService<TaskNoteModel>,
-    private reportService: ReportService
+    private reportService: ReportService,
+    private cdr: ChangeDetectorRef
   ) {}
 
-  // getTaskNotes(){
-  //   this.taskNoteService.getToList().subscribe((response) => {
-  //     if (response.isSuccess) this.taskNotes = response.data;
-  //     console.log(this.taskNotes);
-  //   });
-  // }
-
   getLowerStocks() {
+    this.stockLoader = true;
     this.stockService.getLowerStocks(this.lowerStock).subscribe((response) => {
       if (response.isSuccess) this.stocks = response.data;
+      this.stockLoader = false;
     });
   }
 
   getTotalStocksLowQuantity() {
+    this.totalStocksQuantityWarningLoader = true;
     this.stockService.getTotalStocksQuantityWarning().subscribe((response) => {
       if (response.isSuccess)
         this.totalStocksQuantityWarning = response.data.total;
+      this.totalStocksQuantityWarningLoader = false;
     });
   }
 
   getTopDonors() {
+    this.topDonorsLoader = true;
     this.reportService
       .getTopDonors<MonthTopDonorsModel>()
       .subscribe((response) => {
         if (response.isSuccess) {
           this.monthTopDonors = response.data;
           this.monthTopDonors = this.sortByQuantity(this.monthTopDonors, false);
-          this.monthTopDonors = this.monthTopDonors.slice(0, this.topDoners);
+          this.monthTopDonors = this.monthTopDonors.slice(0, this.topDonors);
         }
+        this.topDonorsLoader = false;
       });
   }
 
@@ -154,6 +155,8 @@ export class DashboardComponent implements OnInit {
   }
 
   buildShoppingChart() {
+    this.actualMonthShoppingLoader = true;
+    this.cdr.detectChanges();
     this.registerInService.getShoppingPerMonth().subscribe((response) => {
       if (!response.isSuccess) return;
       const shoppingPerMonth = response.data;
@@ -164,6 +167,8 @@ export class DashboardComponent implements OnInit {
         labels.unshift(item.month);
         series.unshift(item.total);
       });
+
+      let topSerie = series.reduce((max, current) => Math.max(max, current), 0);
 
       this.actualMonthShopping = shoppingPerMonth[0]?.total ?? 0;
 
@@ -177,7 +182,7 @@ export class DashboardComponent implements OnInit {
           tension: 0,
         }),
         low: 0,
-        high: this.boardTopScale,
+        high: this.getTopSerie(topSerie),
         chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
       };
 
@@ -188,6 +193,7 @@ export class DashboardComponent implements OnInit {
       );
 
       this.startAnimationForLineChart(dailyShoppingChart);
+      this.actualMonthShoppingLoader = false;
     });
   }
 
@@ -196,6 +202,8 @@ export class DashboardComponent implements OnInit {
   }
 
   buildConsumptionsChart() {
+    this.actualMonthConsumptionsLoader = true;
+    this.cdr.detectChanges();
     this.registerOutService.getConsumptionsPerMonth().subscribe((response) => {
       if (!response.isSuccess) return;
       const consumptionsPerMonth = response.data;
@@ -206,6 +214,8 @@ export class DashboardComponent implements OnInit {
         labels.unshift(item.month);
         series.unshift(item.total);
       });
+
+      let topSerie = series.reduce((max, current) => Math.max(max, current), 0);
 
       this.actualMonthConsumptions = consumptionsPerMonth[0]?.total ?? 0;
 
@@ -219,8 +229,8 @@ export class DashboardComponent implements OnInit {
           tension: 0,
         }),
         low: 0,
-        high: this.boardTopScale,
-        chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
+        high: this.getTopSerie(topSerie),
+        chartPadding: { top: 5, right: 0, bottom: 0, left: 0 },
       };
 
       var ConsumptionsChart = new Chartist.Line(
@@ -230,7 +240,12 @@ export class DashboardComponent implements OnInit {
       );
 
       this.startAnimationForLineChart(ConsumptionsChart);
+      this.actualMonthConsumptionsLoader = false;
     });
+  }
+
+  getTopSerie(topSerie: number): number {
+    return Math.ceil(topSerie / 100) * 100;
   }
 
   getActualMonthDonation() {
@@ -238,6 +253,8 @@ export class DashboardComponent implements OnInit {
   }
 
   buildDonationsChart() {
+    this.actualMonthDonationsLoader = true;
+    this.cdr.detectChanges();
     this.registerInService.getDonationsPerMonth().subscribe((response) => {
       if (!response.isSuccess) return;
       const donationsPerMonth = response.data;
@@ -248,6 +265,7 @@ export class DashboardComponent implements OnInit {
         labels.unshift(item.month);
         series.unshift(item.total);
       });
+      let topSerie = series.reduce((max, current) => Math.max(max, current), 0);
 
       this.actualMonthDonations = donationsPerMonth[0]?.total ?? 0;
 
@@ -261,8 +279,8 @@ export class DashboardComponent implements OnInit {
           showGrid: false,
         },
         low: 0,
-        high: this.boardTopScale,
-        chartPadding: { top: 0, right: 5, bottom: 0, left: 0 },
+        high: this.getTopSerie(topSerie),
+        chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
       };
 
       var responsiveOptions: any[] = [
@@ -287,6 +305,7 @@ export class DashboardComponent implements OnInit {
       );
 
       this.startAnimationForBarChart(DonationsChart);
+      this.actualMonthDonationsLoader = false;
     });
   }
 }

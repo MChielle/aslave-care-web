@@ -17,6 +17,7 @@ import { ViewSupplierModel } from "app/shared/models/supplier/view-supplier.mode
   styleUrls: ["./suppliers.component.scss"],
 })
 export class SuppliersComponent implements OnInit {
+  public showLoader = false;
   public propertyLenght;
   public dataSource: MatTableDataSource<ViewSupplierModel>;
   public suppliers: ViewSupplierModel[];
@@ -49,6 +50,7 @@ export class SuppliersComponent implements OnInit {
   }
 
   getAll() {
+    this.showLoader = true;
     firstValueFrom(this.service.getToList())
       .then((response) => {
         if (response.isSuccess) {
@@ -56,9 +58,11 @@ export class SuppliersComponent implements OnInit {
             return new ViewSupplierModel(this.formatHelper, supplier);
           });
           this.reloadDataSource();
+          this.showLoader = false;
         }
       })
       .catch((error) => {
+        this.showLoader = false;
         console.log(error);
       });
   }
