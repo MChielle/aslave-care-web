@@ -64,7 +64,7 @@ export class ConsumptionReportComponent implements OnInit {
   }
 
   getTotalConsumptions() {
-    return this.dataSource.data.reduce((summ, v) => (summ += v.quantity), 0);
+    return this.dataSource.filteredData.reduce((summ, v) => (summ += v.quantity), 0);
   }
 
   generatePdfConsumptionsReport() {
@@ -76,13 +76,13 @@ export class ConsumptionReportComponent implements OnInit {
         { text: "Tipo", bold: true },
         { text: "Quantidade", bold: true },
       ],
-      ...this.dataSource.data.map((row) => [
+      ...this.dataSource.filteredData.map((row) => [
         row.stockName?.toString() ?? "",
         row.stockTypeId?.toString() ?? "",
         row.quantity?.toString() ?? "",
       ]),
       [
-        { text: "", bold: true },
+        { text: "Quantidade total", bold: true },
         { text: "", bold: true },
         { text: total, bold: true },
       ],
@@ -126,7 +126,7 @@ export class ConsumptionReportComponent implements OnInit {
           },
         },
         {
-          text: `Total de items ${this.dataSource.data.length}`,
+          text: `Total de items ${this.dataSource.filteredData.length}`,
           bold: true,
           alignment: "right",
           margin: [0, 10, 0, 10],
