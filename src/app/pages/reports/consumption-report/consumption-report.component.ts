@@ -1,34 +1,29 @@
+import { formatDate } from "@angular/common";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { DonationReportModel } from "app/shared/models/report/donation-report.model";
+import { ConsumptionReportModel } from "app/shared/models/report/consumption-report.model";
 import { ReportService } from "app/shared/services/report/report.service";
 import { environment } from "environments/environment";
 import { firstValueFrom } from "rxjs";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-import { formatDate } from "@angular/common";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
-  selector: "app-donations-report",
-  templateUrl: "./donations-report.component.html",
-  styleUrls: ["./donations-report.component.scss"],
+  selector: "app-consumption-report",
+  templateUrl: "./consumption-report.component.html",
+  styleUrls: ["./consumption-report.component.scss"],
 })
-export class DonationsReportComponent implements OnInit {
+export class ConsumptionReportComponent implements OnInit {
   public propertyLenght;
-  public dataSource: MatTableDataSource<DonationReportModel>;
+  public dataSource: MatTableDataSource<ConsumptionReportModel>;
   public initialDate: Date;
   public finalDate: Date;
-  public donations: DonationReportModel[];
-  public displayedColumns: string[] = [
-    "stockName",
-    "stockTypeId",
-    "quantity",
-    "total",
-  ];
+  public consumptions: ConsumptionReportModel[];
+  public displayedColumns: string[] = ["stockName", "stockTypeId", "quantity"];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -45,21 +40,21 @@ export class DonationsReportComponent implements OnInit {
     }
   }
 
-  getDonationsReport() {
+  getConsumptionsReport() {
     this.initialDate.setHours(0);
     this.initialDate.setMinutes(0);
     this.finalDate.setHours(23);
     this.finalDate.setMinutes(59);
 
     firstValueFrom(
-      this.service.getDonationsReport<DonationReportModel>(
+      this.service.getConsumptionsReport<ConsumptionReportModel>(
         this.initialDate,
         this.finalDate
       )
     )
       .then((response) => {
         if (response.isSuccess && response.data[0]) {
-          this.donations = response.data;
+          this.consumptions = response.data;
           this.reloadDataSource();
         }
       })
@@ -68,64 +63,48 @@ export class DonationsReportComponent implements OnInit {
       });
   }
 
-  getTotalDonations() {
-    return this.dataSource.data.reduce((summ, v) => (summ += v.total), 0);
+  getTotalConsumptions() {
+    return this.dataSource.data.reduce((summ, v) => (summ += v.quantity), 0);
   }
 
-  generatePdfDonationsReport() {
-    const total = this.getTotalDonations();
+  generatePdfConsumptionsReport() {
+    const total = this.getTotalConsumptions();
 
     const tableBody = [
       [
         { text: "Nome", bold: true },
         { text: "Tipo", bold: true },
         { text: "Quantidade", bold: true },
-        { text: "Total", bold: true },
       ],
       ...this.dataSource.data.map((row) => [
         row.stockName?.toString() ?? "",
         row.stockTypeId?.toString() ?? "",
         row.quantity?.toString() ?? "",
-        row.total
-          ? `R$ ${row.total.toLocaleString("pt-BR", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}`
-          : "R$ 0,00",
       ]),
       [
         { text: "", bold: true },
         { text: "", bold: true },
-        { text: "", bold: true },
-        {
-          text: total
-            ? `R$ ${total.toLocaleString("pt-BR", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}`
-            : "R$ 0,00",
-          bold: true,
-        },
+        { text: total, bold: true },
       ],
     ];
 
     let docDefinition = {
       language: "pt-BR",
       info: {
-        title: "Lista de Doações",
+        title: "Lista de Consumo no Período",
         author: environment.APPLICATION_NAME,
-        subject: "restock report",
+        subject: "consumption report",
       },
       content: [
         {
-          text: "Lista de Doações",
+          text: "Lista de Consumo",
           bold: true,
           fontSize: 20,
           alignment: "center",
           margin: [0, 0, 0, 20],
         },
         {
-          text: `Relatório de suprimentos doados no período de ${formatDate(
+          text: `Relatório de suprimentos consumidos no período de ${formatDate(
             this.initialDate,
             "dd/MM/yyyy",
             "en-Us"
@@ -142,7 +121,7 @@ export class DonationsReportComponent implements OnInit {
           margin: [0, 0, 0, 100],
           table: {
             headerRows: 1,
-            widths: ["auto", "auto", "*", "*"],
+            widths: ["auto", "*", "*"],
             body: tableBody,
           },
         },
@@ -165,13 +144,12 @@ export class DonationsReportComponent implements OnInit {
     };
 
     let pdf = pdfMake.createPdf(docDefinition);
-    console.log(pdf);
     pdf.open();
   }
 
   reloadDataSource() {
-    this.dataSource = new MatTableDataSource<DonationReportModel>(
-      this.donations
+    this.dataSource = new MatTableDataSource<ConsumptionReportModel>(
+      this.consumptions
     );
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

@@ -74,8 +74,8 @@ export class RegistersOutComponent implements OnInit {
           );
           this.registersOut = this.sortByNumber(this.registersOut, false);
           this.reloadDataSource();
-          this.showLoader = false;
         }
+        this.showLoader = false;
       })
       .catch((error) => {
         this.showLoader = false;

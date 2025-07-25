@@ -54,22 +54,22 @@ export class UsersComponent implements OnInit {
     this.showLoader = true;
     firstValueFrom(this.service.getAnyToList())
       .then((response) => {
-        if (response.isSuccess) {
+        if (response.isSuccess && response.data[0]) {
           this.users = response.data.map((data) => {
             let profile = new ViewUserModel();
             profile.id = data.id;
             profile.name = data.user.name;
             profile.disable = data.user.disable;
             profile.email = data.user.email;
-            profile.phoneNumber = this.formatHelper.phoneNumberFormatter(data.user.phoneNumber);
+            profile.phoneNumber = data.user.phoneNumber ? this.formatHelper.phoneNumberFormatter(data.user.phoneNumber) : "";
             profile.role = UserType[data.user.userRoles[0].role.userType]
             profile.userId = data.userId;
             profile.user = data.user;
             return profile;
           });
           this.reloadDataSource();
-          this.showLoader = false;
         }
+        this.showLoader = false;
       })
       .catch((error) => {
         this.showLoader = false;
