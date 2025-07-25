@@ -40,6 +40,7 @@ import { StockReportComponent } from "app/pages/reports/stock-report/stock-repor
 import { ViewRegisterInStockComponent } from "app/pages/registers/registers-in/view-register-in-stock/view-register-in-stock.component";
 import { ViewRegisterOutStockComponent } from "app/pages/registers/registers-out/view-register-out-stock/view-register-out-stock.component";
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { ConsumptionReportComponent } from "app/pages/reports/consumption-report/consumption-report.component";
 
 
 @NgModule({
@@ -89,6 +90,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     DonationsReportComponent,
     RestockReportComponent,
     ReportsComponent,
+    ConsumptionReportComponent,
 
     UsersComponent,
     UserProfileComponent,

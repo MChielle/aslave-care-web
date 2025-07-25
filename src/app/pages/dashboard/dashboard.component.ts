@@ -20,7 +20,6 @@ export class DashboardComponent implements OnInit {
   public topDonorsLoader = false;
   public monthTopDonors: MonthTopDonorsModel[] = new Array();
   public lowerStock: number = 5;
-  // public topDonorsLoader = false;
   public topDonors: number = 5;
   public actualMonthDonationsLoader = false;
   public actualMonthDonations: number = 0;
@@ -143,7 +142,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.getLowerStocks();
     this.getTotalStocksLowQuantity();
-    // this.getTaskNotes();
     this.getTopDonors();
     this.buildDonationsChart();
     this.buildConsumptionsChart();
@@ -245,7 +243,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getTopSerie(topSerie: number): number {
-    return Math.ceil(topSerie / 100) * 100;
+    return topSerie ? Math.ceil(topSerie / 100) * 100 : 100;
   }
 
   getActualMonthDonation() {

@@ -23,6 +23,7 @@ import { DonationsReportComponent } from "app/pages/reports/donations-report/don
 import { StockReportComponent } from "app/pages/reports/stock-report/stock-report.component";
 import { ViewRegisterInStockComponent } from "app/pages/registers/registers-in/view-register-in-stock/view-register-in-stock.component";
 import { ViewRegisterOutStockComponent } from "app/pages/registers/registers-out/view-register-out-stock/view-register-out-stock.component";
+import { ConsumptionReportComponent } from "app/pages/reports/consumption-report/consumption-report.component";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "suppliers", component: SuppliersComponent },
@@ -47,6 +48,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "restock-report", component: RestockReportComponent },
   { path: "donations-report", component: DonationsReportComponent },
   { path: "stock-report", component: StockReportComponent },
+  { path: "consumption-report", component: ConsumptionReportComponent },
 
   { path: "users", canActivate: [UserGuard], component: UsersComponent },
   { path: "update-user", canActivate: [UserGuard], component: UpdateUserComponent },

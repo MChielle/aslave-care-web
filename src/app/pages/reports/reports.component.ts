@@ -26,4 +26,8 @@ export class ReportsComponent implements OnInit {
   navigateToStockReport(){
     this.router.navigate([`stock-report`]);
   }
+
+    navigateToConsumptionReport(){
+    this.router.navigate([`consumption-report`]);
+  }
 }

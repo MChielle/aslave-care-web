@@ -74,8 +74,8 @@ export class RegistersInComponent implements OnInit {
           );
           this.registersIn = this.sortByNumber(this.registersIn, false);
           this.reloadDataSource();
-          this.showLoader = false;
         }
+        this.showLoader = false;
       })
       .catch((error) => {
         this.showLoader = false;
