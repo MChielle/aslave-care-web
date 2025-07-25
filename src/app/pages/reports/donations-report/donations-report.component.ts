@@ -94,7 +94,7 @@ export class DonationsReportComponent implements OnInit {
           : "R$ 0,00",
       ]),
       [
-        { text: "", bold: true },
+        { text: "Valor total", bold: true },
         { text: "", bold: true },
         { text: "", bold: true },
         {
